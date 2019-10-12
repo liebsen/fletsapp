@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import $ from 'jquery'
 import Landing from '../components/Landing'
 import Register from '../components/Register'
 import Login from '../components/Login'
 import Flet from '../components/Flet'
+import Confirma from '../components/Confirma'
 import Ruta from '../components/Ruta'
-import Peso from '../components/Peso'
+import Carga from '../components/Carga'
 import Pago from '../components/Pago'
 import Contact from '../components/Contact'
 import About from '../components/About'
@@ -28,9 +28,14 @@ const router = new Router({
       component: Ruta
     },    
     {
-      path: '/peso',
-      name: 'peso',
-      component: Peso
+      path: '/carga',
+      name: 'carga',
+      component: Carga
+    },
+    {
+      path: '/confirma',
+      name: 'confirma',
+      component: Confirma
     },
     {
       path: '/pago',
@@ -126,11 +131,7 @@ window.onerror = function(msg, url, line, col, error) {
 */
 
 router.beforeEach((to, from, next) => {
-  setTimeout(function() {
-    var body = $("html, body")
-    body.stop().animate({scrollTop:0}, 250, 'swing', function() { 
-    })
-  }, 10)  
+  window.scrollTo(0,0)
   next()
 })
 

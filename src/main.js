@@ -1,13 +1,20 @@
 import Vue from 'vue'
-import store from 'store'
+import VuejsDialog from 'vuejs-dialog';
+//import VuejsDialogMixin from 'vuejs-dialog/dist/vuejs-dialog-mixin.min.js'; // only needed in custom components
 import App from './App.vue'
+import store from 'store'
 import router from './router'
 import VueSocketIO from 'vue-socket.io'
 import axios from 'axios'
 import snackbar from './components/Snackbar';
-const endpoint='https://fletsapp.herokuapp.com'
+const endpoint='https://fletsapi.herokuapp.com'
 //const endpoint='http://localhost:4000'
-
+ 
+// include the default style
+//import 'vuejs-dialog/dist/vuejs-dialog.min.css';
+ 
+Vue.use(VuejsDialog);
+//Vue.use(VuejsDialog.main.default);
 require('../assets/css/main.scss')
 
 /*

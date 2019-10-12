@@ -1,8 +1,8 @@
-# AjedrezEnVivo Vue
+# FletsApp
 
-> Jugá y aprendé con Ajedrez en Vivo
+> Llevalo y traelo al toque
 
-[Demo](https://ajedrezenvivoapp.herokuapp.com).
+[Demo](https://fletsapp.herokuapp.com).
 
 ## Build Setup
 

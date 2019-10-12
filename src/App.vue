@@ -1,13 +1,12 @@
 <template>
   <div>
-    
     <svg v-show="$root.loading" class="spinner-container" viewBox="0 0 44 44">
         <circle class="path" cx="22" cy="22" r="20" fill="none" stroke-width="4"></circle>
     </svg>
   
-    <div class="menu hidden-loading slideIn">
-      <div class="menu-container columns is-vcentered">
-        <div class="column is-1 has-text-right">
+    <div class="menu hidden-loading slideDown">
+      <div class="menu-container columns is-vcentered is-mobile">
+        <div class="column is-1">
           <router-link to="/">
             <span class="logo-emoji">🚚</span>
           </router-link>
@@ -46,13 +45,13 @@
         <router-link to="/"><span class="logo-emoji">🚚</span></router-link>
         <div class="menu-links has-text-left">
           <router-link to="/terminos"><span class="aev-icon">🔥</span> Términos y condiciones</router-link>
-          <router-link to="/cotizacion"><span class="aev-icon">🏆</span> ¿Cómo cotiza Flet?</router-link>
+          <router-link to="/cotizacion"><span class="aev-icon">🏆</span> Cómo cotiza FletsApp</router-link>
           <!--router-link to="/puzzles"><span class="aev-icon">🔖</span> Puzzles</router-link-->
           <router-link to="/acerca"><span class="aev-icon">ℹ</span> Acerca de Flet</router-link>
           <router-link to="/contacta"><span class="aev-icon">📧</span> Contacto</router-link>
           <hr>
           <div class="has-text-centered">
-            <router-link class="button is-white is-outlined" to="/ruta"><span>🚚</span> &nbsp;&nbsp;Comenzar</router-link>
+            <router-link class="button is-white is-large is-outlined" to="/ruta"><span>🚚</span> &nbsp;&nbsp;Comenzar</router-link>
           </div>
         </div>
       </div>    
@@ -67,7 +66,7 @@
     <div class="tosprompt">
       <div class="notification">
         <!--p class="has-text-weight-semibold">Ads help us run this site</p-->
-        <p>Utilizamos cookies de análisis para mejorar su experiencia y mejorar esta herramienta. No compartimos sus datos personales con otros. <a href="https://puntoweberplast.com/politica-de-privacidad">Leer mas</a></p>
+        <p>Utilizamos cookies de análisis para mejorar su experiencia y mejorar esta herramienta. No compartimos sus datos personales con otros. <a href="/politica-de-privacidad">Leer mas</a></p>
         <div class="has-text-centered">
           <div class="button" @click="$root.tosAgree(this)">Acepto</div>
         </div>

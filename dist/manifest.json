@@ -1,6 +1,6 @@
 {
-  "short_name": "ajedrezenvivo",
-  "name": "Ajederez En Vivo",
+  "short_name": "fletsapp",
+  "name": "FletsApp - Llevalo y traelo al toque",
   "icons": [
     {
       "src": "/assets/launcher-icon-4x.png",
