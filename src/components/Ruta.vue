@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="form">
+    <div v-show="!$root.loading" class="form">
       <div class="steps-frame">
         <ul class="steps is-narrow is-medium is-centered has-content-centered">
           <li class="steps-segment is-active has-gaps">
@@ -20,6 +20,16 @@
               </span>
               <div class="steps-content">
                 <p class="heading">Carga</p>
+              </div>
+            </a>
+          </li>
+          <li class="steps-segment is-active has-gaps">
+            <a href="#" class="has-text-dark">
+              <span class="steps-marker is-hollow">
+                <span>👤</span>
+              </span>
+              <div class="steps-content">
+                <p class="heading">Mis datos</p>
               </div>
             </a>
           </li>
@@ -74,12 +84,16 @@
       </div>
     </div>
     <div id='map'></div>
-    <div v-show="Object.keys(data.distance).length" class="columns actions navbar is-fixed-bottom is-vcentered has-text-centered">
+    <div v-if="!$root.loading" v-show="Object.keys(data.distance).length" class="columns actions navbar is-fixed-bottom is-vcentered has-text-centered">
       <div class="topright">
-        <a href="#" @click="removeSaved" class="button is-danger is-outlined is-large">❌</a>
+        <a href="#" @click="removeSaved" class="button is-danger is-outlined">
+          <span>Descartar</span> &nbsp;&nbsp;
+          <span>❌</span>
+        </a>
       </div>
       <div class="column has-text-centered">
-        <div v-show="Object.keys(data.distance).length" class="button is-large is-info" v-html="data.distance.text"></div>
+        <div v-show="Object.keys(data.distance).length" class="button is-large is-white" v-html="data.distance.text"></div>
+        <div v-show="Object.keys(data.duration).length" class="button is-large is-white" v-html="data.duration.text"></div>
         <router-link to="/carga" class="button is-success is-large">Continuar</router-link>
       </div>
     </div>  
@@ -109,6 +123,7 @@ export default {
           localStorage.removeItem('ruta')
           t.data = {
             distance:{},
+            duration:{},
             coordinates:[],
             from:{
               formatted_address:'',
@@ -153,7 +168,34 @@ export default {
             t.createOrigMarker()
             document.querySelector('.form').classList.add('fadeIn')
             t.$root.loading = false
-          });          
+          });
+
+          /* autocomplete origin */
+          t.autocomplete_orig = new google.maps.places.Autocomplete(
+            (t.$refs.autocomplete_orig),
+            {
+              types: ['geocode'],
+              componentRestrictions: {
+                country: 'ar'
+              }
+            }
+          );
+
+          t.autocomplete_orig.addListener('place_changed', () => {
+            let place = t.autocomplete_orig.getPlace();
+            let ac = place.address_components;
+            let city = ac[0]["short_name"];
+
+            t.data.from = {
+              lat: place.geometry.location.lat(),
+              lng: place.geometry.location.lng(),
+              formatted_address: place.formatted_address
+            }
+
+            t.calculateRoute()
+          });      
+
+          /* autocomplete destination */
           t.autocomplete_dest = new google.maps.places.Autocomplete(
             (t.$refs.autocomplete_dest),
             {
@@ -175,39 +217,46 @@ export default {
               formatted_address: place.formatted_address
             }
 
-            //var distance_mts = google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(t.from.lat, t.from.lng), new google.maps.LatLng(t.to.lat, t.to.lng));
-            //t.distance = parseFloat(distance_mts/1000).toFixed(2);
-
-            t.$root.loading = true
-            axios.post( t.$root.endpoint + '/directions', { from: t.data.from, to: t.data.to} ).then((res) => {
-              if(res.data.routes.length){
-                t.data.distance = res.data.routes[0].legs[0].distance
-                t.data.coordinates = []
-                res.data.routes[0].legs[0].steps.forEach((step) => {
-                  t.data.coordinates.push([step.start_location.lng,step.start_location.lat])
-                  t.data.coordinates.push([step.end_location.lng,step.end_location.lat])
-                })
-
-                t.createRoute()
-                t.createOrigMarker()
-                t.createDestMarker()
-
-                localStorage.setItem('ruta',JSON.stringify(t.data))
-                //t.$root.snackbar('success','📍 Distancia: ' + t.data.distance.text)
-              } else {
-                t.$root.snackbar('error','📍 No se pudo obtener datos de la ruta')
-              }
-              t.$root.loading = false
-            })
-            
-            //t.$root.snackbar('success','📍 Distancia ' + t.distance + ' kms',1000);
+            t.calculateRoute()
           });      
-
         }, function() {
           t.$root.snackbar('error','No se pudo obtener ubicación')
           t.initMap()
           //t.initAutocomplete('dest')
         })    
+      }
+    },
+    calculateRoute:function(){
+      var t = this
+      if(t.data.from.lat && t.data.to.lat){
+        t.$root.loading = true
+        axios.post( t.$root.endpoint + '/directions', { 
+          from: t.data.from, 
+          to: t.data.to
+        }).then((res) => {
+          if(res.data.routes.length){
+            t.data.distance = res.data.routes[0].legs[0].distance
+            t.data.duration = res.data.routes[0].legs[0].duration
+            t.data.coordinates = []
+            res.data.routes[0].legs[0].steps.forEach((step) => {
+              t.data.coordinates.push([step.start_location.lng,step.start_location.lat])
+              t.data.coordinates.push([step.end_location.lng,step.end_location.lat])
+            })
+
+            t.createRoute()
+            t.createOrigMarker()
+            t.createDestMarker()
+
+            localStorage.setItem('ruta',JSON.stringify(t.data))
+            //t.$root.snackbar('success','📍 Distancia: ' + t.data.distance.text)
+          } else {
+            t.$root.snackbar('error','📍 No se pudo obtener datos de la ruta')
+          }
+          t.$root.loading = false
+        })
+      } else {
+        t.createOrigMarker()
+        t.map.flyTo({center:[t.data.from.lng, t.data.from.lat]});
       }
     },
     createRoute: function(){
@@ -216,7 +265,6 @@ export default {
       if(typeof mapLayer !== 'undefined') {
         t.map.removeLayer('coordinates').removeSource('coordinates');        
       }
-
       t.map.addLayer({
         "id": "coordinates",
         "type": "line",
@@ -301,7 +349,7 @@ export default {
       var orig = new mapboxgl.LngLat(t.data.from.lng, t.data.from.lat);
       var dest = new mapboxgl.LngLat(t.data.to.lng, t.data.to.lat);  
       var llb = new mapboxgl.LngLatBounds(orig, dest);
-      t.map.fitBounds(llb,{padding:200, offset: [0,25]});
+      t.map.fitBounds(llb,{padding:200, offset: [0,5]});
       var mapLayer = t.map.getLayer('dest');
 
       if(typeof mapLayer !== 'undefined') {
@@ -354,6 +402,7 @@ export default {
     return {
       data: {
         distance:{},
+        duration:{},
         coordinates:[],
         from:{
           formatted_address:'',

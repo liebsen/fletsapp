@@ -73,7 +73,7 @@ body > div {
   right: 0;
   z-index: 90;
   height: 60px;
-  background-color: #00d1b2;
+  background-color: #1f9cef;
   transition: background-color 0.25 linear;
 }
 
@@ -85,7 +85,7 @@ body > div {
   margin-bottom: 0 !important;
 
   .is-1 {
-    min-width: 60px;
+    min-width: 75px;
   }
 
   > .column {
@@ -95,9 +95,9 @@ body > div {
 }
 
 .columns.is-vcentered{
-    -webkit-box-align:center;
-    -ms-flex-align:center;
-    align-items:center
+  -webkit-box-align:center;
+  -ms-flex-align:center;
+  align-items:center
 }
 
 .logo-emoji {
@@ -105,9 +105,9 @@ body > div {
 }
 
 .menu-text {
-  font-size: 20px;
-  color: white;
+  font-size: 22px;
   font-weight: 700;
+  color: white;
 }
 
 .menu-logo img {
@@ -148,8 +148,8 @@ body > div {
   width: 60px;
   height: 60px;
   border-radius: 100%;
-  right: 10px;
-  top: 0px;
+  right: 2px;
+  top: -1px;
   z-index: 99;
 }
 
@@ -193,7 +193,7 @@ body > div {
 }
 
 .menu-bg {
-  background-color: #00d1b2;
+  background-color: #1f9cef;
   pointer-events: none;
   -webkit-transition: .3s;
   transition: .3s;
@@ -260,15 +260,15 @@ body > div {
   width: 30px;
   height: 30px;
   margin-top: 0.25rem;
-  font-size: 1rem;
+  font-size: 1.25rem;
   text-align: center;
-  background-color: darkgreen;
   border-radius: 100%;
 }
 
 .menu-items a:not(.button) {
-  font-size: 1rem;
+  font-size: 1.25rem;
   color: white;
+  font-weight: 400;
   display: block;
   line-height: 1.75rem;
 }

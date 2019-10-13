@@ -23,6 +23,16 @@
               </div>
             </router-link>
           </li>
+          <li class="steps-segment">
+            <router-link to="/datos" class="has-text-dark">
+              <span class="steps-marker">
+                <span>👤</span>
+              </span>
+              <div class="steps-content">
+                <p class="heading">Mis datos</p>
+              </div>
+            </router-link>
+          </li>
           <li class="steps-segment is-active has-gaps">
             <span class="steps-marker">
               <span>✔️</span>

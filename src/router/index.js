@@ -5,6 +5,7 @@ import Register from '../components/Register'
 import Login from '../components/Login'
 import Flet from '../components/Flet'
 import Confirma from '../components/Confirma'
+import Datos from '../components/Datos'
 import Ruta from '../components/Ruta'
 import Carga from '../components/Carga'
 import Pago from '../components/Pago'
@@ -31,6 +32,11 @@ const router = new Router({
       path: '/carga',
       name: 'carga',
       component: Carga
+    },
+    {
+      path: '/datos',
+      name: 'datos',
+      component: Datos
     },
     {
       path: '/confirma',

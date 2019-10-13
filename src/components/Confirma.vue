@@ -23,6 +23,16 @@
               </div>
             </router-link>
           </li>
+          <li class="steps-segment">
+            <router-link to="/datos" class="has-text-dark">
+              <span class="steps-marker">
+                <span>👤</span>
+              </span>
+              <div class="steps-content">
+                <p class="heading">Mis datos</p>
+              </div>
+            </router-link>
+          </li>
           <li class="steps-segment is-active has-gaps">
             <span class="steps-marker">
               <span>✔️</span>
@@ -46,32 +56,50 @@
         <div class="columns content has-text-centered fadeLeft">
           <div class="column confirm-container has-text-left">
             <h3>Datos de tu Flet</h3>
-            <table class="table is-bordered">
+            <table class="table">
               <tr>
-                <td class="has-background-light"><label>Inicia</label></td>
+                <td class="has-background-light"><label>FLET para</label></td>
+                <td><span v-html="data.datos.nombre"></span></td>
+                <td><router-link class="button is-text" to="/datos">✎</router-link></td>
+              </tr>
+              <tr>
+                <td class="has-background-light"><label>Teléfono</label></td>
+                <td><span v-html="data.datos.telefono"></span></td>
+                <td><router-link class="button is-text" to="/datos">✎</router-link></td>
+              </tr>
+              <tr>
+                <td class="has-background-light"><label>Retirar en</label></td>
                 <td><span v-html="data.ruta.from.formatted_address"></span></td>
+                <td><router-link class="button is-text" to="/ruta">✎</router-link></td>
               </tr>
               <tr>
-                <td class="has-background-light"><label>Entrega</label></td>
+                <td class="has-background-light"><label>Entregar en</label></td>
                 <td><span v-html="data.ruta.to.formatted_address"></span></td>
-              </tr>
-              <tr>
-                <td class="has-background-light"><label>Distancia</label></td>
-                <td><span v-html="data.ruta.distance.text"></span></td>
+                <td><router-link class="button is-text" to="/ruta">✎</router-link></td>
               </tr>
               <tr>
                 <td class="has-background-light"><label>Tipo de carga</label></td>
                 <td><span v-html="data.carga.carga"></span></td>
+                <td><router-link class="button is-text" to="/carga">✎</router-link></td>
               </tr>
               <tr>
                 <td class="has-background-light"><label>Peso de la carga</label></td>
                 <td><span v-html="data.carga.peso"></span></td>
+                <td><router-link class="button is-text" to="/carga">✎</router-link></td>
               </tr>  
               <tr>
-                <td class="has-background-success"><label class="has-text-white">Costo</label></td>
-                <td class="has-background-success">
-                  <span class="has-text-white" v-html="data.price.price"></span> 
-                  <span class="has-text-white" v-html="data.price.currency"></span>
+                <td class="has-background-light"><label>Distancia</label></td>
+                <td class="has-background-light" colspan="2"><span v-html="data.ruta.distance.text"></span></td>
+              </tr>
+              <tr>
+                <td class="has-background-light"><label>Tiempo aprox. viaje</label></td>
+                <td class="has-background-light" colspan="2"><span v-html="data.ruta.duration.text"></span></td>
+              </tr>
+              <tr>
+                <td class="has-background-light"><label>Costo</label></td>
+                <td colspan=2 class="has-background-light">
+                  <span class="is-size-2 is-text-weight-bolder" v-html="data.price.price"></span> 
+                  <span class="" v-html="data.price.currency"></span>
                 </td>
               </tr>  
             </table>
@@ -96,9 +124,11 @@ export default {
     var ruta = localStorage.getItem('ruta')
     var carga = localStorage.getItem('carga')
     var price = localStorage.getItem('price')
+    var datos = localStorage.getItem('datos')
     if(ruta && carga){
       t.data.ruta = JSON.parse(ruta)
       t.data.carga = JSON.parse(carga)
+      t.data.datos = JSON.parse(datos)
     } else {
       t.$router.push('/')
     }
@@ -138,6 +168,7 @@ export default {
           carga:null,
           peso:null
         },
+        datos:{},
         price:{}
       }
     }
