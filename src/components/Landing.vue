@@ -3,6 +3,9 @@
     <div class="column">
       <div class="landing-text content slideIn">
         <h2>Llevalo y traelo al toque</h2>
+        <p>
+          <span>Entregamos en Capital Federal y alrededores de 8hs a 18:00hs.</span>
+        </p>
         <router-link class="button is-white is-large" to="/ruta">
           <span>🚚</span> &nbsp;&nbsp;
           <span>Comenzar</span>

@@ -5,7 +5,10 @@
         <h2 class="title">
           <span>⚖️ Términos y condiciones</span>
         </h2>
+
         <p>El principal radio de acción de los fletes es Buenos Aires Capital Federal y Gran Buenos Aires, realizando fletes al interior a expreso pedido del cliente.</p>
+
+        <p>Nuestros horarios de atención es de Lunes a Sábados de 8hs a 18hs.</p>
 
         <p>A los efectos de brindar tranquilidad, seguridad, y privacidad en los fletes para la mercadería u objetos personales la unidad que solicita el usuario es asignada en forma exclusiva y no compartida con otro cliente.</p>
 

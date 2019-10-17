@@ -7,8 +7,8 @@ import router from './router'
 import VueSocketIO from 'vue-socket.io'
 import axios from 'axios'
 import snackbar from './components/Snackbar';
-//const endpoint='https://fletsapi.herokuapp.com'
-const endpoint='https://fletsapidev.herokuapp.com'
+const endpoint='https://fletsapi.herokuapp.com'
+//const endpoint='https://fletsapidev.herokuapp.com'
 //const endpoint='http://localhost:4000'
  
 // include the default style

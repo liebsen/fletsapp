@@ -156,8 +156,9 @@ export default {
       if(!t.$root.loading){
         t.$root.loading = true
         axios.post( t.$root.endpoint + '/flet/preference', {
-          id: t.data.id
-        } ).then((res) => {
+          id: t.data.id,
+          estimate: t.data.estimate
+        }).then((res) => {
           if(res.data.id){
             localStorage.setItem('preference',JSON.stringify(res.data))
             t.$router.push('/pago')

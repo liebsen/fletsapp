@@ -74,7 +74,7 @@
     </div>
 
     <div class="legal-footer has-text-centered">
-      <span>©️ 2019 FletsApp</span>
+      <span>©️ 2019 FletsApp &mdash; <router-link to="/terminos">Términos y condiciones</router-link></span>
     </div>
 
     <div class="ui-snackbar ui-snackbar--is-inactive">
