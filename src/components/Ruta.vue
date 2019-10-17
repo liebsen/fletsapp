@@ -56,7 +56,7 @@
         <div class="columns is-vcentered">
           <div class="column">
             <div class="field">
-              <label class="label has-text-info">Origen</label>
+              <!--label class="label has-text-info">Origen</label-->
               <div class="control">
                 <input ref="autocomplete_orig" 
                   placeholder="Origen" 
@@ -69,7 +69,7 @@
           </div>
           <div class="column">
             <div class="field">
-              <label class="label has-text-success">Destino</label>
+              <!--label class="label has-text-success">Destino</label-->
               <div class="control">
                 <input ref="autocomplete_dest" 
                   placeholder="Destino" 
@@ -85,16 +85,16 @@
     </div>
     <div id='map'></div>
     <div v-if="!$root.loading" v-show="Object.keys(data.distance).length" class="columns actions navbar is-fixed-bottom is-vcentered has-text-centered">
-      <div class="topright">
-        <a href="#" @click="removeSaved" class="button is-danger is-outlined">
-          <span>Descartar</span> &nbsp;&nbsp;
-          <span>❌</span>
+      <div class="bottomright">
+        <a href="#" @click="removeSaved" class="button is-danger is-small">
+          <!--span class="has-text-white">❌</span-->
+          <span>Descartar esta ruta</span>          
         </a>
       </div>
       <div class="column has-text-centered">
-        <div v-show="Object.keys(data.distance).length" class="button is-large is-white" v-html="data.distance.text"></div>
-        <div v-show="Object.keys(data.duration).length" class="button is-large is-white" v-html="data.duration.text"></div>
-        <router-link to="/carga" class="button is-success is-large">Continuar</router-link>
+        <div v-show="Object.keys(data.distance).length" class="button is-medium is-white" v-html="data.distance.text"></div>
+        <div v-show="Object.keys(data.duration).length" class="button is-medium is-white" v-html="data.duration.text"></div>
+        <router-link to="/carga" class="button is-info is-medium">Continuar</router-link>
       </div>
     </div>  
   </div>
@@ -230,7 +230,7 @@ export default {
       var t = this
       if(t.data.from.lat && t.data.to.lat){
         t.$root.loading = true
-        axios.post( t.$root.endpoint + '/directions', { 
+        axios.post( t.$root.endpoint + '/flet/directions', { 
           from: t.data.from, 
           to: t.data.to
         }).then((res) => {
@@ -349,7 +349,7 @@ export default {
       var orig = new mapboxgl.LngLat(t.data.from.lng, t.data.from.lat);
       var dest = new mapboxgl.LngLat(t.data.to.lng, t.data.to.lat);  
       var llb = new mapboxgl.LngLatBounds(orig, dest);
-      t.map.fitBounds(llb,{padding:200, offset: [0,5]});
+      t.map.fitBounds(llb,{padding:50});
       var mapLayer = t.map.getLayer('dest');
 
       if(typeof mapLayer !== 'undefined') {
@@ -419,39 +419,3 @@ export default {
   }
 }
 </script>
-
-<style>
-  .form {
-    padding: 1rem;
-    opacity: 0;
-    position:relative; 
-    z-index: 9;
-  }
-  #map { 
-    position:absolute; 
-    top:60px; 
-    bottom:0; 
-    width:100%; 
-  }
-  .steps-frame {
-    background-color: white;
-    padding: 0.5rem;
-    padding-top: 1rem;
-    margin-top: -1rem;
-    margin-left: -1rem;
-    margin-right: -1rem;
-  }
-  .input-data {
-    padding: 1rem;
-  }
-  .actions {
-    background-color: transparent!important;
-    padding-bottom: 5rem;
-  }
-  .topright {
-    position: fixed;
-    top: 80px;
-    right: 20px;
-  }
-
-</style>

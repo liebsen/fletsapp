@@ -2,8 +2,7 @@
   <div class="columns is-vcentered has-text-centered" id="photo">
     <div class="column">
       <div class="landing-text content slideIn">
-        <h1>FletsApp</h1>
-        <h6>Llevalo y traelo al toque</h6>
+        <h2>Llevalo y traelo al toque</h2>
         <router-link class="button is-white is-large" to="/ruta">
           <span>🚚</span> &nbsp;&nbsp;
           <span>Comenzar</span>
@@ -24,10 +23,11 @@
 <style type="text/css">
 
   #photo {
+    display: inline-flex;
     position: fixed;
     left: 0;
     right:0;
-    top: 60px;
+    top: 0;
     bottom: -12px;
     padding-top: 1rem;
     background-size: cover;

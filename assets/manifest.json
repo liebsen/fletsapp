@@ -1,9 +1,9 @@
 {
-  "short_name": "fletsapp",
+  "short_name": "FletsApp",
   "name": "FletsApp - Llevalo y traelo al toque",
   "icons": [
     {
-      "src": "/assets/launcher-icon-4x.png",
+      "src": "/assets/apple-touch-icon.png",
       "sizes": "192x192",
       "type": "image/png"
     }

@@ -1,11 +1,16 @@
 <template>
   <section class="hero">
     <div class="hero-body">
-      <div class="container is-flex-column is-vertical">
+      <div class="container content is-flex-column is-vertical">
         <h1 class="title">
-          <span jsb-word="not-found">Esta partida no existe</span>
+          <span>🔌 No se encontró la página</span>
         </h1>
-        <p jsb-word="not-found-text">Si cree que se trata de un error por favor contáctenos.</p>
+        <h4><em>FletsApp</em> no encontró el recurso que estás buscando. </h4>
+        <p>Algunas acciones que puedes tomar a partir de aquí:</p>
+        <ul>        
+        <li>Revisa la URL o dirígete a <router-link to="/">inicio</router-link>.</li>
+        <li>Si crees que se trata de un error <router-link to="/contacto">contáctanos</router-link>.</li>
+        </ul>
       </div>
     </div>
   </section>

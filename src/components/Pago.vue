@@ -53,7 +53,8 @@
       </div>
     </div>
     <div class="input-data has-text-centered">
-      <form action="/procesar-pago" method="POST" id="form">
+      <form action="https://fletsapi.herokuapp.com/procesar-pago" method="POST" id="form">
+        <p>Enviando solicitud. Espere por favor...</p>
       </form>
     </div>
   </div>
@@ -65,17 +66,21 @@ export default {
   name: 'pago',
   mounted: function(){
     var t = this
-    axios.post( t.$root.endpoint + '/preference', {} ).then((res) => {
-      if(res.data.status==='success'){
-      } else {
-        this.$root.snackbar('error','La preferencia no pudo ser comprobada. Por favor intenta nuevamente en unos instantes.')
-      }        
-    })
-
-    let script = document.createElement('script')
-    script.setAttribute('src', 'https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js')
-    script.setAttribute('data-preference-id', '199')
-    document.getElementById('form').appendChild(script)
+    var preference = localStorage.getItem('preference')
+    if(!preference){
+      t.$router.push('/')
+    } else {
+      preference = JSON.parse(preference)
+      let script = document.createElement('script')
+      script.setAttribute('src', 'https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js')
+      script.setAttribute('data-preference-id', preference.id)
+      window.sandbox_init_point = preference.init_point
+      //window.init_point = preference.init_point
+      document.getElementById('form').appendChild(script)
+      setTimeout(function(){
+        document.querySelector('.mercadopago-button').click()
+      },5000)
+    }
   },
   data () {
     return {
@@ -85,27 +90,12 @@ export default {
 }
 </script>
 
-
 <style>
-  .form {
-    padding: 1rem;
-    position:relative; 
-    opacity: 1!important;
-    z-index: 9;
-  }
-  .steps-frame {
-    background-color: white;
-    padding: 0.5rem;
-    padding-top: 1rem;
-    margin-top: -1rem;
-    margin-left: -1rem;
-    margin-right: -1rem;
-  }
-  .input-data {
-    padding: 1rem;
-  }
   iframe {
     height: 100%;
+    overflow-x: hidden;
   }
-
+  .mercadopago-button {
+    opacity: 0;
+  }
 </style>

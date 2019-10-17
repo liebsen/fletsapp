@@ -12,10 +12,59 @@ body > div {
   height: 100%;
 }
 
+.hero-body {
+  padding: 2rem 1.5rem;
+}
+
+.padless {
+  padding: 0!important
+}
+
+.actions {
+  padding-bottom: 1.75rem;
+  box-shadow: -5px 0 40px rgba(100,100,100,0.25);
+}
+
+.bottomright {
+  position: fixed;
+  z-index: 9990;
+  bottom: 6rem;
+  right: 1rem;
+}
+.form {
+  padding: 1rem;
+  opacity: 0;
+}
+#map { 
+  min-height: 300px;
+  margin-bottom: 5.25rem;
+  width:100%; 
+}
+.steps-frame {
+  background-color: white;
+  padding: 0.5rem;
+  padding-top: 1rem;
+  margin-top: -1rem;
+  margin-left: -1rem;
+  margin-right: -1rem;
+}
+.input-data {
+  padding: 1rem;
+}
+.options-container {
+  margin: 0 auto;
+  max-width: 320px;
+}
+.confirm-container {
+  margin: 0 auto;
+  max-width: 500px;
+  margin-bottom: 6rem;
+}
+
 .tosprompt {
   opacity: 0;
   position: fixed;
-  z-index: 50;
+  z-index: 9999;
   bottom:0;
   left:0;
   right: 0;
@@ -102,6 +151,18 @@ body > div {
 
 .logo-emoji {
   font-size: 3.5rem;
+}
+
+.legal-footer {
+  position: absolute;
+  bottom: 0;
+  left:0;
+  right:0;
+  z-index: 99;
+  span {
+    color: black;
+    font-size: 12px;
+  }
 }
 
 .menu-text {
@@ -232,7 +293,7 @@ body > div {
   align-items: center;
   flex-direction: column;
   position: fixed;
-  top: 2rem;
+  top: 3rem;
   left: 0;
   right: 0;
   width: 100%;

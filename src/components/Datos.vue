@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="form">
+    <div class="form fadeIn">
       <div class="steps-frame">
         <ul class="steps is-narrow is-medium is-centered has-content-centered">
           <li class="steps-segment">
@@ -70,7 +70,7 @@
     </div>
     <div v-show="data.nombre && data.telefono" class="columns actions navbar is-fixed-bottom is-vcentered has-text-centered">
       <div class="column has-text-centered">
-        <a href="#" @click="submit" class="button is-info is-large">Continuar</a>
+        <a href="#" @click="submit" class="button is-info is-medium">Continuar</a>
         <!--router-link to="/pago" class="button is-info is-large">Continuar</router-link-->
       </div>
     </div>  
@@ -105,31 +105,3 @@ export default {
 }
 </script>
 
-<style>
-  .form {
-    padding: 1rem;
-    position:relative; 
-    opacity: 1!important;
-    z-index: 9;
-  }
-  .steps-frame {
-    background-color: white;
-    padding: 0.5rem;
-    padding-top: 1rem;
-    margin-top: -1rem;
-    margin-left: -1rem;
-    margin-right: -1rem;
-  }
-  .input-data {
-    padding: 1rem;
-  }
-  .actions {
-    background-color: transparent!important;
-    padding-bottom: 5rem;
-  }
-  .options-container {
-    margin: 0 auto;
-    max-width: 320px;
-  }
-
-</style>

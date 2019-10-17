@@ -12,10 +12,59 @@ body > div {
   height: 100%;
 }
 
+.hero-body {
+  padding: 2rem 1.5rem;
+}
+
+.padless {
+  padding: 0!important
+}
+
+.actions {
+  padding-bottom: 1.75rem;
+  box-shadow: -5px 0 40px rgba(100,100,100,0.25);
+}
+
+.bottomright {
+  position: fixed;
+  z-index: 9990;
+  bottom: 6rem;
+  right: 1rem;
+}
+.form {
+  padding: 1rem;
+  opacity: 0;
+}
+#map { 
+  min-height: 300px;
+  margin-bottom: 5.25rem;
+  width:100%; 
+}
+.steps-frame {
+  background-color: white;
+  padding: 0.5rem;
+  padding-top: 1rem;
+  margin-top: -1rem;
+  margin-left: -1rem;
+  margin-right: -1rem;
+}
+.input-data {
+  padding: 1rem;
+}
+.options-container {
+  margin: 0 auto;
+  max-width: 320px;
+}
+.confirm-container {
+  margin: 0 auto;
+  max-width: 500px;
+  margin-bottom: 6rem;
+}
+
 .tosprompt {
   opacity: 0;
   position: fixed;
-  z-index: 50;
+  z-index: 9999;
   bottom:0;
   left:0;
   right: 0;
@@ -73,7 +122,7 @@ body > div {
   right: 0;
   z-index: 90;
   height: 60px;
-  background-color: #00d1b2;
+  background-color: #1f9cef;
   transition: background-color 0.25 linear;
 }
 
@@ -95,19 +144,31 @@ body > div {
 }
 
 .columns.is-vcentered{
-    -webkit-box-align:center;
-    -ms-flex-align:center;
-    align-items:center
+  -webkit-box-align:center;
+  -ms-flex-align:center;
+  align-items:center
 }
 
 .logo-emoji {
   font-size: 3.5rem;
 }
 
+.legal-footer {
+  position: absolute;
+  bottom: 0;
+  left:0;
+  right:0;
+  z-index: 99;
+  span {
+    color: black;
+    font-size: 12px;
+  }
+}
+
 .menu-text {
-  font-size: 20px;
-  color: white;
+  font-size: 22px;
   font-weight: 700;
+  color: white;
 }
 
 .menu-logo img {
@@ -148,8 +209,8 @@ body > div {
   width: 60px;
   height: 60px;
   border-radius: 100%;
-  right: 10px;
-  top: 0px;
+  right: 2px;
+  top: -1px;
   z-index: 99;
 }
 
@@ -193,7 +254,7 @@ body > div {
 }
 
 .menu-bg {
-  background-color: #00d1b2;
+  background-color: #1f9cef;
   pointer-events: none;
   -webkit-transition: .3s;
   transition: .3s;
@@ -232,7 +293,7 @@ body > div {
   align-items: center;
   flex-direction: column;
   position: fixed;
-  top: 2rem;
+  top: 3rem;
   left: 0;
   right: 0;
   width: 100%;
@@ -260,15 +321,15 @@ body > div {
   width: 30px;
   height: 30px;
   margin-top: 0.25rem;
-  font-size: 1rem;
+  font-size: 1.25rem;
   text-align: center;
-  background-color: darkgreen;
   border-radius: 100%;
 }
 
 .menu-items a:not(.button) {
-  font-size: 1rem;
+  font-size: 1.25rem;
   color: white;
+  font-weight: 400;
   display: block;
   line-height: 1.75rem;
 }

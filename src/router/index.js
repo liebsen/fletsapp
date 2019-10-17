@@ -5,12 +5,15 @@ import Register from '../components/Register'
 import Login from '../components/Login'
 import Flet from '../components/Flet'
 import Confirma from '../components/Confirma'
+import Cotizacion from '../components/Cotizacion'
+import Terminos from '../components/Terminos'
 import Datos from '../components/Datos'
 import Ruta from '../components/Ruta'
 import Carga from '../components/Carga'
 import Pago from '../components/Pago'
-import Contact from '../components/Contact'
+import Contacto from '../components/Contacto'
 import About from '../components/About'
+import PagoCompletado from '../components/PagoCompletado'
 import NotFound from '../components/NotFound'
 
 Vue.use(Router)
@@ -48,6 +51,12 @@ const router = new Router({
       name: 'pago',
       component: Pago
     },
+    
+    {
+      path: '/pago-completado/:status?',
+      name: 'pago_completado',
+      component: PagoCompletado
+    },
     {
       path: '/register',
       name: 'register',
@@ -64,9 +73,19 @@ const router = new Router({
       component: Flet
     },
     {
-      path: '/contact',
-      name: 'contact',
-      component: Contact
+      path: '/cotizacion',
+      name: 'cotizacion',
+      component: Cotizacion
+    },    
+    {
+      path: '/terminos',
+      name: 'terminos',
+      component: Terminos
+    },
+    {
+      path: '/contacto',
+      name: 'contacto',
+      component: Contacto
     },
     {
       path: '/about',

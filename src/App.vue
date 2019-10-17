@@ -44,11 +44,11 @@
       <div class="menu-items">
         <router-link to="/"><span class="logo-emoji">🚚</span></router-link>
         <div class="menu-links has-text-left">
-          <router-link to="/terminos"><span class="aev-icon">🔥</span> Términos y condiciones</router-link>
-          <router-link to="/cotizacion"><span class="aev-icon">🏆</span> Cómo cotiza FletsApp</router-link>
+          <router-link to="/terminos"><span class="aev-icon">⚖️</span> Términos y condiciones</router-link>
+          <router-link to="/cotizacion"><span class="aev-icon">💰</span> Cómo cotiza <em>FletsApp</em></router-link>
           <!--router-link to="/puzzles"><span class="aev-icon">🔖</span> Puzzles</router-link-->
-          <router-link to="/acerca"><span class="aev-icon">ℹ</span> Acerca de Flet</router-link>
-          <router-link to="/contacta"><span class="aev-icon">📧</span> Contacto</router-link>
+          <router-link to="/about"><span class="aev-icon">ℹ</span> Acerca de <em>FletsApp</em></router-link>
+          <router-link to="/contacto"><span class="aev-icon">📧</span> Contacto</router-link>
           <hr>
           <div class="has-text-centered">
             <router-link class="button is-white is-large is-outlined" to="/ruta"><span>🚚</span> &nbsp;&nbsp;Comenzar</router-link>
@@ -71,6 +71,10 @@
           <div class="button" @click="$root.tosAgree(this)">Acepto</div>
         </div>
       </div>
+    </div>
+
+    <div class="legal-footer has-text-centered">
+      <span>©️ 2019 FletsApp</span>
     </div>
 
     <div class="ui-snackbar ui-snackbar--is-inactive">
