@@ -6,7 +6,9 @@
           <li class="steps-segment">
             <router-link to="/ruta" class="has-text-dark">
               <span class="steps-marker">
-                <span>📍</span>
+                <span class="icon">
+                  <span class="fas fa-map-marker-alt"></span>
+                </span>
               </span>
               <div class="steps-content">
                 <p class="heading">Ruta</p>
@@ -14,34 +16,40 @@
             </router-link>
           </li>
           <li class="steps-segment is-active has-gaps">
-            <a href="#" class="has-text-dark">
-              <span class="steps-marker">
-                <span>📦</span>
+            <span class="steps-marker">
+              <span class="icon">
+                <span class="fas fa-truck-loading"></span>
               </span>
-              <div class="steps-content">
-                <p class="heading">Carga</p>
-              </div>
-            </a>
+            </span>
+            <div class="steps-content">
+              <p class="heading">Carga</p>
+            </div>
           </li>
           <li class="steps-segment is-active has-gaps">
-            <span class="steps-marker is-hollow">
-              <span>👤</span>
+            <span class="steps-marker">
+              <span class="icon has-text-grey">
+                <span class="fas fa-user"></span>
+              </span>
             </span>
             <div class="steps-content">
               <p class="heading">Mis datos</p>
             </div>
           </li>
           <li class="steps-segment is-active has-gaps">
-            <span class="steps-marker is-hollow">
-              <span>✔️</span>
+            <span class="steps-marker">
+              <span class="icon has-text-grey">
+                <span class="fas fa-check"></span>
+              </span>
             </span>
             <div class="steps-content">
               <p class="heading">Confirmación</p>
             </div>
           </li>
           <li class="steps-segment">
-            <span class="steps-marker is-hollow">
-              <span>💳</span>
+            <span class="steps-marker">
+              <span class="icon has-text-grey">
+                <span class="fas fa-credit-card"></span>
+              </span>
             </span>
             <div class="steps-content">
               <p class="heading">Pago</p>
@@ -54,7 +62,7 @@
         <div class="columns content has-text-centered fadeLeft">
           <div class="column options-container has-text-left">
             <h3>Tipo de carga</h3>
-            <p>Seleccione que tipo de carga desea contratar</p>
+            <p>Selecciona un tipo de carga</p>
             <div class="field">
               <input class="is-checkradio" id="carga1" type="radio" v-model="data.carga" value="mueble">
               <label for="carga1">Mueble</label>
@@ -106,13 +114,14 @@
           </div>
         </div>
       </div>
+    
+      <div v-show="data.carga && data.peso" class="columns actions navbar is-fixed-bottom is-vcentered has-text-centered">
+        <div class="column has-text-centered">
+          <a href="#" @click="submit" class="button is-info is-medium">Continuar</a>
+          <!--router-link to="/pago" class="button is-info is-large">Continuar</router-link-->
+        </div>
+      </div>  
     </div>
-    <div v-show="data.carga && data.peso" class="columns actions navbar is-fixed-bottom is-vcentered has-text-centered">
-      <div class="column has-text-centered">
-        <a href="#" @click="submit" class="button is-info is-medium">Continuar</a>
-        <!--router-link to="/pago" class="button is-info is-large">Continuar</router-link-->
-      </div>
-    </div>  
   </div>
 </template>
 

@@ -6,7 +6,9 @@
           <li class="steps-segment">
             <router-link to="/ruta" class="has-text-dark">
               <span class="steps-marker">
-                <span>📍</span>
+                <span class="icon">
+                  <span class="fas fa-map-marker-alt"></span>
+                </span>
               </span>
               <div class="steps-content">
                 <p class="heading">Ruta</p>
@@ -16,7 +18,9 @@
           <li class="steps-segment">
             <router-link to="/carga" class="has-text-dark">
               <span class="steps-marker">
-                <span>📦</span>
+                <span class="icon">
+                  <span class="fas fa-truck-loading"></span>
+                </span>
               </span>
               <div class="steps-content">
                 <p class="heading">Carga</p>
@@ -26,7 +30,9 @@
           <li class="steps-segment">
             <router-link to="/datos" class="has-text-dark">
               <span class="steps-marker">
-                <span>👤</span>
+                <span class="icon">
+                  <span class="fas fa-user"></span>
+                </span>
               </span>
               <div class="steps-content">
                 <p class="heading">Mis datos</p>
@@ -35,15 +41,19 @@
           </li>
           <li class="steps-segment is-active has-gaps">
             <span class="steps-marker">
-              <span>✔️</span>
+              <span class="icon">
+                <span class="fas fa-check"></span>
+              </span>
             </span>
             <div class="steps-content">
               <p class="heading">Confirmación</p>
             </div>
           </li>
           <li class="steps-segment">
-            <span class="steps-marker is-hollow">
-              <span>💳</span>
+            <span class="steps-marker">
+              <span class="icon has-text-grey">
+                <span class="fas fa-credit-card"></span>
+              </span>
             </span>
             <div class="steps-content">
               <p class="heading">Pago</p>
@@ -156,8 +166,7 @@ export default {
       if(!t.$root.loading){
         t.$root.loading = true
         axios.post( t.$root.endpoint + '/flet/preference', {
-          id: t.data.id,
-          estimate: t.data.estimate
+          id: t.data.id
         }).then((res) => {
           if(res.data.id){
             localStorage.setItem('preference',JSON.stringify(res.data))

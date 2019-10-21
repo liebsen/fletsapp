@@ -1,49 +1,53 @@
 <template>
   <div>
-    <div v-show="!$root.loading" class="form">
+    <div class="form" id="form">
       <div class="steps-frame">
         <ul class="steps is-narrow is-medium is-centered has-content-centered">
           <li class="steps-segment is-active has-gaps">
-            <a href="#" class="has-text-dark">
-              <span class="steps-marker">
-                <span>📍</span>
+            <span class="steps-marker">
+              <span class="icon">
+                <span class="fas fa-map-marker-alt"></span>
               </span>
-              <div class="steps-content">
-                <p class="heading">Ruta</p>
-              </div>
-            </a>
+            </span>
+            <div class="steps-content">
+              <p class="heading">Ruta</p>
+            </div>
           </li>
           <li class="steps-segment is-active has-gaps">
-            <a href="#" class="has-text-dark">
-              <span class="steps-marker is-hollow">
-                <span>📦</span>
+            <span class="steps-marker">
+              <span class="icon has-text-grey">
+                <span class="fas fa-truck-loading"></span>
               </span>
-              <div class="steps-content">
-                <p class="heading">Carga</p>
-              </div>
-            </a>
+            </span>
+            <div class="steps-content">
+              <p class="heading">Carga</p>
+            </div>
           </li>
           <li class="steps-segment is-active has-gaps">
-            <a href="#" class="has-text-dark">
-              <span class="steps-marker is-hollow">
-                <span>👤</span>
+            <span class="steps-marker">
+              <span class="icon has-text-grey">
+                <span class="fas fa-user"></span>
               </span>
-              <div class="steps-content">
-                <p class="heading">Mis datos</p>
-              </div>
-            </a>
+            </span>
+            <div class="steps-content">
+              <p class="heading">Mis datos</p>
+            </div>
           </li>
           <li class="steps-segment is-active has-gaps">
-            <span class="steps-marker is-hollow">
-              <span>✔️</span>
+            <span class="steps-marker">
+              <span class="icon has-text-grey">
+                <span class="fas fa-check"></span>
+              </span>
             </span>
             <div class="steps-content">
               <p class="heading">Confirmación</p>
             </div>
           </li>
           <li class="steps-segment">
-            <span class="steps-marker is-hollow">
-              <span>💳</span>
+            <span class="steps-marker">
+              <span class="icon has-text-grey">
+                <span class="fas fa-credit-card"></span>
+              </span>
             </span>
             <div class="steps-content">
               <p class="heading">Pago</p>
@@ -84,17 +88,20 @@
       </div>
     </div>
     <div id='map'></div>
-    <div v-if="!$root.loading" v-show="Object.keys(data.distance).length" class="columns actions navbar is-fixed-bottom is-vcentered has-text-centered">
+    <div class="columns actions navbar is-fixed-bottom is-vcentered has-text-centered" id="actions">
       <div class="bottomright">
         <a href="#" @click="removeSaved" class="button is-danger is-small">
-          <!--span class="has-text-white">❌</span-->
+          <span class="icon">
+            <span class="fas fa-times"></span>
+          </span>
+
           <span>Descartar esta ruta</span>          
         </a>
       </div>
       <div class="column has-text-centered">
-        <div v-show="Object.keys(data.distance).length" class="button is-medium is-white" v-html="data.distance.text"></div>
-        <div v-show="Object.keys(data.duration).length" class="button is-medium is-white" v-html="data.duration.text"></div>
-        <router-link to="/carga" class="button is-info is-medium">Continuar</router-link>
+        <div v-show="Object.keys(data.distance).length" class="button is-small is-white" v-html="data.distance.text"></div>
+        <div v-show="Object.keys(data.duration).length" class="button is-small is-white" v-html="data.duration.text"></div>
+        <router-link v-show="Object.keys(data.distance).length" to="/carga" class="button is-info is-medium">Continuar</router-link>
       </div>
     </div>  
   </div>
@@ -108,15 +115,15 @@ export default {
   mounted: function(){
     var t = this
     t.$root.loading = true
-    t.$refs.autocomplete_dest.focus()
+    //t.$refs.autocomplete_dest.focus()
     t.checkSavedData()
   },
   methods: {
     removeSaved:function(){
       var t = this
       t.$dialog
-        .confirm('Eliminar ruta actual',{
-          okText: 'Eliminar',
+        .confirm('¿Descartar esta ruta?',{
+          okText: 'Descartar',
           cancelText: 'Cerrar',
         })
         .then(function(dialog) {
@@ -145,6 +152,57 @@ export default {
     checkSavedData:function(){
       var t = this
       var saved = localStorage.getItem('ruta')
+
+      /* autocomplete origin */
+      t.autocomplete_orig = new google.maps.places.Autocomplete(
+        (t.$refs.autocomplete_orig),
+        {
+          types: ['geocode'],
+          componentRestrictions: {
+            country: 'ar'
+          }
+        }
+      );
+
+      t.autocomplete_orig.addListener('place_changed', () => {
+        let place = t.autocomplete_orig.getPlace();
+        let ac = place.address_components;
+        let city = ac[0]["short_name"];
+
+        t.data.from = {
+          lat: place.geometry.location.lat(),
+          lng: place.geometry.location.lng(),
+          formatted_address: place.formatted_address
+        }
+
+        t.calculateRoute()
+      });      
+
+      /* autocomplete destination */
+      t.autocomplete_dest = new google.maps.places.Autocomplete(
+        (t.$refs.autocomplete_dest),
+        {
+          types: ['geocode'],
+          componentRestrictions: {
+            country: 'ar'
+          }
+        }
+      );
+
+      t.autocomplete_dest.addListener('place_changed', () => {
+        let place = t.autocomplete_dest.getPlace();
+        let ac = place.address_components;
+        let city = ac[0]["short_name"];
+
+        t.data.to = {
+          lat: place.geometry.location.lat(),
+          lng: place.geometry.location.lng(),
+          formatted_address: place.formatted_address
+        }
+
+        t.calculateRoute()
+      });  
+
       if(saved){
         t.data = JSON.parse(saved)
         t.initMap()
@@ -169,56 +227,7 @@ export default {
             document.querySelector('.form').classList.add('fadeIn')
             t.$root.loading = false
           });
-
-          /* autocomplete origin */
-          t.autocomplete_orig = new google.maps.places.Autocomplete(
-            (t.$refs.autocomplete_orig),
-            {
-              types: ['geocode'],
-              componentRestrictions: {
-                country: 'ar'
-              }
-            }
-          );
-
-          t.autocomplete_orig.addListener('place_changed', () => {
-            let place = t.autocomplete_orig.getPlace();
-            let ac = place.address_components;
-            let city = ac[0]["short_name"];
-
-            t.data.from = {
-              lat: place.geometry.location.lat(),
-              lng: place.geometry.location.lng(),
-              formatted_address: place.formatted_address
-            }
-
-            t.calculateRoute()
-          });      
-
-          /* autocomplete destination */
-          t.autocomplete_dest = new google.maps.places.Autocomplete(
-            (t.$refs.autocomplete_dest),
-            {
-              types: ['geocode'],
-              componentRestrictions: {
-                country: 'ar'
-              }
-            }
-          );
-
-          t.autocomplete_dest.addListener('place_changed', () => {
-            let place = t.autocomplete_dest.getPlace();
-            let ac = place.address_components;
-            let city = ac[0]["short_name"];
-
-            t.data.to = {
-              lat: place.geometry.location.lat(),
-              lng: place.geometry.location.lng(),
-              formatted_address: place.formatted_address
-            }
-
-            t.calculateRoute()
-          });      
+    
         }, function() {
           t.$root.snackbar('error','No se pudo obtener ubicación')
           t.initMap()
@@ -386,7 +395,8 @@ export default {
     initMap : function(){
       var t = this
       mapboxgl.accessToken = 'pk.eyJ1IjoibWFydGluZnJlZSIsImEiOiJ5ZFd0U19vIn0.Z7WBxuf0QKPrdzv2o6Mx6A';
-       
+      const height = (document.body.clientHeight - document.getElementById('actions').clientHeight) - document.getElementById('form').clientHeight - 48;
+      document.getElementById('map').style.height = height + 'px'
       var map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v11',
@@ -419,3 +429,12 @@ export default {
   }
 }
 </script>
+
+<style>
+  @media screen and (max-width: 400px) {
+    .pac-container { 
+      top: 70px!important;
+      z-index: 10000 !important; 
+    }
+  }
+</style>

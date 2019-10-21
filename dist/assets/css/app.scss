@@ -1,15 +1,15 @@
 html, body {
-  height: 100%;
+  min-height: 100%;
   overflow-x: hidden;
 }
 
 body > div {
   padding-top: 60px;
-  height: 100%;
+  min-height: 100%;
 }
 
 .hero {
-  height: 100%;
+  min-height: 100%;
 }
 
 .hero-body {
@@ -20,19 +20,27 @@ body > div {
   padding: 0!important
 }
 
+.header-logo img {
+  max-height: 4.5rem;
+  top: .25rem;
+  position: relative;
+}
+
 .actions {
   padding-bottom: 1.75rem;
+  min-height: 125px;
   box-shadow: -5px 0 40px rgba(100,100,100,0.25);
 }
 
 .bottomright {
   position: fixed;
   z-index: 9990;
-  bottom: 6rem;
-  right: 1rem;
+  bottom: 7.5rem;
+  right: 0.5rem;
 }
 .form {
   padding: 1rem;
+  padding-bottom: 0;
   opacity: 0;
 }
 #map { 
@@ -50,6 +58,7 @@ body > div {
 }
 .input-data {
   padding: 1rem;
+  margin-bottom: 125px;
 }
 .options-container {
   margin: 0 auto;
@@ -154,7 +163,7 @@ body > div {
 }
 
 .legal-footer {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left:0;
   right:0;
@@ -308,38 +317,31 @@ body > div {
 }
 
 .menu-items img {
-  max-height: 3rem;
-  height: 3rem;
+  max-height: 5rem;
+  height: 5rem;
 }
 
 .menu-links {
   padding: 2.25rem;
 }
 
-.aev-icon {
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-  margin-top: 0.25rem;
-  font-size: 1.25rem;
-  text-align: center;
-  border-radius: 100%;
-}
-
 .menu-items a:not(.button) {
   font-size: 1.25rem;
   color: white;
-  font-weight: 400;
   display: block;
-  line-height: 1.75rem;
+}
+
+.menu-items .icon {
+  position: relative;
+  top: 3px;
 }
 
 .menu-items a.active {
-  color: whitesmoke;
+  color: yellow;
 }
 
 .menu-items a:not(.button):hover {
-  color: black;
+  color: yellow;
 }
 
 .menu-items img{

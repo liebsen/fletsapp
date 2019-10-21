@@ -1,22 +1,15 @@
 import Vue from 'vue'
 import VuejsDialog from 'vuejs-dialog';
-//import VuejsDialogMixin from 'vuejs-dialog/dist/vuejs-dialog-mixin.min.js'; // only needed in custom components
 import App from './App.vue'
 import store from 'store'
 import router from './router'
-import VueSocketIO from 'vue-socket.io'
 import axios from 'axios'
 import snackbar from './components/Snackbar';
-const endpoint='https://fletsapi.herokuapp.com'
-//const endpoint='https://fletsapidev.herokuapp.com'
-//const endpoint='http://localhost:4000'
- 
-// include the default style
-//import 'vuejs-dialog/dist/vuejs-dialog.min.css';
- 
-Vue.use(VuejsDialog);
-//Vue.use(VuejsDialog.main.default);
+//import VueSocketIO from 'vue-socket.io' 
+
 require('../assets/css/main.scss')
+
+Vue.use(VuejsDialog);
 
 /*
 Vue.use(new VueSocketIO({
@@ -35,22 +28,7 @@ new Vue({
   el: '#app',
   router,
   created: function() {
-
-    if(localStorage.getItem('nowflet')){
-      this.player = localStorage.getItem('nowflet')
-    }
-
     this.loading = false
-  },
-  data:{
-    port:0,
-    endpoint:endpoint,
-  	loading:true,
-  	processing:false,
-    verification:false,
-    nowflet:{},
-  	message:'',
-  	typeMessage:''
   },
   methods: {
     snackbar : function(messageType,message,timeout){
@@ -77,6 +55,13 @@ new Vue({
         document.querySelector('.tosprompt').style.display = 'none';
       },1000)
     }
+  }, 
+  data: {
+    ver: '1.0.1'
+    endpoint:'https://fletsapi.herokuapp.com',
+    loading:true,
+    message:'',
+    typeMessage:''
   },
   render: h => h(App)
 })

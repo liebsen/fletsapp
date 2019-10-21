@@ -2,8 +2,11 @@
   <section class="hero">
     <div class="hero-body">
       <div class="container content is-flex-column is-vertical">
-        <h2 class="title">
-          <span>ℹ Acerca de FletsApp</span>
+        <h2>
+          <span class="icon">
+            <span class="fas fa-info-circle"></span>
+          </span> 
+          <span>Acerca de <em>FletsApp</em></span>
         </h2>
         <h4><em>FletsApp</em> ofrece servicios de transporte de carga liviana por vía terrestre, con rápida recepción y entrega solicitadas, sin demoras.</h4>
 

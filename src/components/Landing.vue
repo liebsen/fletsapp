@@ -4,11 +4,13 @@
       <div class="landing-text content slideIn">
         <h2>Llevalo y traelo al toque</h2>
         <p>
-          <span>Entregamos en Capital Federal y alrededores de 8hs a 18:00hs.</span>
+          <span>Entregamos en Capital Federal y alrededores de 8 a 18hs.</span>
         </p>
         <router-link class="button is-white is-large" to="/ruta">
-          <span>🚚</span> &nbsp;&nbsp;
-          <span>Comenzar</span>
+          <span class="icon">
+            <span class="fas fa-truck-loading"></span>
+          </span> 
+          <span>Comenzar</span>  
         </router-link>
       </div>
     </div>

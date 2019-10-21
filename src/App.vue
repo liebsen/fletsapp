@@ -6,15 +6,9 @@
   
     <div class="menu hidden-loading slideDown">
       <div class="menu-container columns is-vcentered is-mobile">
-        <div class="column is-1">
-          <router-link to="/">
-            <span class="logo-emoji">🚚</span>
-          </router-link>
-        </div>
-
-        <div class="column menu-text">
-            <span>FletsApp</span>
-        </div>
+        <router-link class="header-logo" to="/">
+          <img src="/assets/img/delivery-truck.png" >
+        </router-link>
 
         <div class="column menu-secondary has-text-centered">
           <div class="section-tag-container">
@@ -42,16 +36,48 @@
       </div>
 
       <div class="menu-items">
-        <router-link to="/"><span class="logo-emoji">🚚</span></router-link>
+        <router-link to="/">
+          <img src="/assets/delivery-truck_1f69a.png" >
+        </router-link>
+
         <div class="menu-links has-text-left">
-          <router-link to="/terminos"><span class="aev-icon">⚖️</span> Términos y condiciones</router-link>
-          <router-link to="/cotizacion"><span class="aev-icon">💰</span> Cómo cotiza <em>FletsApp</em></router-link>
-          <!--router-link to="/puzzles"><span class="aev-icon">🔖</span> Puzzles</router-link-->
-          <router-link to="/about"><span class="aev-icon">ℹ</span> Acerca de <em>FletsApp</em></router-link>
-          <router-link to="/contacto"><span class="aev-icon">📧</span> Contacto</router-link>
+          <router-link to="/terminos">
+            <span class="icon">
+              <span class="fas fa-balance-scale"></span>
+            </span> 
+            <span>Términos y condiciones</span>
+          </router-link>
+
+          <router-link to="/cotizacion">
+            <span class="icon">
+              <span class="fas fa-search-dollar"></span>
+            </span> 
+            <span>Cómo cotiza <em>FletsApp</em></span>
+          </router-link>
+
+          <router-link to="/about">
+            <span class="icon">
+              <span class="fas fa-info-circle"></span>
+            </span> 
+            <span>Acerca de <em>FletsApp</em></span>
+          </router-link>
+  
+          <router-link to="/contacto">
+            <span class="icon">
+              <span class="fas fa-envelope"></span>
+            </span> 
+            <span>Contacto</span>
+          </router-link>
+
           <hr>
+  
           <div class="has-text-centered">
-            <router-link class="button is-white is-large is-outlined" to="/ruta"><span>🚚</span> &nbsp;&nbsp;Comenzar</router-link>
+            <router-link class="button is-white is-large is-outlined" to="/ruta">
+              <span class="icon">
+                <span class="fas fa-truck-loading"></span>
+              </span> 
+              <span>Comenzar</span>            
+            </router-link>
           </div>
         </div>
       </div>    
@@ -86,11 +112,6 @@
 
 <script>
 export default {
-  name: 'app',
-  data () {
-    return {
-      ver: '2.0.1'
-    }
-  }
+  name: 'app'
 }
 </script>

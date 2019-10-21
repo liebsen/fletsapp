@@ -1,7 +1,7 @@
 {
   "name": "fletsapp",
   "description": "FletsApp - Llevalo y traelo al toque",
-  "version": "0.6.0",
+  "version": "1.0.1",
   "author": "Martin Frith",
   "license": "MIT",
   "private": true,
@@ -21,7 +21,6 @@
     "store": "^2.0.12",
     "vue": "^2.5.11",
     "vue-router": "^3.0.1",
-    "vue-socket.io": "^3.0.7",
     "vuejs-dialog": "^1.4.1"
   },
   "browserslist": [
