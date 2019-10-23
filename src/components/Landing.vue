@@ -38,7 +38,7 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-image: url(/assets/img/calles-buenos-aires-1.jpg);  
+    background-image: url(/assets/img/avenida-santa-fe.jpg);  
   }
 
   #photo .button {

@@ -60,7 +60,7 @@
         </ul>
       </div>
 
-      <div class="input-data">
+      <div class="input-data bottom-spaced">
         <div class="columns content has-text-centered fadeLeft">
           <div class="column options-container has-text-left">
             <h3>Mis datos</h3>

@@ -57,7 +57,7 @@ new Vue({
     }
   }, 
   data: {
-    ver: '1.0.1'
+    ver: '1.0.1',
     endpoint:'https://fletsapi.herokuapp.com',
     loading:true,
     message:'',

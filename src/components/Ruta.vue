@@ -395,7 +395,7 @@ export default {
     initMap : function(){
       var t = this
       mapboxgl.accessToken = 'pk.eyJ1IjoibWFydGluZnJlZSIsImEiOiJ5ZFd0U19vIn0.Z7WBxuf0QKPrdzv2o6Mx6A';
-      const height = (document.body.clientHeight - document.getElementById('actions').clientHeight) - document.getElementById('form').clientHeight - 48;
+      const height = (document.body.clientHeight - document.getElementById('actions').clientHeight) - document.getElementById('form').clientHeight;
       document.getElementById('map').style.height = height + 'px'
       var map = new mapboxgl.Map({
         container: 'map',

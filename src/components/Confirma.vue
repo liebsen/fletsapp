@@ -62,7 +62,7 @@
         </ul>
       </div>
 
-      <div v-show="Object.keys(data.estimate).length" class="input-data">
+      <div v-show="Object.keys(data.estimate).length" class="input-data bottom-spaced">
         <div class="columns content has-text-centered fadeLeft">
           <div class="column confirm-container has-text-left">
             <!--h3>Datos de tu Flet</h3-->
