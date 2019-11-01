@@ -34,7 +34,7 @@ body > div {
 
 .bottomright {
   position: fixed;
-  z-index: 9990;
+  z-index: 1020;
   bottom: 7.5rem;
   right: 0.5rem;
 }
@@ -75,7 +75,7 @@ body > div {
 .tosprompt {
   opacity: 0;
   position: fixed;
-  z-index: 9999;
+  z-index: 1023;
   bottom:0;
   left:0;
   right: 0;
@@ -169,7 +169,7 @@ body > div {
   bottom: 0;
   left:0;
   right:0;
-  z-index: 9999;
+  z-index: 1021;
   span {
     color: black;
     font-size: 12px;

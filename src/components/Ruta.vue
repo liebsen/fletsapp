@@ -115,7 +115,6 @@ export default {
   mounted: function(){
     var t = this
     t.$root.loading = true
-    //t.$refs.autocomplete_dest.focus()
     t.checkSavedData()
   },
   methods: {
@@ -151,16 +150,21 @@ export default {
     },
     checkSavedData:function(){
       var t = this
-      var saved = localStorage.getItem('ruta')
+      const saved = localStorage.getItem('ruta')
+      const defaultBounds = new google.maps.LatLngBounds(
+      new google.maps.LatLng(-34.907899, -58.935164),
+      new google.maps.LatLng(-34.362287, -58.142812));
 
       /* autocomplete origin */
       t.autocomplete_orig = new google.maps.places.Autocomplete(
         (t.$refs.autocomplete_orig),
         {
           types: ['geocode'],
+          bounds: defaultBounds,
+          strictBounds: true,
           componentRestrictions: {
             country: 'ar'
-          }
+          }        
         }
       );
 
@@ -183,6 +187,8 @@ export default {
         (t.$refs.autocomplete_dest),
         {
           types: ['geocode'],
+          bounds: defaultBounds,
+          strictBounds: true,
           componentRestrictions: {
             country: 'ar'
           }
@@ -212,7 +218,7 @@ export default {
           t.createDestMarker()
           document.querySelector('.form').classList.add('fadeIn')
           t.$root.loading = false
-        });
+        })
       } else {
         if (!navigator.geolocation){
           this.$root.snackbar('error','No se pudo obtener ubicación')
@@ -226,12 +232,10 @@ export default {
             t.createOrigMarker()
             document.querySelector('.form').classList.add('fadeIn')
             t.$root.loading = false
-          });
-    
+          })    
         }, function() {
           t.$root.snackbar('error','No se pudo obtener ubicación')
           t.initMap()
-          //t.initAutocomplete('dest')
         })    
       }
     },
@@ -251,11 +255,9 @@ export default {
               t.data.coordinates.push([step.start_location.lng,step.start_location.lat])
               t.data.coordinates.push([step.end_location.lng,step.end_location.lat])
             })
-
             t.createRoute()
             t.createOrigMarker()
             t.createDestMarker()
-
             localStorage.setItem('ruta',JSON.stringify(t.data))
             //t.$root.snackbar('success','📍 Distancia: ' + t.data.distance.text)
           } else {
@@ -429,12 +431,3 @@ export default {
   }
 }
 </script>
-
-<style>
-  @media screen and (max-width: 400px) {
-    .pac-container { 
-      top: 70px!important;
-      z-index: 10000 !important; 
-    }
-  }
-</style>
