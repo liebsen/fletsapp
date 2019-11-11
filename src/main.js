@@ -49,11 +49,11 @@ new Vue({
     },
     tosAgree: function(){
       localStorage.setItem("tosagree",true)
-      document.querySelector('.tosprompt').classList.remove('slidIn')
+      document.querySelector('.tosprompt').classList.remove('fadeIn')
       document.querySelector('.tosprompt').classList.add('fadeOut')      
       setTimeout(() => {
-        document.querySelector('.tosprompt').style.display = 'none';
-      },1000)
+        document.querySelector('.tosprompt').parentNode.removeChild(document.querySelector('.tosprompt'))
+      },3000)
     }
   }, 
   data: {

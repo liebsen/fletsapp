@@ -169,6 +169,8 @@ export default {
           id: t.data.id
         }).then((res) => {
           if(res.data.id){
+            localStorage.removeItem('ruta')
+            localStorage.removeItem('carga')
             localStorage.setItem('preference',JSON.stringify(res.data))
             t.$router.push('/pago')
           } else {

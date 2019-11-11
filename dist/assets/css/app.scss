@@ -3,7 +3,11 @@ html, body {
   overflow-x: hidden;
 }
 
-body > div {
+body {
+  background: linear-gradient(to bottom,  rgba(0,0,0,0.025) 60px,rgba(0,0,0,0.025) 60px,rgba(255,255,255,1) 60px); 
+}
+
+body > div:first-child {
   padding-top: 60px;
   min-height: 100%;
 }
@@ -27,7 +31,7 @@ body > div {
 }
 
 .actions {
-  padding-bottom: 1.75rem;
+  background-color: white!important;
   min-height: 125px;
   box-shadow: -5px 0 40px rgba(100,100,100,0.25);
 }
@@ -39,13 +43,13 @@ body > div {
   right: 0.5rem;
 }
 .form {
-  padding: 1rem;
-  padding-bottom: 0;
+  margin: 1rem;
+  margin-bottom: 0;
   opacity: 0;
 }
 #map { 
-  min-height: 300px;
-  margin-bottom: 5.25rem;
+  min-height: 430px;
+  /*margin-bottom: 5.25rem;*/
   width:100%; 
 }
 .steps-frame {
@@ -71,7 +75,6 @@ body > div {
   max-width: 500px;
   margin-bottom: 6rem;
 }
-
 .tosprompt {
   opacity: 0;
   position: fixed;
@@ -80,15 +83,9 @@ body > div {
   left:0;
   right: 0;
 }
-
-.tosprompt.accepted {
-  opacity: 0;
-}
-
 .tosprompt .button {
   margin-top: 1rem;
 }
-
 .tosprompt .notification {
   border-radius: 0!important;
   background-color: #ffec01;
@@ -221,7 +218,7 @@ body > div {
   height: 60px;
   border-radius: 100%;
   right: 2px;
-  top: -1px;
+  top: -2px;
   z-index: 99;
 }
 
@@ -610,11 +607,6 @@ table {
   }
 }
 
-.fadeOut {
-  transition: opacity .5s ease-in-out;
-  transition-delay: .75s;
-  opacity: 0;
-}
 
 @keyframes fadeInUp{
   from{
@@ -787,11 +779,9 @@ table {
   }
 }
 
-
 .fadeIn {
-  animation:.15s ease 0s normal forwards 1 fadeIn;
-  -webkit-animation:.75s ease 0s normal forwards 1 fadeIn;
-  opacity:0
+  opacity:0;
+  animation:1s cubic-bezier(.17,.67,.83,.67) .1s normal forwards 1 fadeIn;
 }
 
 .fadeIn:nth-child(1){
@@ -856,7 +846,15 @@ table {
   100%{opacity:1}
 }
 
-/* bulma hacks */
-
-@media screen and (min-width: 790px), print {
+.fadeOut {
+  opacity:1;
+  animation:1s cubic-bezier(.17,.67,.83,.67) .1s normal forwards 1 fadeOut;
 }
+
+@keyframes fadeOut{
+  0%{opacity:1}
+  80%{opacity:1}
+  100%{opacity:0}
+}
+
+

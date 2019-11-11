@@ -12,6 +12,7 @@ import Ruta from '../components/Ruta'
 import Carga from '../components/Carga'
 import Pago from '../components/Pago'
 import Contacto from '../components/Contacto'
+import Privacidad from '../components/Privacidad'
 import About from '../components/About'
 import PagoCompletado from '../components/PagoCompletado'
 import NotFound from '../components/NotFound'
@@ -93,6 +94,11 @@ const router = new Router({
       component: About
     },
     {
+      path: '/privacidad',
+      name: 'privacidad',
+      component: Privacidad
+    },
+    {
       path: '*',
       name: 'notfound',
       component: NotFound
@@ -101,15 +107,6 @@ const router = new Router({
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-  var tosAgree = function(target){
-    localStorage.setItem("tosagree",true)
-    document.querySelector('.tosprompt').classList.remove('slideIn')
-    document.querySelector('.tosprompt').classList.add('fadeOut')      
-    setTimeout(() => {
-      document.querySelector('.tosprompt').style.display = 'none';
-    },1000)
-  }
-
   document.querySelectorAll(".menu-burger, .menu-items").forEach(function(item) {
     item.addEventListener("click", function() {
       if(document.querySelector('.menu').classList.contains('fs')){
@@ -128,9 +125,11 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 
   if(!localStorage.getItem("tosagree")){
-    document.querySelector('.tosprompt').classList.add('slideIn')
+    setTimeout(() => {
+      document.querySelector('.tosprompt').classList.add('fadeIn')
+    },1000)
   } else {
-    document.querySelector('.tosprompt').style.display = 'none';
+    document.querySelector('.tosprompt').parentNode.removeChild(document.querySelector('.tosprompt'))
   }
 })
 

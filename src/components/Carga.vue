@@ -103,13 +103,13 @@
             </div>
 
             <div class="field">
-              <input class="is-checkradio" id="peso3" type="radio" v-model="data.peso" value="400">
-              <label for="peso3">Entre 300kg/400kg</label>
+              <input class="is-checkradio" id="peso4" type="radio" v-model="data.peso" value="400">
+              <label for="peso4">Entre 300kg/400kg</label>
             </div>
 
             <div class="field">
-              <input class="is-checkradio" id="peso4" type="radio" v-model="data.peso" value="500">
-              <label for="peso4">Mas de 400kg y menos de 500kg</label>
+              <input class="is-checkradio" id="peso5" type="radio" v-model="data.peso" value="500">
+              <label for="peso5">Mas de 400kg y menos de 500kg</label>
             </div>
           </div>
         </div>

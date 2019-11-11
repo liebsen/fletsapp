@@ -47,6 +47,13 @@
             </span> 
             <span>Términos y condiciones</span>
           </router-link>
+  
+          <router-link to="/privacidad">
+            <span class="icon">
+              <span class="fas fa-unlock-alt"></span>
+            </span> 
+            <span>Política de privacidad</span>
+          </router-link>
 
           <router-link to="/cotizacion">
             <span class="icon">
@@ -61,7 +68,7 @@
             </span> 
             <span>Acerca de <em>FletsApp</em></span>
           </router-link>
-  
+
           <router-link to="/contacto">
             <span class="icon">
               <span class="fas fa-envelope"></span>
@@ -83,19 +90,27 @@
       </div>    
     </div>
     
-    <keep-alive v-show="!$root.loading" exclude="game">
-      <transition>
-        <router-view/>
-      </transition>
+    <keep-alive v-show="!$root.loading">
+      <router-view/>
     </keep-alive>
 
     <div class="tosprompt">
       <div class="notification">
-        <!--p class="has-text-weight-semibold">Ads help us run this site</p-->
-        <p>Utilizamos cookies de análisis para mejorar su experiencia y mejorar esta herramienta. No compartimos sus datos personales con otros. <a href="/politica-de-privacidad">Leer mas</a></p>
-        <div class="has-text-centered">
-          <div class="button" @click="$root.tosAgree(this)">Acepto</div>
+        <div class="is-pulled-right">
+          <a href="#" @click="$root.tosAgree(this)">
+            <span class="icon">
+              <span class="fa fa-times"></span>
+            </span>
+          </a>
         </div>
+        <p>
+          <span class="has-text-black">
+            <span class="fa fa-unlock-alt"></span>&nbsp; 
+            <span>Aviso de Privacidad</span>
+          </span>
+          <span> no compartimos tus datos personales con otros.</span> 
+          <router-link to="/privacidad">Leer mas</router-link>
+        </p>
       </div>
     </div>
 

@@ -87,21 +87,33 @@
         </div>
       </div>
     </div>
-    <div id='map'></div>
-    <div class="columns actions navbar is-fixed-bottom is-vcentered has-text-centered" id="actions">
+    <div id='map' :style="{ height: mapHeight + 'px'}"></div>
+    <div v-show="Object.keys(data.distance).length" class="columns actions navbar is-fixed-bottom is-vcentered has-text-centered" id="actions">
       <div class="bottomright">
-        <a href="#" @click="removeSaved" class="button is-danger is-small">
+        <div class="button is-small is-success">
+          <span class="icon">
+            <span class="fas fa-route"></span>
+          </span>
+          <span v-html="data.distance.text"></span>
+        </div>
+
+        <div class="button is-small is-success">
+          <span class="icon">
+            <span class="fas fa-stopwatch"></span>
+          </span>
+
+          <span v-html="data.duration.text"></span>
+        </div>
+
+        <a href="#" @click="removeSaved" class="button is-danger is-text is-small">
           <span class="icon">
             <span class="fas fa-times"></span>
           </span>
-
           <span>Descartar esta ruta</span>          
         </a>
       </div>
       <div class="column has-text-centered">
-        <div v-show="Object.keys(data.distance).length" class="button is-small is-white" v-html="data.distance.text"></div>
-        <div v-show="Object.keys(data.duration).length" class="button is-small is-white" v-html="data.duration.text"></div>
-        <router-link v-show="Object.keys(data.distance).length" to="/carga" class="button is-info is-medium">Continuar</router-link>
+        <router-link to="/carga" class="button is-info is-medium">Continuar</router-link>
       </div>
     </div>  
   </div>
@@ -133,13 +145,13 @@ export default {
             coordinates:[],
             from:{
               formatted_address:'',
-              lat:'',
-              lng:''
+              lat:0,
+              lng:0
             },
             to:{
               formatted_address:'',
-              lat:'',
-              lng:''        
+              lat:0,
+              lng:0        
             }
           }
           t.checkSavedData()
@@ -151,9 +163,12 @@ export default {
     checkSavedData:function(){
       var t = this
       const saved = localStorage.getItem('ruta')
+      const defLat = -34.603767
+      const defLng = -58.381619
       const defaultBounds = new google.maps.LatLngBounds(
-      new google.maps.LatLng(-34.907899, -58.935164),
-      new google.maps.LatLng(-34.362287, -58.142812));
+        new google.maps.LatLng(-34.907899, -58.935164),
+        new google.maps.LatLng(-34.362287, -58.142812)
+      );
 
       /* autocomplete origin */
       t.autocomplete_orig = new google.maps.places.Autocomplete(
@@ -211,33 +226,43 @@ export default {
 
       if(saved){
         t.data = JSON.parse(saved)
-        t.initMap()
-        t.map.on('load', function() {
-          t.createRoute()
-          t.createOrigMarker()
-          t.createDestMarker()
-          document.querySelector('.form').classList.add('fadeIn')
-          t.$root.loading = false
-        })
+        t.startMap()
       } else {
         if (!navigator.geolocation){
           this.$root.snackbar('error','No se pudo obtener ubicación')
+          t.data.from.lat  = defLat
+          t.data.from.lng = defLng
+          t.startMap()
         }
         navigator.geolocation.getCurrentPosition(function(position){
           t.data.from.lat  = position.coords.latitude
           t.data.from.lng = position.coords.longitude
           t.getAddressFromLatLng()
-          t.initMap()
-          t.map.on('load', function() {
-            t.createOrigMarker()
-            document.querySelector('.form').classList.add('fadeIn')
-            t.$root.loading = false
-          })    
+          t.startMap()
         }, function() {
           t.$root.snackbar('error','No se pudo obtener ubicación')
-          t.initMap()
+          t.data.from.lat  = defLat
+          t.data.from.lng = defLng
+          t.startMap()
         })    
       }
+    },
+    startMap: function(){
+      var t = this
+      t.setMapHeight()
+      t.initMap(() => {
+        t.map.on('load', function() {
+          if(t.data.to.lat && t.data.to.lng){
+            t.createRoute()
+            t.createOrigMarker()
+            t.createDestMarker()
+          } else {
+            t.createOrigMarker()
+          }
+          document.querySelector('.form').classList.add('fadeIn')
+          t.$root.loading = false
+        })    
+      })
     },
     calculateRoute:function(){
       var t = this
@@ -258,6 +283,8 @@ export default {
             t.createRoute()
             t.createOrigMarker()
             t.createDestMarker()
+
+
             localStorage.setItem('ruta',JSON.stringify(t.data))
             //t.$root.snackbar('success','📍 Distancia: ' + t.data.distance.text)
           } else {
@@ -298,7 +325,16 @@ export default {
           "line-color": "#1496ed",
           "line-width": 8
         }
-      });      
+      })
+
+      var bounds = t.data.coordinates.reduce(function(bounds, coord) {
+        return bounds.extend(coord);
+      }, new mapboxgl.LngLatBounds(t.data.coordinates[0], t.data.coordinates[0]));
+
+      t.map.fitBounds(bounds,{
+        padding:90, 
+        offset:[0,-38]
+      })     
     },
     getAddressFromLatLng: function () {
       var latlng = new google.maps.LatLng(this.data.from.lat, this.data.from.lng);
@@ -356,11 +392,11 @@ export default {
     },
     createDestMarker : function(){
       var t = this
-      var bounds = new google.maps.LatLngBounds();
+      //var bounds = new google.maps.LatLngBounds();
       var orig = new mapboxgl.LngLat(t.data.from.lng, t.data.from.lat);
       var dest = new mapboxgl.LngLat(t.data.to.lng, t.data.to.lat);  
-      var llb = new mapboxgl.LngLatBounds(orig, dest);
-      t.map.fitBounds(llb,{padding:50});
+      //var llb = new mapboxgl.LngLatBounds(orig, dest);
+      //t.map.fitBounds(llb,{padding:100, offset:[0,-30]});
       var mapLayer = t.map.getLayer('dest');
 
       if(typeof mapLayer !== 'undefined') {
@@ -394,37 +430,41 @@ export default {
         });
       });
     },
-    initMap : function(){
+    setMapHeight: function(){
+      this.mapHeight = window.innerHeight - (document.getElementById('form').clientHeight + document.getElementById('form').offsetTop)
+    },
+    initMap : function(callback){
       var t = this
-      mapboxgl.accessToken = 'pk.eyJ1IjoibWFydGluZnJlZSIsImEiOiJ5ZFd0U19vIn0.Z7WBxuf0QKPrdzv2o6Mx6A';
-      const height = (document.body.clientHeight - document.getElementById('actions').clientHeight) - document.getElementById('form').clientHeight;
-      document.getElementById('map').style.height = height + 'px'
-      var map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v11',
-        center: [t.data.from.lng, t.data.from.lat],
-        interactive: false,
-        zoom:14
-      });
-       
-      t.map = map   
+      setTimeout(() => {
+        mapboxgl.accessToken = 'pk.eyJ1IjoibWFydGluZnJlZSIsImEiOiJ5ZFd0U19vIn0.Z7WBxuf0QKPrdzv2o6Mx6A';
+        var map = new mapboxgl.Map({
+          container: 'map',
+          style: 'mapbox://styles/mapbox/streets-v11',
+          center: [t.data.from.lng, t.data.from.lat],
+          interactive: false,
+          zoom:14
+        });
+        t.map = map  
+        callback(this) 
+      },500)
     }
   },
   data () {
     return {
+      mapHeight:0,
       data: {
         distance:{},
         duration:{},
         coordinates:[],
         from:{
           formatted_address:'',
-          lat:'',
-          lng:''
+          lat:0,
+          lng:0
         },
         to:{
           formatted_address:'',
-          lat:'',
-          lng:''        
+          lat:0,
+          lng:0        
         }
       }
     }

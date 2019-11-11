@@ -6,7 +6,7 @@
         <p>
           <span>Entregamos en Capital Federal y alrededores de 8 a 18hs.</span>
         </p>
-        <router-link class="button is-white is-large" to="/ruta">
+        <router-link class="button is-info is-large" to="/ruta">
           <span class="icon">
             <span class="fas fa-truck-loading"></span>
           </span> 
@@ -42,7 +42,7 @@
   }
 
   #photo .button {
-    box-shadow: 10px 10px 0 rgba(0,0,0,0.5)
+    /*box-shadow: 10px 10px 0 rgba(0,0,0,0.5)*/
   }
 
   .landing-text {
