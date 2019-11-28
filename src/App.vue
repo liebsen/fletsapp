@@ -1,7 +1,7 @@
 <template>
   <div>
     <svg v-show="$root.loading" class="spinner-container" viewBox="0 0 44 44">
-        <circle class="path" cx="22" cy="22" r="20" fill="none" stroke-width="4"></circle>
+      <circle class="path" cx="22" cy="22" r="20" fill="none" stroke-width="4"></circle>
     </svg>
   
     <div class="menu hidden-loading slideDown">
@@ -89,8 +89,73 @@
         </div>
       </div>    
     </div>
+
+    <div class="steps-frame hidden fadeIn">
+      <ul class="steps is-narrow is-medium is-centered has-content-centered">
+        <li class="steps-segment is-active has-gaps">
+          <a href="#" class="has-text-dark">
+            <span class="steps-marker">
+              <span class="icon">
+                <span class="fas fa-map-marker-alt"></span>
+              </span>
+            </span>
+            <div class="steps-content">
+              <p class="heading">Ruta</p>
+            </div>
+          </a>
+        </li>
+        <li class="steps-segment is-active has-gaps">
+          <a href="#" class="has-text-dark">
+            <span class="steps-marker">
+              <span class="icon">
+                <span class="fas fa-truck-loading"></span>
+              </span>
+            </span>
+            <div class="steps-content">
+              <p class="heading">Carga</p>
+            </div>
+          </a>
+        </li>
+        <li class="steps-segment is-active has-gaps">
+          <a href="#" class="has-text-dark">
+            <span class="steps-marker">
+              <span class="icon">
+                <span class="fas fa-user"></span>
+              </span>
+            </span>
+            <div class="steps-content">
+              <p class="heading">Mis datos</p>
+            </div>
+          </a>
+        </li>
+        <li class="steps-segment is-active has-gaps">
+          <a href="#" class="has-text-dark">
+            <span class="steps-marker">
+              <span class="icon">
+                <span class="fas fa-check"></span>
+              </span>
+            </span>
+            <div class="steps-content">
+              <p class="heading">Confirmación</p>
+            </div>
+          </a>
+        </li>
+        <li class="steps-segment">
+          <a href="#" class="has-text-dark">
+            <span class="steps-marker">
+              <span class="icon">
+                <span class="fas fa-credit-card"></span>
+              </span>
+            </span>
+            <div class="steps-content">
+              <p class="heading">Pago</p>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
     
-    <keep-alive v-show="!$root.loading">
+    <keep-alive v-show="!$root.loading" exclude="ruta,cotizacion">
       <router-view/>
     </keep-alive>
 

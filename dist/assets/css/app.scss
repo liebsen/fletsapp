@@ -14,6 +14,7 @@ body > div:first-child {
 
 .hero {
   min-height: 100%;
+  margin: 1rem 0 auto;
 }
 
 .hero-body {
@@ -32,33 +33,33 @@ body > div:first-child {
 
 .actions {
   background-color: white!important;
-  min-height: 125px;
+  min-height: 100px;
   box-shadow: -5px 0 40px rgba(100,100,100,0.25);
+}
+
+.actions .button.is-medium {
+  min-width: 250px;
 }
 
 .bottomright {
   position: fixed;
   z-index: 1020;
-  bottom: 7.5rem;
+  bottom: 6rem;
   right: 0.5rem;
 }
 .form {
-  margin: 1rem;
-  margin-bottom: 0;
   opacity: 0;
 }
 #map { 
-  min-height: 430px;
+  min-height: 400px;
   /*margin-bottom: 5.25rem;*/
   width:100%; 
 }
 .steps-frame {
-  background-color: white;
-  padding: 0.5rem;
+  background-color: whitesmoke;
+  padding: 0.25rem;
   padding-top: 1rem;
-  margin-top: -1rem;
-  margin-left: -1rem;
-  margin-right: -1rem;
+  margin-bottom: 1rem;
 }
 .input-data {
   padding: 1rem;
@@ -117,9 +118,14 @@ body > div:first-child {
   }
 }
 
-.hidden-loading {
+.hidden, .hidden-loading {
   display: none;
 }
+
+.show {
+  display: block;
+}
+
 
 /* menu */
 
@@ -155,6 +161,12 @@ body > div:first-child {
   -webkit-box-align:center;
   -ms-flex-align:center;
   align-items:center
+}
+
+.columns.is-vbaseline{
+  -webkit-box-align:center;
+  -ms-flex-align:center;
+  align-items:baseline
 }
 
 .logo-emoji {
@@ -857,4 +869,11 @@ table {
   100%{opacity:0}
 }
 
+@media screen and (max-width: 768px) {
+  .form {
+    margin: 0;
+  }
+  .input-data {
+  }
+}
 

@@ -1,61 +1,6 @@
 <template>
   <div>
     <div class="form" id="form">
-      <div class="steps-frame">
-        <ul class="steps is-narrow is-medium is-centered has-content-centered">
-          <li class="steps-segment is-active has-gaps">
-            <span class="steps-marker">
-              <span class="icon">
-                <span class="fas fa-map-marker-alt"></span>
-              </span>
-            </span>
-            <div class="steps-content">
-              <p class="heading">Ruta</p>
-            </div>
-          </li>
-          <li class="steps-segment is-active has-gaps">
-            <span class="steps-marker">
-              <span class="icon has-text-grey">
-                <span class="fas fa-truck-loading"></span>
-              </span>
-            </span>
-            <div class="steps-content">
-              <p class="heading">Carga</p>
-            </div>
-          </li>
-          <li class="steps-segment is-active has-gaps">
-            <span class="steps-marker">
-              <span class="icon has-text-grey">
-                <span class="fas fa-user"></span>
-              </span>
-            </span>
-            <div class="steps-content">
-              <p class="heading">Mis datos</p>
-            </div>
-          </li>
-          <li class="steps-segment is-active has-gaps">
-            <span class="steps-marker">
-              <span class="icon has-text-grey">
-                <span class="fas fa-check"></span>
-              </span>
-            </span>
-            <div class="steps-content">
-              <p class="heading">Confirmación</p>
-            </div>
-          </li>
-          <li class="steps-segment">
-            <span class="steps-marker">
-              <span class="icon has-text-grey">
-                <span class="fas fa-credit-card"></span>
-              </span>
-            </span>
-            <div class="steps-content">
-              <p class="heading">Pago</p>
-            </div>
-          </li>
-        </ul>
-      </div>
-
       <div class="input-data">
         <div class="columns is-vcentered">
           <div class="column">
@@ -88,7 +33,7 @@
       </div>
     </div>
     <div id='map' :style="{ height: mapHeight + 'px'}"></div>
-    <div v-show="Object.keys(data.distance).length" class="columns actions navbar is-fixed-bottom is-vcentered has-text-centered" id="actions">
+    <div v-show="Object.keys(data.distance).length" class="columns actions navbar is-fixed-bottom is-vbaseline has-text-centered" id="actions">
       <div class="bottomright">
         <div class="button is-small is-success">
           <span class="icon">
@@ -120,7 +65,6 @@
 </template>
 
 <script>
-
 import axios from 'axios'
 export default {
   name: 'ruta',
@@ -128,6 +72,7 @@ export default {
     var t = this
     t.$root.loading = true
     t.checkSavedData()
+    this.$root.snackbar('default','Por favor selecciona el <span class="has-text-info">origen (en azul)</span> y <span class="has-text-success">destino (en verde)</span> para tu <em>flet</em>')
   },
   methods: {
     removeSaved:function(){
@@ -229,7 +174,7 @@ export default {
         t.startMap()
       } else {
         if (!navigator.geolocation){
-          this.$root.snackbar('error','No se pudo obtener ubicación')
+          this.$root.snackbar('default','No se pudo obtener ubicación')
           t.data.from.lat  = defLat
           t.data.from.lng = defLng
           t.startMap()
@@ -240,7 +185,7 @@ export default {
           t.getAddressFromLatLng()
           t.startMap()
         }, function() {
-          t.$root.snackbar('error','No se pudo obtener ubicación')
+          t.$root.snackbar('default','Por favor habilite el permiso para ubicación')
           t.data.from.lat  = defLat
           t.data.from.lng = defLng
           t.startMap()
@@ -249,7 +194,7 @@ export default {
     },
     startMap: function(){
       var t = this
-      t.setMapHeight()
+      //t.setMapHeight()
       t.initMap(() => {
         t.map.on('load', function() {
           if(t.data.to.lat && t.data.to.lng){
@@ -283,8 +228,6 @@ export default {
             t.createRoute()
             t.createOrigMarker()
             t.createDestMarker()
-
-
             localStorage.setItem('ruta',JSON.stringify(t.data))
             //t.$root.snackbar('success','📍 Distancia: ' + t.data.distance.text)
           } else {
@@ -332,8 +275,8 @@ export default {
       }, new mapboxgl.LngLatBounds(t.data.coordinates[0], t.data.coordinates[0]));
 
       t.map.fitBounds(bounds,{
-        padding:90, 
-        offset:[0,-38]
+        padding:100, 
+        offset:[0,-35]
       })     
     },
     getAddressFromLatLng: function () {

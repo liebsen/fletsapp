@@ -1,66 +1,7 @@
 <template>
   <div>
     <div class="form fadeIn">
-      <div class="steps-frame">
-        <ul class="steps is-narrow is-medium is-centered has-content-centered">
-          <li class="steps-segment">
-            <router-link to="/ruta" class="has-text-dark">
-              <span class="steps-marker">
-                <span class="icon">
-                  <span class="fas fa-map-marker-alt"></span>
-                </span>
-              </span>
-              <div class="steps-content">
-                <p class="heading">Ruta</p>
-              </div>
-            </router-link>
-          </li>
-          <li class="steps-segment">
-            <router-link to="/carga" class="has-text-dark">
-              <span class="steps-marker">
-                <span class="icon">
-                  <span class="fas fa-truck-loading"></span>
-                </span>
-              </span>
-              <div class="steps-content">
-                <p class="heading">Carga</p>
-              </div>
-            </router-link>
-          </li>
-          <li class="steps-segment">
-            <router-link to="/datos" class="has-text-dark">
-              <span class="steps-marker">
-                <span class="icon">
-                  <span class="fas fa-user"></span>
-                </span>
-              </span>
-              <div class="steps-content">
-                <p class="heading">Mis datos</p>
-              </div>
-            </router-link>
-          </li>
-          <li class="steps-segment is-active has-gaps">
-            <span class="steps-marker">
-              <span class="icon">
-                <span class="fas fa-check"></span>
-              </span>
-            </span>
-            <div class="steps-content">
-              <p class="heading">Confirmación</p>
-            </div>
-          </li>
-          <li class="steps-segment">
-            <span class="steps-marker">
-              <span class="icon has-text-grey">
-                <span class="fas fa-credit-card"></span>
-              </span>
-            </span>
-            <div class="steps-content">
-              <p class="heading">Pago</p>
-            </div>
-          </li>
-        </ul>
-      </div>
+
 
       <div v-show="Object.keys(data.estimate).length" class="input-data bottom-spaced">
         <div class="columns content has-text-centered fadeLeft">
@@ -76,8 +17,8 @@
                 <td class="has-background-light" colspan="2"><span v-html="data.ruta.duration.text"></span></td>
               </tr>
               <tr>
-                <td class="has-background-dark"><label class="has-text-white">Costo</label></td>
-                <td colspan=2 class="has-background-dark">
+                <td class="has-background-success"><label class="has-text-white">Costo</label></td>
+                <td colspan=2 class="has-background-success">
                   <span class="is-size-4 has-text-white has-text-weight-bold" v-html="data.estimate.amount"></span> 
                   <span class="has-text-white" v-html="data.estimate.currency"></span>
                 </td>
@@ -118,9 +59,9 @@
         </div>
       </div>
     </div>
-    <div v-show="Object.keys(data.estimate).length" class="columns actions navbar is-fixed-bottom is-vcentered has-text-centered">
+    <div v-show="Object.keys(data.estimate).length" class="columns actions navbar is-fixed-bottom is-vbaseline has-text-centered">
       <div class="column has-text-centered">
-        <a href="#" @click="submit" class="button is-success is-medium">Confirmar</a>
+        <a href="#" @click="submit" class="button is-info is-medium">Confirmar y pagar</a>
         <!--router-link to="/pago" class="button is-success is-medium">Confirmar</router-link-->
       </div>
     </div>  
@@ -145,7 +86,7 @@ export default {
     }
 
     t.$root.loading = true
-    axios.post( t.$root.endpoint + '/flet/estimate', {
+    axios.post( t.$root.endpoint + '/flet/estimate/5dadf4617c213e556141874f', {
       ruta: JSON.parse(ruta),
       carga: JSON.parse(carga),
       datos: JSON.parse(datos)
