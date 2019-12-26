@@ -3,9 +3,8 @@
     <div class="column">
       <div class="landing-text-container">
         <div class="landing-text content slideIn">
-          <h2>Llevalo y traelo al toque</h2>
-          <h4>Entregamos en Capital Federal y alrededores de 8 a 18hs.</h4>
-
+          <h2>Llevalo y traelo ... al toque!</h2>
+          <h4>Entregamos en Capital Federal y GBA Lunes - Sábado 8am - 6pm</h4>
           <router-link class="button is-info is-large" to="/ruta">
             <span class="icon">
               <span class="fas fa-truck-loading"></span>
