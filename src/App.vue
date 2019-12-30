@@ -155,7 +155,7 @@
       </ul>
     </div>
     
-    <keep-alive v-show="!$root.loading" exclude="ruta,cotizacion">
+    <keep-alive v-show="!$root.loading" exclude="ruta,cotizacion,confirma">
       <router-view/>
     </keep-alive>
 

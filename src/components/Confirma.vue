@@ -9,51 +9,124 @@
             <!--h3>Datos de tu Flet</h3-->
             <table class="table">
               <tr>
-                <td class="has-background-light"><label>Distancia</label></td>
-                <td class="has-background-light" colspan="2"><span v-html="data.ruta.distance.text"></span></td>
+                <td class="has-background-light">
+                  <label>Distancia</label>
+                </td>
+                <td class="has-background-light" colspan="2">
+                  <span v-html="data.ruta.distance.text"></span>
+                </td>
               </tr>
               <tr>
-                <td class="has-background-light"><label>Tiempo aprox. viaje</label></td>
-                <td class="has-background-light" colspan="2"><span v-html="data.ruta.duration.text"></span></td>
+                <td class="has-background-light">
+                  <label>Tiempo aprox. viaje</label>
+                </td>
+                <td class="has-background-light" colspan="2">
+                  <span v-html="data.ruta.duration.text"></span>
+                </td>
               </tr>
               <tr>
-                <td class="has-background-success"><label class="has-text-white">Costo</label></td>
-                <td colspan=2 class="has-background-success">
+                <td class="has-background-success">
+                  <label class="has-text-white">Costo</label>
+                </td>
+                <td colspan="2" class="has-background-success">
                   <span class="is-size-4 has-text-white has-text-weight-bold" v-html="data.estimate.amount"></span> 
                   <span class="has-text-white" v-html="data.estimate.currency"></span>
                 </td>
               </tr>              
               <tr>
-                <td class="has-background-light"><label>FLET para</label></td>
-                <td><span v-html="data.datos.nombre"></span></td>
-                <td><router-link class="button is-text" to="/datos">✎</router-link></td>
+                <td class="has-background-light">
+                  <label>FLET para</label>
+                </td>
+                <td>
+                  <span v-html="data.datos.nombre"></span>
+                </td>
+                <td>
+                  <router-link class="button is-text" to="/datos">✎</router-link>
+                </td>
               </tr>
               <tr>
-                <td class="has-background-light"><label>Teléfono</label></td>
-                <td><span v-html="data.datos.telefono"></span></td>
-                <td><router-link class="button is-text" to="/datos">✎</router-link></td>
+                <td class="has-background-light">
+                  <label>Teléfono</label>
+                </td>
+                <td>
+                  <span v-html="data.datos.telefono"></span>
+                </td>
+                <td>
+                  <router-link class="button is-text" to="/datos">✎</router-link>
+                </td>
               </tr>
               <tr>
-                <td class="has-background-light"><label>Retirar en</label></td>
-                <td><span v-html="data.ruta.from.formatted_address"></span></td>
-                <td><router-link class="button is-text" to="/ruta">✎</router-link></td>
+                <td class="has-background-light">
+                  <label>Retirar en</label>
+                </td>
+                <td>
+                  <span v-html="data.ruta.from.formatted_address"></span>
+                </td>
+                <td>
+                  <router-link class="button is-text" to="/ruta">✎</router-link>
+                </td>
               </tr>
               <tr>
-                <td class="has-background-light"><label>Entregar en</label></td>
-                <td><span v-html="data.ruta.to.formatted_address"></span></td>
-                <td><router-link class="button is-text" to="/ruta">✎</router-link></td>
+                <td class="has-background-light">
+                  <label>Entregar en</label>
+                </td>
+                <td>
+                  <span v-html="data.ruta.to.formatted_address"></span>
+                </td>
+                <td>
+                  <router-link class="button is-text" to="/ruta">✎</router-link>
+                </td>
+              </tr>
+              <tr v-show="data.carga.service">
+                <td class="has-background-light">
+                  <label>Carga y descarga</label>
+                </td>
+                <td>
+                  <span class="icon">
+                    <span class="fa fa-check"></span>
+                  </span>
+                  <span>Este envío cubre costos de carga y descarga</span>
+                </td>
+                <td>
+                  <router-link class="button is-text" to="/carga">✎</router-link>
+                </td>
+              </tr>
+              <tr v-show="!data.carga.service">
+                <td class="has-background-light">
+                  <label>Carga y descarga</label>
+                </td>
+                <td>
+                  <span class="icon">
+                    <span class="fa fa-times"></span>
+                  </span>
+                  <span>Este envío no cubre costos de carga y descarga</span>
+                </td>
+                <td>
+                  <router-link class="button is-text" to="/carga">✎</router-link>
+                </td>
               </tr>
               <tr>
-                <td class="has-background-light"><label>Tipo de carga</label></td>
-                <td><span v-html="data.carga.carga"></span></td>
-                <td><router-link class="button is-text" to="/carga">✎</router-link></td>
+                <td class="has-background-light">
+                  <label>Tipo de carga</label>
+                </td>
+                <td>
+                  <span v-html="data.carga.carga"></span>
+                </td>
+                <td>
+                  <router-link class="button is-text" to="/carga">✎</router-link>
+                </td>
               </tr>
               <tr>
-                <td class="has-background-light"><label>Peso de la carga</label></td>
-                <td><span v-html="data.carga.peso"></span>kg</td>
-                <td><router-link class="button is-text" to="/carga">✎</router-link></td>
-              </tr>  
-
+                <td class="has-background-light">
+                  <label>Peso de la carga</label>
+                </td>
+                <td>
+                  <span v-html="data.carga.peso"></span> <span>Kg</span>
+                </td>
+                <td>
+                  <router-link class="button is-text" to="/carga">✎</router-link>
+                </td>
+              </tr>
             </table>
           </div>
         </div>
@@ -148,6 +221,7 @@ export default {
           }          
         },
         carga:{
+          service: false,
           carga:null,
           peso:null
         },
