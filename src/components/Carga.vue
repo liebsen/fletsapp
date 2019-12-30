@@ -2,8 +2,18 @@
   <div>
     <div class="form fadeIn">
       <div class="input-data bottom-spaced">
-        <div class="columns content has-text-centered fadeLeft">
-          <div class="column options-container has-text-left">
+        <div class="columns content has-text-left fadeLeft">
+          <div class="column">
+            <h3>Servicio de carga / descarga</h3>
+            <p>Fletsapp en general no provee servicios de carga y descarga. Si usted necesita este servicio adicional por favor seleccionelo.</p>
+            
+            <div class="field">
+              <input class="is-checkradio has-background-color is-success" v-model="data.service" id="service" type="checkbox">
+             <label for="service"> Necesito personal adicional para cargar y descargar</label>
+            </div>
+          </div>
+
+          <div class="column">
             <h3>Tipo de carga</h3>
             <p>Por favor selecciona el tipo de carga que deseas contratar.</p>
             
@@ -38,7 +48,7 @@
             </div>
           </div>
 
-          <div class="column options-container has-text-left">
+          <div class="column">
             <h3>Peso de la carga</h3>
             <p>Por favor indica el peso aproximado de la carga que deseas llevar</p>
             <div class="field">
@@ -99,6 +109,7 @@ export default {
   data () {
     return {
       data: {
+        service: false,
         carga:null,
         peso:null
       }
