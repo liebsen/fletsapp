@@ -15,6 +15,7 @@
     "bulma": "^0.7.5",
     "bulma-checkradio": "^1.1.1",
     "bulma-steps-component": "^0.5.3",
+    "compression": "^1.7.4",
     "express": "^4.16.4",
     "fs": "0.0.1-security",
     "heroku-ssl-redirect": "0.0.4",
@@ -22,9 +23,9 @@
     "store": "^2.0.12",
     "vue": "^2.5.11",
     "vue-router": "^3.0.1",
+    "vue-socket.io": "^3.0.7",
     "vue-timers": "^2.0.4",
-    "vuejs-dialog": "^1.4.1",
-    "vue-socket.io": "^3.0.7"
+    "vuejs-dialog": "^1.4.1"
   },
   "browserslist": [
     "> 1%",

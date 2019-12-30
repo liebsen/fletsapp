@@ -1,14 +1,20 @@
 #!/usr/bin/env node
 var express = require('express');
 var path = require('path');
+var compression = require('compression');
 var sslRedirect = require('heroku-ssl-redirect');
 var bodyParser = require('body-parser');
 var app = express();
 
+app.use(compression());
 app.use(sslRedirect());
-// Set static filess
-app.use(express.static('dist'));
 app.use(bodyParser.json());
+
+// Set static filess
+//app.use(express.static('dist'));
+app.use(express.static(__dirname + '/dist',{
+    maxAge: "1d"
+}))
 
 app.get('*', function(req, res){
 	res.sendFile('index.html', { root: __dirname + '/dist' });
