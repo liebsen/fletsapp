@@ -289,8 +289,8 @@ body > div:first-child {
 .menu.fs .menu-bg {
   -webkit-transform: translate3d(50%, -50%, 0);
           transform: translate3d(50%, -50%, 0);
-  width: 300vw;
-  height: 300vw;
+  width: 200vh;
+  height: 200vh;
 }
 
 .menu-burger {
@@ -311,13 +311,13 @@ body > div:first-child {
 .menu-items {
   > div {
     margin: auto;
+    margin-right: 1rem;
   }
   display: flex;
   align-items: center;
   flex-direction: column;
   height: calc(100vh - 60px);
   width: 100%;
-  text-align: center;
   opacity: 0;
   -webkit-transition: .4s;
   transition: .4s;

@@ -27,6 +27,11 @@ Vue.use(new VueSocketIO({
 new Vue({
   el: '#app',
   router,
+  watch: {
+    '$route' (to, from) {
+      this.loading = false  
+    }
+  },
   created: function() {
     this.loading = false
   },

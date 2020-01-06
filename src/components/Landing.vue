@@ -1,16 +1,18 @@
 <template>
-  <div class="columns is-vcentered has-text-centered" id="photo">
+  <div class="columns" id="photo">
     <div class="column">
-      <div class="landing-text-container">
-        <div class="landing-text content slideIn">
+      <div class="landing-container">
+        <div class="landing-text content">
           <h2>Llevalo y traelo ... al toque!</h2>
           <h4>Entregamos en Capital Federal y GBA Lunes a Sábado de 8:00 a 18:00hs</h4>
-          <router-link class="button is-info is-large" to="/ruta">
+          <router-link class="button is-action is-white is-outlined is-large" to="/ruta">
             <span class="icon">
               <span class="fas fa-truck-loading"></span>
             </span> 
             <span>Comenzar</span>  
           </router-link>
+        </div>
+        <div class="landing-scale">
         </div>
       </div>
     </div>
@@ -20,7 +22,19 @@
 <script>
 
   export default {
-    name: 'landing'
+    name: 'landing',
+    mounted: function(){
+      document.querySelector('.landing-scale').classList.remove('expand')
+      document.querySelector('.landing-scale').classList.remove('collapse')
+      document.querySelector('.is-action').addEventListener('mouseover', () => {
+        document.querySelector('.landing-scale').classList.remove('collapse')
+        document.querySelector('.landing-scale').classList.add('expand')
+      }, false)
+      document.querySelector('.is-action').addEventListener('mouseleave', () => {
+        document.querySelector('.landing-scale').classList.remove('expand')
+        document.querySelector('.landing-scale').classList.add('collapse')
+      }, false)
+    }
   }
 
 </script>
@@ -45,22 +59,101 @@
     /*box-shadow: 10px 10px 0 rgba(0,0,0,0.5)*/
   }
 
-  .landing-text-container {
-    /*background-color: #ffdd57;*/
-    opacity: 0.9;
+  .landing-container {
+    display: flex;
+    align-content: center;
+    height: 100vh;
+  }
+
+  .landing-scale {
+    height: 220px;
+    background-color: #22c65b;
+    width: 100vw;
+    margin: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
   }
 
   .landing-text {
-    /*background-color: #ffdd57;*/
-    background-color: #59fff1;
-    padding: 2rem;
-    padding-top: 1.5rem;
-    margin-bottom: 1rem;
-  }
-  
-  .landing-text h2, .landing-text h4 {
-    color: #2d7e62;
-    text-shadow: 0 0 5px white;
+    opacity: 0.9;
+    background-color: #22c65b;
+    position: relative;
+    z-index: 1;
+    margin: auto!important;
+    text-align: center;
+    width: 100vw;
+    padding: 2rem 2rem;
   }
 
+  .landing-text h2, .landing-text h4 {
+    color: #fff;
+    text-shadow: 0 0 5px #22c65b;
+  }
+
+  .expand {
+    -webkit-animation-name: expand;
+    animation-name: expand;
+   -webkit-animation-duration:.5s;
+   animation-duration:.5s;
+   -webkit-animation-timing-function:cubic-bezier(.23,1,.32,1);
+   animation-timing-function:cubic-bezier(.23,1,.32,1);
+   animation-fill-mode: forwards;
+  }
+
+  @keyframes expand {
+    0%{
+      opacity: 0;
+      transform: scaleY(1);
+    }
+    to{
+      opacity: 1;
+      transform: scaleY(3);
+    }
+  }
+
+  @-webkit-keyframes expand {
+    0%{
+      opacity: 0;
+      transform: scaleY(1);
+    }
+    to{
+      opacity: 1;
+      transform: scaleY(3);
+    }
+  }
+
+  .collapse {
+    -webkit-animation-name: collapse;
+    animation-name: collapse;
+   -webkit-animation-duration:.5s;
+   animation-duration:.5s;
+   -webkit-animation-timing-function:cubic-bezier(.23,1,.32,1);
+   animation-timing-function:cubic-bezier(.23,1,.32,1);
+   animation-fill-mode: forwards;
+  }
+
+  @keyframes collapse {
+    0%{
+      opacity: 1;
+      transform: scaleY(3);
+    }
+    to{
+      opacity: 0;
+      transform: scaleY(1);
+    }
+  }
+
+  @-webkit-keyframes collapse {
+    0%{
+      opacity: 1;
+      transform: scaleY(3);
+    }
+    to{
+      opacity: 0;
+      transform: scaleY(1);
+    }
+  }
 </style>
