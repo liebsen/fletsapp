@@ -66,6 +66,7 @@
   }
 
   .landing-scale {
+    opacity: 0;
     height: 220px;
     background-color: #22c65b;
     width: 100vw;
