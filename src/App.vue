@@ -36,55 +36,57 @@
       </div>
 
       <div class="menu-items">
-        <router-link to="/">
-          <img src="/assets/delivery-truck_1f69a.png" >
-        </router-link>
-
-        <div class="menu-links has-text-left">
-          <router-link to="/terminos">
-            <span class="icon">
-              <span class="fas fa-balance-scale"></span>
-            </span> 
-            <span>Términos y condiciones</span>
-          </router-link>
-  
-          <router-link to="/privacidad">
-            <span class="icon">
-              <span class="fas fa-unlock-alt"></span>
-            </span> 
-            <span>Política de privacidad</span>
+        <div>
+          <router-link to="/">
+            <img src="/assets/img/delivery-truck.png" >
           </router-link>
 
-          <router-link to="/cotizacion">
-            <span class="icon">
-              <span class="fas fa-search-dollar"></span>
-            </span> 
-            <span>Cómo cotiza <em>FletsApp</em></span>
-          </router-link>
-
-          <router-link to="/about">
-            <span class="icon">
-              <span class="fas fa-info-circle"></span>
-            </span> 
-            <span>Acerca de <em>FletsApp</em></span>
-          </router-link>
-
-          <router-link to="/contacto">
-            <span class="icon">
-              <span class="fas fa-envelope"></span>
-            </span> 
-            <span>Contacto</span>
-          </router-link>
-
-          <hr>
-  
-          <div class="has-text-centered">
-            <router-link class="button is-white is-large is-outlined" to="/ruta">
+          <div class="menu-links has-text-left">
+            <router-link to="/terminos">
               <span class="icon">
-                <span class="fas fa-truck-loading"></span>
+                <span class="fas fa-balance-scale"></span>
               </span> 
-              <span>Comenzar</span>            
+              <span>Términos y condiciones</span>
             </router-link>
+    
+            <router-link to="/privacidad">
+              <span class="icon">
+                <span class="fas fa-unlock-alt"></span>
+              </span> 
+              <span>Política de privacidad</span>
+            </router-link>
+
+            <router-link to="/cotizacion">
+              <span class="icon">
+                <span class="fas fa-search-dollar"></span>
+              </span> 
+              <span>Cómo cotiza <em>FletsApp</em></span>
+            </router-link>
+
+            <router-link to="/about">
+              <span class="icon">
+                <span class="fas fa-info-circle"></span>
+              </span> 
+              <span>Acerca de <em>FletsApp</em></span>
+            </router-link>
+
+            <router-link to="/contacto">
+              <span class="icon">
+                <span class="fas fa-envelope"></span>
+              </span> 
+              <span>Contacto</span>
+            </router-link>
+
+            <hr>
+    
+            <div class="has-text-centered">
+              <router-link class="button is-white is-large is-outlined" to="/ruta">
+                <span class="icon">
+                  <span class="fas fa-truck-loading"></span>
+                </span> 
+                <span>Comenzar</span>            
+              </router-link>
+            </div>
           </div>
         </div>
       </div>    

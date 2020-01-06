@@ -309,14 +309,13 @@ body > div:first-child {
 }*/
 
 .menu-items {
+  > div {
+    margin: auto;
+  }
   display: flex;
   align-items: center;
   flex-direction: column;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  padding-top: 1rem;
+  height: calc(100vh - 60px);
   width: 100%;
   text-align: center;
   opacity: 0;
@@ -364,7 +363,6 @@ body > div:first-child {
   -webkit-transition: 1s;
   transition: 1s;
   opacity: 0;
-  margin-top: 0px;
 }
 
 .menu.fs .menu-items {
