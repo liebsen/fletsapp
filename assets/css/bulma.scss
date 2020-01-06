@@ -37,5 +37,8 @@ $control-border-width: 2px;
 //$input-border-color: transparent;
 $input-shadow: none;
 $info: hsla(197, 100%, 20%, 1.0);
+$success: #3D9970;
+$danger: #85144b;
+$warning: #FF851B;
 @import '~bulma/bulma';
 @import '~bulma-steps-component/bulma-steps';
