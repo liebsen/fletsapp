@@ -15,6 +15,7 @@
 
         <p>A los efectos de brindar tranquilidad, seguridad, y privacidad en los fletes para la mercadería u objetos personales la unidad que solicita el usuario es asignada en forma exclusiva y no compartida con otro cliente.</p>
 
+        <br><br>
         <h4>PRESTACIÓN DE LOS SERVICIOS</h4>
 
         <p>Los Servicios disponibles a través de nuestra Aplicación están diseñados para proporcionar al usuario servicios de transporte de hasta 600 kg, a través de un servicio de transporte realizado por terceros conductores, profesionales e independientes (“Terceros Proveedores”) contratados por el usuario a través de nuestro sitio.</p>
@@ -23,10 +24,10 @@
 
         <p>Al respecto, <em>FletsApp</em> sólo se limita a  conectar al cliente con el Tercer Proveedor para la realización del Servicio de conformidad con las disposiciones de estos Términos. Por lo tanto, los servicios prestados por Fletsapp a sus usuarios se limitan a los Servicios y a la gestión de cobro de los pagos a realizar por los usuarios a los Terceros Proveedores.</p>
 
+        <br><br>
         <p>USTED RECONOCE QUE FLETSAPP NO PRESTA SERVICIOS DE TRANSPORTE DE NINGÚN TIPO NI FUNCIONA COMO UNA EMPRESA DE TRANSPORTES.</p>
-        <p></p>
-        <p></p>
         
+        <br><br>        
         <p>Algunas acciones que puedes tomar a partir de aquí:</p>
         <ul>
         <li>Volver a <router-link to="/">inicio</router-link>.</li>

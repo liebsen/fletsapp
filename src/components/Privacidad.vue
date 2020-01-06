@@ -6,7 +6,7 @@
           <span class="icon">
             <span class="fas fa-unlock-alt"></span>
           </span> 
-          <span>Política de privacidad de <em>FletsApp</em></span>
+          <span>Política de privacidad</span>
         </h2>
         <h4><em>FletsApp</em> se compromete con sus usuarios a tratar su información personal con la responsabilidad social que se merecen.</h4>
 
@@ -20,10 +20,10 @@
 
         <p>Gracias por tomarte el tiempo de leer la información importante que tenemos para vos.</p>
 
+        <br><br>
         <p><em>Que tengas un agradable Flet!</em></p>
 
-        <p></p>
-        <p></p>
+        <br><br>
         <p>Algunas acciones que puedes tomar a partir de aquí:</p>
         <ul>
         <li>Volver a <router-link to="/">inicio</router-link>.</li>

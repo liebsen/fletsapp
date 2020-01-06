@@ -16,8 +16,7 @@
 
         <p>Buscamos con todo esto lograr el prestigio y el liderazgo en este segmento del transporte automotor, para continuar ofreciendo las mejores posibilidades del mercado.</p>
 
-        <p></p>
-        <p></p>
+        <br><br>
         <p>Algunas acciones que puedes tomar a partir de aquí:</p>
         <ul>
         <li>Volver a <router-link to="/">inicio</router-link>.</li>

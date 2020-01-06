@@ -15,19 +15,20 @@
         <li><a href="#carga">Carga</a></li>
         <li><a href="#adicional">Costo adicional</a></li>
         </ul>
+        <br><br>
         <a name="ruta"></a>
         <h4>Ruta</h4>
         <p>En el cálculo de la ruta obtenemos varios datos, como coordenadas de trayecto, distancia y tiempo estimado de viaje con la ayuda de <em>Google Directions API</em>. De esos datos para calcular el costo de la cotización extraemos el valor de la distancia.</p>
 
         <p>La tarifa básica por distancia incluye las solicitudes de transporte hasta 20 kilómetros. Por encima de este valor se cotizará un valor extra por kilómetro.</p>
-        
+        <br><br>
         <a name="carga"></a>
         <h4>Carga</h4>
 
         <p>A partir de los datos de la carga extraemos el valor de su peso.</p>
 
         <p>La tarifa básica por carga incluye las solicitudes de transporte hasta 100 kilogramos. Por encima de este valor se cotizará un valor extra por kilogramo.</p>
-        
+        <br><br>
         <a name="carga"></a>
         <h4>Costo adicional</h4>
 
@@ -35,12 +36,12 @@
 
         <p>Los costos son calculados evitando peajes, si por algún motivo es estrictamente necesario el pago de estos se adicionarán al presupuesto original.</p>
 
-
+        <br><br>
         <h4>Transparencia y confiabilidad</h4>
 
         <p>Todos las cotizaciones son generadas automáticamente por nuestra aplicación garantizando el trato igualitario con todos nuestros clientes.</p>
         
-        <p></p>
+        <br><br>
         <p>Algunas acciones que puedes tomar a partir de aquí:</p>
 
         <ul>

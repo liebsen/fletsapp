@@ -126,6 +126,10 @@ body > div:first-child {
   display: block;
 }
 
+.is-checkradio[type="checkbox"] + label::after, .is-checkradio[type="checkbox"] + label::after  {
+  border-width: 0.25rem!important;
+}
+
 
 /* menu */
 
