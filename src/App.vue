@@ -182,7 +182,7 @@
     </div>
 
     <div class="legal-footer has-text-centered">
-      <span>©️ 2020 FletsApp &mdash; <router-link to="/terminos">Términos y condiciones</router-link> | <a href="https://fletspanel.herokuapp.com">Fletspanel</a></span>
+      <span>©️ 2020 FletsApp &mdash; <router-link to="/terminos">Términos y condiciones</router-link> | <a href="https://fletspanel.herokuapp.com" target="_blank">FletsPanel</a></span>
     </div>
 
     <div class="ui-snackbar ui-snackbar--is-inactive">
