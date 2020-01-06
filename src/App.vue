@@ -37,7 +37,7 @@
 
       <div class="menu-items">
         <div>
-          <router-link to="/">
+          <router-link class="has-text-centered" to="/">
             <img src="/assets/img/delivery-truck.png" >
           </router-link>
 

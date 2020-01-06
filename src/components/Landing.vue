@@ -1,6 +1,6 @@
 <template>
   <div class="columns" id="photo">
-    <div class="column">
+    <div class="column slideIn">
       <div class="landing-container">
         <div class="landing-text content">
           <h2>Llevalo y traelo ... al toque!</h2>
