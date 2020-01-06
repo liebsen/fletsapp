@@ -5,7 +5,7 @@
         <div class="landing-text content">
           <h2>Llevalo y traelo ... al toque!</h2>
           <h4>Entregamos en Capital Federal y GBA Lunes a Sábado de 8:00 a 18:00hs</h4>
-          <router-link class="button is-action is-white is-outlined is-large" to="/ruta">
+          <router-link class="button is-action is-info is-outlined is-large" to="/ruta">
             <span class="icon">
               <span class="fas fa-truck-loading"></span>
             </span> 
@@ -68,7 +68,7 @@
   .landing-scale {
     opacity: 0;
     height: 220px;
-    background-color: #22c65b;
+    background-color: #7FDBFF;
     width: 100vw;
     margin: auto;
     position: fixed;
@@ -80,7 +80,7 @@
 
   .landing-text {
     opacity: 0.9;
-    background-color: #22c65b;
+    background-color: #7FDBFF;
     position: relative;
     z-index: 1;
     margin: auto!important;
@@ -90,8 +90,8 @@
   }
 
   .landing-text h2, .landing-text h4 {
-    color: #fff;
-    text-shadow: 0 0 5px #22c65b;
+    color: hsla(197, 100%, 20%, 1.0)!important;
+    text-shadow: 0 0 5px #7FDBFF;
   }
 
   .expand {

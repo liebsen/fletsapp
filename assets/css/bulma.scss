@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 // Import a Google Font
-//@import url('https://fonts.googleapis.com/css?family=Catamaran:400,700');
+@import url('https://fonts.googleapis.com/css?family=Rubik:400,700');
 
 // Set your brand colors
 $purple: #8A4D76;
@@ -11,7 +11,7 @@ $beige-light: #D0D1CD;
 $beige-lighter: #EFF0EB;
 
 // Update Bulma's global variables
-$family-sans-serif: "CentraNube", sans-serif;
+$family-sans-serif: "Rubik", sans-serif;
 //$grey-dark: $brown;
 //$grey-light: $beige-light;
 //$primary: $purple;
@@ -36,6 +36,6 @@ $fullhd-enabled: false;
 $control-border-width: 2px;
 //$input-border-color: transparent;
 $input-shadow: none;
-
+$info: hsla(197, 100%, 20%, 1.0);
 @import '~bulma/bulma';
 @import '~bulma-steps-component/bulma-steps';
