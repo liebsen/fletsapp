@@ -27,9 +27,18 @@
                   </div>
                 </div>
               </div>
-              <div class="field">
-                <div class="control">
-                  <input class="input" type="email" v-model="data.email" placeholder="Tu email" autofocus required>
+              <div class="field is-horizontal">
+                <div class="field-body">
+                  <div class="field">
+                    <div class="control">
+                      <input class="input" type="tel" v-model="data.phone" placeholder="Tu teléfono" autofocus required>
+                    </div>
+                  </div>
+                  <div class="field">
+                    <div class="control">
+                      <input class="input" type="email" v-model="data.email" placeholder="Tu email" autofocus required>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

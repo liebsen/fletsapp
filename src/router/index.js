@@ -165,40 +165,42 @@ router.afterEach(function (to, from, next) {
   setTimeout(() => {
     var list = ['ruta','carga','datos','confirma','pago']
     var elem = document.querySelector('.steps-frame')
-    var flag = 0
+    var stop = false
 
-    if(list.indexOf(to.name) > -1){
+    if(list.includes(to.name)){
       if(!elem.classList.contains('show')){
         elem.classList.remove('hidden')
         elem.classList.add('show')
       }
+
+      list.forEach((step,i) => {
+        var node = document.querySelectorAll('.steps-segment')[i] 
+        if(!node) return
+        if(step === to.name){
+          node.classList.add('is-active')
+          node.classList.add('has-gaps')
+          stop = true
+        } else {
+          node.classList.remove('is-active')
+          node.classList.remove('has-gaps')
+        }
+        if(stop) {
+          node.querySelector('a').addEventListener('click', (e) => {
+            e.preventDefault()
+            return false
+          })
+        } else {
+          node.querySelector('a').addEventListener('click', () => {
+            return router.push(step)
+          })
+        }
+      })
     } else {
       if(!elem.classList.contains('hidden')){
         elem.classList.add('hidden')
         elem.classList.remove('show')
       }
     }
-
-    list.forEach((step,i) => {
-      var node = document.querySelectorAll('.steps-segment')[i] 
-      if(!node) return
-      if(step === to.name){
-        node.classList.add('is-active')
-        node.classList.add('has-gaps')
-        flag = 1
-      } else {
-        node.classList.remove('is-active')
-        node.classList.remove('has-gaps')
-      }
-      if(flag) {
-        node.querySelector('a').addEventListener('click', () => {
-        })
-      } else {
-        node.querySelector('a').addEventListener('click', () => {
-          router.push(step)
-        })
-      }
-    })
   },250)
 })
 

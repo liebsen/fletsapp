@@ -155,7 +155,7 @@ export default {
       t.data.carga = JSON.parse(carga)
       t.data.datos = JSON.parse(datos)
     } else {
-      t.$router.push('/')
+      return t.$router.push('/')
     }
 
     t.$root.loading = true
