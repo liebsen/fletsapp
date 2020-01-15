@@ -111,8 +111,8 @@ export default {
       const defLat = -34.603767
       const defLng = -58.381619
       const defaultBounds = new google.maps.LatLngBounds(
-        new google.maps.LatLng(-35.145066, -57.904224),
-        new google.maps.LatLng(-34.305329, -59.337308)        
+        new google.maps.LatLng(-34.907899, -58.935164),
+        new google.maps.LatLng(-34.362287, -58.142812)
       );
 
       /* autocomplete origin */
