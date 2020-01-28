@@ -7,7 +7,7 @@
     <div class="menu hidden-loading slideDown">
       <div class="menu-container columns is-vcentered is-mobile">
         <router-link class="header-logo" to="/">
-          <img src="/assets/img/delivery-truck.png" >
+          <img src="/static/img/delivery-truck.png" >
         </router-link>
 
         <div class="column menu-secondary has-text-centered">
@@ -38,7 +38,7 @@
       <div class="menu-items">
         <div>
           <router-link class="has-text-centered" to="/">
-            <img src="/assets/img/delivery-truck.png" >
+            <img src="/static/img/delivery-truck.png" >
           </router-link>
 
           <div class="menu-links has-text-left">

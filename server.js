@@ -9,9 +9,14 @@ var app = express();
 app.use(compression());
 app.use(sslRedirect());
 app.use(bodyParser.json());
+app.set('etag', false)
+
+app.use(function(req, res, next) {
+	res.header("Expires", new Date(Date.now() + 2592000000).toUTCString())
+	next()
+})
 
 // Set static filess
-//app.use(express.static('dist'));
 app.use(express.static(__dirname + '/dist',{
     maxAge: "1d"
 }))
