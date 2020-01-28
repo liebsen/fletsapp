@@ -55,11 +55,11 @@
 .expand {
   -webkit-animation-name: expand;
   animation-name: expand;
- -webkit-animation-duration:.75s;
- animation-duration:.75s;
- -webkit-animation-timing-function:cubic-bezier(.23,1,.32,1);
- animation-timing-function:cubic-bezier(.23,1,.32,1);
- animation-fill-mode: forwards;
+  -webkit-animation-duration:.75s;
+  animation-duration:.75s;
+  -webkit-animation-timing-function:cubic-bezier(.23,1,.32,1);
+  animation-timing-function:cubic-bezier(.23,1,.32,1);
+  animation-fill-mode: forwards;
 }
 
 @keyframes expand {
@@ -87,11 +87,11 @@
 .collapse {
   -webkit-animation-name: collapse;
   animation-name: collapse;
- -webkit-animation-duration:.5s;
- animation-duration:.5s;
- -webkit-animation-timing-function:cubic-bezier(.23,1,.32,1);
- animation-timing-function:cubic-bezier(.23,1,.32,1);
- animation-fill-mode: forwards;
+  -webkit-animation-duration:.5s;
+  animation-duration:.5s;
+  -webkit-animation-timing-function:cubic-bezier(.23,1,.32,1);
+  animation-timing-function:cubic-bezier(.23,1,.32,1);
+  animation-fill-mode: forwards;
 }
 
 @keyframes collapse {

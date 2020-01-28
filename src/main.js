@@ -6,6 +6,7 @@ import router from './router'
 import axios from 'axios'
 import snackbar from './components/Snackbar';
 //import VueSocketIO from 'vue-socket.io' 
+import '../assets/js/fontawesome_all.js'
 
 require('../assets/css/main.scss')
 
