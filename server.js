@@ -9,7 +9,6 @@ var app = express();
 app.use(compression());
 app.use(sslRedirect());
 app.use(bodyParser.json());
-app.set('etag', false)
 
 app.use(function(req, res, next) {
 	res.header("Expires", new Date(Date.now() + 2592000000).toUTCString())

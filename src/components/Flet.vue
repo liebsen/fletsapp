@@ -96,7 +96,7 @@
       },
       search: function() {
         this.$root.loading = true
-        axios.post( this.$root.endpoint + '/search', {query:this.query,offset:this.offset,limit:this.limit} ).then((res) => {
+        axios.post('/search', {query:this.query,offset:this.offset,limit:this.limit} ).then((res) => {
           this.data = res.data
 
           var pages = []

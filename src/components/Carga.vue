@@ -4,7 +4,7 @@
       <div class="input-data bottom-spaced">
         <div class="columns content has-text-left fadeLeft">
           <div class="column">
-            <h3>Servicio de carga / descarga</h3>
+            <h4>Servicio de carga / descarga</h4>
             <p>Fletsapp en general no provee servicios de carga y descarga. Si usted necesita este servicio adicional por favor seleccionelo.</p>
             
             <div class="field">
@@ -14,7 +14,7 @@
           </div>
 
           <div class="column">
-            <h3>Tipo de carga</h3>
+            <h4>Tipo de carga</h4>
             <p>Por favor selecciona el tipo de carga que deseas contratar.</p>
             
             <div class="field">
@@ -49,7 +49,7 @@
           </div>
 
           <div class="column">
-            <h3>Peso de la carga</h3>
+            <h4>Peso de la carga</h4>
             <p>Por favor indica el peso aproximado de la carga que deseas llevar</p>
             <div class="field">
               <input class="is-checkradio" id="peso1" type="radio" v-model="data.peso" value="100">
@@ -81,7 +81,7 @@
     
       <div v-show="data.carga && data.peso" class="columns actions navbar is-fixed-bottom is-vbaseline has-text-centered">
         <div class="column has-text-centered">
-          <a href="#" @click="submit" class="button is-info is-medium">Continuar</a>
+          <a href="#" @click="submit" class="button is-rounded is-info is-medium">Continuar</a>
           <!--router-link to="/pago" class="button is-info is-large">Continuar</router-link-->
         </div>
       </div>  

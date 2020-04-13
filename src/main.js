@@ -12,6 +12,8 @@ require('../assets/css/main.scss')
 
 Vue.use(VuejsDialog);
 
+axios.defaults.baseURL = process.env.EP
+
 /*
 Vue.use(new VueSocketIO({
     debug: true,
@@ -64,10 +66,10 @@ new Vue({
   }, 
   data: {
     ver: '1.0.1',
-    endpoint:'https://fletsapi.herokuapp.com',
-    loading:true,
-    message:'',
-    typeMessage:''
+    endpoint: process.env.EP,
+    loading: true,
+    message: '',
+    typeMessage: ''
   },
   render: h => h(App)
 })

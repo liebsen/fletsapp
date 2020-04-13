@@ -41,7 +41,7 @@
                   <span v-html="data.datos.nombre"></span>
                 </td>
                 <td>
-                  <router-link class="button is-text" to="/datos">✎</router-link>
+                  <router-link class="button is-rounded is-text" to="/datos">✎</router-link>
                 </td>
               </tr>
               <tr>
@@ -52,7 +52,7 @@
                   <span v-html="data.datos.telefono"></span>
                 </td>
                 <td>
-                  <router-link class="button is-text" to="/datos">✎</router-link>
+                  <router-link class="button is-rounded is-text" to="/datos">✎</router-link>
                 </td>
               </tr>
               <tr>
@@ -63,7 +63,7 @@
                   <span v-html="data.ruta.from.formatted_address"></span>
                 </td>
                 <td>
-                  <router-link class="button is-text" to="/ruta">✎</router-link>
+                  <router-link class="button is-rounded is-text" to="/ruta">✎</router-link>
                 </td>
               </tr>
               <tr>
@@ -74,7 +74,7 @@
                   <span v-html="data.ruta.to.formatted_address"></span>
                 </td>
                 <td>
-                  <router-link class="button is-text" to="/ruta">✎</router-link>
+                  <router-link class="button is-rounded is-text" to="/ruta">✎</router-link>
                 </td>
               </tr>
               <tr v-show="data.carga.service">
@@ -88,7 +88,7 @@
                   <span>Este envío cubre costos de carga y descarga</span>
                 </td>
                 <td>
-                  <router-link class="button is-text" to="/carga">✎</router-link>
+                  <router-link class="button is-rounded is-text" to="/carga">✎</router-link>
                 </td>
               </tr>
               <tr v-show="!data.carga.service">
@@ -102,7 +102,7 @@
                   <span>Este envío no cubre costos de carga y descarga</span>
                 </td>
                 <td>
-                  <router-link class="button is-text" to="/carga">✎</router-link>
+                  <router-link class="button is-rounded is-text" to="/carga">✎</router-link>
                 </td>
               </tr>
               <tr>
@@ -113,7 +113,7 @@
                   <span v-html="data.carga.carga"></span>
                 </td>
                 <td>
-                  <router-link class="button is-text" to="/carga">✎</router-link>
+                  <router-link class="button is-rounded is-text" to="/carga">✎</router-link>
                 </td>
               </tr>
               <tr>
@@ -124,7 +124,7 @@
                   <span v-html="data.carga.peso"></span> <span>Kg</span>
                 </td>
                 <td>
-                  <router-link class="button is-text" to="/carga">✎</router-link>
+                  <router-link class="button is-rounded is-text" to="/carga">✎</router-link>
                 </td>
               </tr>
             </table>
@@ -134,7 +134,7 @@
     </div>
     <div v-show="Object.keys(data.estimate).length" class="columns actions navbar is-fixed-bottom is-vbaseline has-text-centered">
       <div class="column has-text-centered">
-        <a href="#" @click="submit" class="button is-info is-medium">Confirmar y pagar</a>
+        <a href="#" @click="submit" class="button is-rounded is-info is-medium">Confirmar y pagar</a>
         <!--router-link to="/pago" class="button is-success is-medium">Confirmar</router-link-->
       </div>
     </div>  
@@ -159,7 +159,7 @@ export default {
     }
 
     t.$root.loading = true
-    axios.post( t.$root.endpoint + '/flet/estimate/5dadf4617c213e556141874f', {
+    axios.post( '/flet/estimate/5dadf4617c213e556141874f', {
       ruta: JSON.parse(ruta),
       carga: JSON.parse(carga),
       datos: JSON.parse(datos)
@@ -179,7 +179,7 @@ export default {
       var t = this
       if(!t.$root.loading){
         t.$root.loading = true
-        axios.post( t.$root.endpoint + '/flet/preference', {
+        axios.post('/flet/preference', {
           id: t.data.id
         }).then((res) => {
           if(res.data.id){

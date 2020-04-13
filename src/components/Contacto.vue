@@ -78,7 +78,7 @@ export default {
         this.$root.snackbar('error','Debes aceptar los términos y condiciones para contactarnos')
       } else {
         this.$root.loading = true
-        axios.post( this.$root.endpoint + '/contact', this.data ).then((res) => {
+        axios.post('/contact', this.data ).then((res) => {
           if(res.data.status==='success'){
             this.$root.snackbar('success','El contacto fue recibido con éxito. Nos pondremos en contacto con vos a la brevedad.',10000)
           } else {

@@ -65,7 +65,7 @@ export default {
   name: 'register',
   methods : {
     verify : function(){
-      axios.post( endpoint + '/account/verify', {} ).then((res) => {
+      axios.post('/account/verify', {} ).then((res) => {
         if(res.data.status==='success'){
           this.$root.snackbar('success','La verificación ha sido exitosa. Por favor ingrese sus datos.',10000)
           setTimeout(() => {
@@ -77,7 +77,7 @@ export default {
       })
     },
     register : function(){
-      axios.post( endpoint + '/account/register', {} ).then((res) => {
+      axios.post('/account/register', {} ).then((res) => {
         if(res.data.status==='success'){
           this.$root.snackbar('success','La verificación ha sido exitosa. Por favor ingrese sus datos.',10000)
           setTimeout(() => {

@@ -80,7 +80,7 @@
             <hr>
     
             <div class="has-text-centered">
-              <router-link class="button is-white is-large is-outlined" to="/ruta">
+              <router-link class="button is-rounded is-white is-large is-outlined" to="/ruta">
                 <span class="icon">
                   <span class="fas fa-truck-loading"></span>
                 </span> 
@@ -182,7 +182,7 @@
     </div>
 
     <div class="legal-footer has-text-centered">
-      <span>©️ 2020 FletsApp &mdash; <router-link to="/terminos">Términos y condiciones</router-link> | <a href="https://fletspanel.herokuapp.com" target="_blank">FletsPanel</a></span>
+      <span>©️ {{ getYear() }} FletsApp &mdash; <router-link to="/terminos">Términos y condiciones</router-link></span>
     </div>
 
     <div class="ui-snackbar ui-snackbar--is-inactive">
@@ -193,7 +193,13 @@
 </template>
 
 <script>
+import moment from 'moment'
 export default {
-  name: 'app'
+  name: 'app',
+  methods: {
+    getYear () {
+      return moment().format('YYYY')
+    }
+  }
 }
 </script>

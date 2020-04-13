@@ -178,11 +178,9 @@ router.afterEach(function (to, from, next) {
         if(!node) return
         if(step === to.name){
           node.classList.add('is-active')
-          node.classList.add('has-gaps')
           stop = true
         } else {
           node.classList.remove('is-active')
-          node.classList.remove('has-gaps')
         }
         if(stop) {
           node.querySelector('a').addEventListener('click', (e) => {
