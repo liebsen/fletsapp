@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="form" id="form">
-      <div class="input-data slideIn">
-        <div class="columns is-vcentered">
+      <div class="input-data slideIn" :key="inputKey">
+        <div class="columns is-waypoints is-vcentered">
           <div v-for="(item, index) in data.waypoints" class="column" :key="index">
             <div class="field">
               <div class="control">
@@ -12,7 +12,6 @@
                   :id="`waypoint_${index}`" 
                   :placeholder="item.placeholder"                   
                   :class="{ 'is-info has-text-info': index === 0, 'is-grey has-text-grey': index && index < data.waypoints.length - 1, 'is-success has-text-success': index === data.waypoints.length - 1 }" 
-                  :autofocus="index===0" 
                   :disabled="item.disabled"
                   :value="item.value"
                   @focus="autocompleteFocus" 
@@ -93,6 +92,23 @@ export default {
         this.calcWaypoints()
       })
     },
+    enableLineAnimation(layerId) {
+      var step = 0;
+      var animationStep = 50;
+      let dashArraySeq = [
+        [0, 4, 3],
+        [1, 4, 2],
+        [2, 4, 1],
+        [3, 4, 0],
+        [0, 1, 3, 3],
+        [0, 2, 3, 2],
+        [0, 3, 3, 1]
+      ];
+      setInterval(() => {
+        step = (step + 1) % dashArraySeq.length;
+        this.map.setPaintProperty(layerId, 'line-dasharray', dashArraySeq[step]);
+      }, animationStep)
+    },
     initMap () {
       let t = this
       return new Promise((resolve, reject) => {
@@ -111,6 +127,7 @@ export default {
       })
     },
     initAutocomplete (index) {
+      console.log('initAutocomplete: ' + index)
       let t = this
       var autocomplete = new google.maps.places.Autocomplete(
         document.getElementById(`waypoint_${index}`),
@@ -143,20 +160,25 @@ export default {
       let waypoints = this.data.waypoints.filter(e => e.location)
       this.data.waypoints.map((e, i) => {
         let disabled = false
-        if(i > waypoints.length || !e.location) {
+        if(i > waypoints.length) {
           disabled = true
         }
+        console.log(i+':'+disabled)
         this.data.waypoints[i].disabled = disabled
       })
 
       setTimeout(() => {
         let w = waypoints.length - 1
+        if (w < 0) {
+          w = 0
+        }
         console.log('waypoint id? ' + w)
-        if (document.getElementById(`waypoint_${w}`)) {
+        let e = document.getElementById(`waypoint_${w}`)
+        if (e && !e.value) {
           console.log('waypoint id:' + w)
           document.getElementById(`waypoint_${w}`).focus()
         }
-      }, 1000)
+      }, 500)
     },
     calculateAndDisplayRoute() {
       let t = this
@@ -169,8 +191,6 @@ export default {
       if (!waypoints.length) {
         return
       }
-
-      this.createWaypointsMarkers()
 
       if (waypoints.length === 1) {
         this.map.flyTo({
@@ -208,7 +228,7 @@ export default {
             // var summaryPanel = document.getElementById('directions-panel');
 
             if(route){
-              // t.data = route.legs
+              t.data.legs = route.legs
               t.data.coordinates = []
               for (var i = 0; i < route.legs.length; i++) {
                 const leg = route.legs[i]
@@ -218,8 +238,9 @@ export default {
                   t.data.coordinates.push([step.end_location.lng(),step.end_location.lat()])
                 }
               }
-              t.computeTotalDistance(route)
+              t.computeTotalDistance(route)  
               t.drawRoute()
+              t.createWaypointsMarkers()
               localStorage.setItem('ruta', JSON.stringify(t.data))
               t.$root.snackbar('success','📍 Distancia: ' + t.data.distance.text)
             } else {
@@ -230,6 +251,8 @@ export default {
             window.alert('Directions request failed due to ' + status);
           }
         })
+      } else {
+        this.createWaypointsMarkers()
       }
     },
     removeSaved () {
@@ -250,17 +273,27 @@ export default {
       })
     },
     computeTotalDistance(route) {
-      var totalDist = 0;
-      var totalTime = 0;
-      for (i = 0; i < route.legs.length; i++) {
-        totalDist += route.legs[i].distance.value
-        totalTime += route.legs[i].duration.value
+      var totalDist = 0
+      var totalTime = 0
+      for (var i = 0; i < route.legs.length; i++) {
+        console.log(route.legs[i].distance.value)
+        totalDist+= route.legs[i].distance.value
+        totalTime+= route.legs[i].duration.value
       }
+      console.log('totalDist:' + totalDist)
+      console.log('totalTime:' + totalTime)
       totalDist = totalDist / 1000
-      this.data.distance = totalDist + 'km'
-      this.data.duration = (totalTime / 60).toFixed(2) + 'min'
+      let duration = (totalTime / 60).toFixed(2)
+      this.data.distance = {
+        text: totalDist + 'km',
+        value: totalDist
+      }
+      this.data.duration = {
+        text: duration + 'min',
+        value: duration
+      }
     },
-    checkSavedData:function(){
+    checkSavedData: function(){
       var t = this
       const saved = JSON.parse(localStorage.getItem('ruta')) || {}
       let waypoints = saved.waypoints || this.defaultWaypoints
@@ -292,7 +325,13 @@ export default {
             stopover: true
           }
           t.getAddressFromLatLng()
-          t.initMap()
+          t.initMap().then(() => {
+            t.createWaypointsMarkers()
+            t.map.flyTo({
+              center: [waypoints[0].location.lng, waypoints[0].location.lat],
+              zoom: 16
+            })
+          })
         }, function() {
           t.$root.snackbar('default','Por favor habilite el permiso para ubicación')
           t.initMap()
@@ -300,33 +339,58 @@ export default {
       }
     },
     drawRoute: function() {
-      var mapLayer = this.map.getLayer('coordinates');
-      if(typeof mapLayer !== 'undefined') {
-        this.map.removeLayer('coordinates').removeSource('coordinates');        
-      }
+      let t = this
+      this.data.legs.map((e, i) => {
 
-      this.map.addLayer({
-        "id": "coordinates",
-        "type": "line",
-        "source": {
-          "type": "geojson",
-          "data": {
-            "type": "Feature",
-            "properties": {},
-            "geometry": {
-              "type": "LineString",
-              "coordinates": this.data.coordinates
-            }
-          }
-        },
-        "layout": {
-          "line-join": "round",
-          "line-cap": "round"
-        },
-        "paint": {
-          "line-color": "#1496ed",
-          "line-width": 8
+        var mapLayer = t.map.getLayer(`leg_${i}`);
+        var linecolor = '#5e84f6'
+
+        if(typeof mapLayer !== 'undefined') {
+          t.map.removeLayer(`leg_${i}`).removeSource(`leg_${i}`)
         }
+
+        if (i > 0) {
+          if (i < waypoints.length - 1) {
+            linecolor = '#9ea7a7'
+          } else {
+            linecolor = '#4fde51'
+          }
+        }
+
+        let coordinates = []
+        for (var j = 0; j < e.steps.length; j++) {
+          const step = e.steps[j]
+          coordinates.push([step.start_location.lng,step.start_location.lat])
+          coordinates.push([step.end_location.lng,step.end_location.lat])
+        }
+
+        t.map.addLayer({
+          "id": `leg_${i}`,
+          "type": "line",
+          "source": {
+            "type": "geojson",
+            "data": {
+              "type": "Feature",
+              "properties": {},
+              "geometry": {
+                "type": "LineString",
+                "coordinates": coordinates
+              }
+            }
+          },
+          "layout": {
+            "line-join": "round",
+            "line-cap": "round"
+          },
+          "paint": {
+            "line-color": linecolor,
+            // "line-width": 8
+            "line-width": 8,
+            "line-dasharray": [0, 4, 3]
+          }
+        })
+
+        t.enableLineAnimation(`leg_${i}`)
       })
 
       var bounds = this.data.coordinates.reduce(function(bounds, coord) {
@@ -335,7 +399,7 @@ export default {
 
       this.map.fitBounds(bounds,{
         padding:100, 
-        offset:[0,-35]
+        offset:[0,-20]
       })   
     },
     getAddressFromLatLng: function () {
@@ -346,14 +410,21 @@ export default {
         'latLng': latlng
       }, function (results, status) {
         if (status === google.maps.GeocoderStatus.OK) {
-          if (results[1]) {
-            t.data.waypoints[0].value = results[1].formatted_address
-            t.$root.snackbar('success','📍 ' + t.data.waypoints[0].formatted_address);
+          if (results[0]) {
+            t.data.waypoints[0].value = results[0].formatted_address
+            t.inputKey++
+            t.calcWaypoints()
+            t.$nextTick(() => {
+              t.data.waypoints.map((e, i) => {
+                t.initAutocomplete(i)
+              })
+            })
+            t.$root.snackbar('success','📍 ' + t.data.waypoints[0].value)
           } else {
-            t.$root.snackbar('error','No results found');
+            t.$root.snackbar('default','El Geocoder falló');
           }
         } else {
-          t.$root.snackbar('error','Geocoder failed due to: ' + status);
+          t.$root.snackbar('error','El Geocoder falló: ' + status);
         }
       });
     },
@@ -417,6 +488,7 @@ export default {
   },
   data () {
     return {
+      inputKey: 0,
       map: null,
       mapHeight: 0,
       directionsService: null,
@@ -451,12 +523,14 @@ export default {
       defaultData: {
         distance: {},
         duration: {},
+        legs: [],
         waypoints: [],
         coordinates: []
       },
       data: {
         distance: {},
         duration: {},
+        legs: [],
         waypoints: [],
         coordinates: []
       }

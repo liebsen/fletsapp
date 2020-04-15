@@ -7,7 +7,7 @@ module.exports = function (type, message, options) {
 
   clearInterval(snackbarClock)
 
-  if(options===undefined) options = 8000
+  if(options===undefined) options = 10000
   if (!message) return;
 
   if (snackbarMsg) {

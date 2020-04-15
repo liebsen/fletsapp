@@ -2,14 +2,18 @@
   <div>
     <div class="form fadeIn">
       <div class="input-data bottom-spaced">
-        <div class="columns content has-text-left fadeLeft">
+        <div class="columns is-carga content has-text-left fadeLeft">
           <div class="column">
-            <h4>Servicio de carga / descarga</h4>
+            <h4>Servicio de carga y descarga</h4>
             <p>Fletsapp en general no provee servicios de carga y descarga. Si usted necesita este servicio adicional por favor seleccionelo.</p>
             
             <div class="field">
               <input class="is-checkradio has-background-color is-success" v-model="data.service" id="service" type="checkbox">
-             <label for="service"> Necesito personal adicional para cargar y descargar</label>
+             <label for="service"> Contratar <strong>carga y descarga</strong></label>
+            </div>
+
+            <div v-show="data.service" class="notification">
+              <p>El servicio de carga y descarga tiene un costo adicional de <span></span></p>
             </div>
           </div>
 
@@ -29,7 +33,7 @@
 
             <div class="field">
               <input class="is-checkradio" id="carga3" type="radio" v-model="data.carga" value="mascota">
-              <label for="carga3">Mascotas</label>
+              <label for="carga3">Mascotas (con canil)</label>
             </div>
 
             <div class="field">
@@ -39,12 +43,8 @@
 
             <div class="field">
               <input class="is-checkradio" id="carga5" type="radio" v-model="data.carga" value="heladera">
-              <label for="carga5">Heladeras</label>
-            </div>
-
-            <div class="field">
-              <input class="is-checkradio" id="carga6" type="radio" v-model="data.carga" value="patologico">
-              <label for="carga6">Residuos patológicos</label>
+              <label for="carga5">Otro</label>
+              <textarea class="textarea" v-model="data.otro" maxlength="500" placeholder="Detallá que querés llevar acá"></textarea>
             </div>
           </div>
 
@@ -58,22 +58,22 @@
 
             <div class="field">
               <input class="is-checkradio" id="peso2" type="radio" v-model="data.peso" value="200">
-              <label for="peso2">Entre 100kg/200kg</label>
+              <label for="peso2">100kg/200kg</label>
             </div>
 
             <div class="field">
               <input class="is-checkradio" id="peso3" type="radio" v-model="data.peso" value="300">
-              <label for="peso3">Entre 200kg/300kg</label>
+              <label for="peso3">200kg/300kg</label>
             </div>
 
             <div class="field">
               <input class="is-checkradio" id="peso4" type="radio" v-model="data.peso" value="400">
-              <label for="peso4">Entre 300kg/400kg</label>
+              <label for="peso4">300kg/400kg</label>
             </div>
 
             <div class="field">
               <input class="is-checkradio" id="peso5" type="radio" v-model="data.peso" value="500">
-              <label for="peso5">Mas de 400kg y hasta 500kg</label>
+              <label for="peso5">400kg/500kg</label>
             </div>
           </div>
         </div>
