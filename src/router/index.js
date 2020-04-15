@@ -131,8 +131,6 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     document.querySelector('.tosprompt').parentNode.removeChild(document.querySelector('.tosprompt'))
   }
-
-
 })
 
 /*

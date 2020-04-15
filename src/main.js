@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import VuejsDialog from 'vuejs-dialog';
 import App from './App.vue'
 import store from 'store'
 import router from './router'
@@ -9,8 +8,6 @@ import snackbar from './components/Snackbar';
 import '../assets/js/fontawesome_all.js'
 
 require('../assets/css/main.scss')
-
-Vue.use(VuejsDialog);
 
 axios.defaults.baseURL = process.env.EP
 
@@ -47,7 +44,6 @@ new Vue({
       document.querySelector('.ui-snackbar').classList.remove('ui-snackbar--success')
       document.querySelector('.ui-snackbar').classList.remove('ui-snackbar--error')
       document.querySelector('.ui-snackbar').classList.remove('ui-snackbar--default')
-
       document.querySelector('.ui-snackbar').classList.add('ui-snackbar--' + messageType)
       document.querySelector('.ui-snackbar').classList.add('ui-snackbar--is-active')
       setTimeout(() => {

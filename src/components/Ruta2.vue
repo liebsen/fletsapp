@@ -152,6 +152,13 @@ export default {
 
 
             // For each route, display summary information.
+
+response.routes[0].legs[0].steps.forEach((step) => {
+                t.data.coordinates.push([step.start_location.lng(),step.start_location.lat()])
+                t.data.coordinates.push([step.end_location.lng(),step.end_location.lat()])
+              })
+
+
             /* 
             for (var i = 0; i < route.legs.length; i++) {
               var routeSegment = i + 1;

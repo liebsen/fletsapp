@@ -3,7 +3,7 @@
     <div class="form" id="form">
       <div class="input-data">
         <div class="columns is-vcentered">
-          <div v-for="(item, index) in waypoints" class="column" :key="index">
+          <div v-for="(item, index) in data.waypoints" class="column" :key="index">
             <div class="field">
               <div class="control">
                 <input type="text" 
@@ -11,7 +11,7 @@
                   :ref="`waypoint_${index}`"  
                   :id="`waypoint_${index}`" 
                   :placeholder="item.placeholder"                   
-                  :class="{ 'is-info has-text-info': !item.is_waypoint && index < waypoints.length, 'is-success has-text-success': !item.is_waypoint && index === waypoints.length - 1, 'is-warning has-text-warning': item.is_waypoint }" 
+                  :class="{ 'is-info has-text-info': index === 0, 'is-warning has-text-warning': index && index < data.waypoints.length - 1, 'is-success has-text-success': index === data.waypoints.length - 1 }" 
                   :autofocus="index===0" 
                   :disabled="item.disabled"
                   :value="item.value"
@@ -61,12 +61,15 @@
 
 <script>
 import axios from 'axios'
+import swal from 'sweetalert'
 export default {
   name: 'ruta',
+  created () {
+    this.$root.loading = true
+    this.data.waypoints = this.defaultWaypoints
+  },
   mounted () {
-    var t = this
-    t.$root.loading = true
-    t.checkSavedData()
+    this.checkSavedData()
     this.$root.snackbar('default','Por favor selecciona el <span class="has-text-weight-bold has-text-info">dirección de recepción</span> y <span class="has-text-weight-bold has-text-success">dirección de entrega</span> para tu viaje')
   },
   methods: {
@@ -83,42 +86,87 @@ export default {
       }
       target.value = value
     },
-    initMap () {
-      this.directionsService = new google.maps.DirectionsService;
-      mapboxgl.accessToken = 'pk.eyJ1IjoibWFydGluZnJlZSIsImEiOiJ5ZFd0U19vIn0.Z7WBxuf0QKPrdzv2o6Mx6A';
-      var map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v11',
-        center: [-58.381619, -34.603767],
-        interactive: false,
-        zoom: 10
-      });
-      this.map = map  
-      this.$root.loading = false
+    addSegment ({type, target}) {
+      this.data.waypoints.splice(this.data.waypoints.length - 1, 0, this.defaultSegment)
+      this.$nextTick(() => {
+        this.initAutocomplete(this.data.waypoints.length - 1)
+        this.checkWaypoints()
+      })
     },
-    calculateAndDisplayRoute() {
+    initMap () {
       let t = this
-      let waypoints = this.waypoints.filter(e => e.location)
+      return new Promise((resolve, reject) => {
+        t.directionsService = new google.maps.DirectionsService;
+        mapboxgl.accessToken = 'pk.eyJ1IjoibWFydGluZnJlZSIsImEiOiJ5ZFd0U19vIn0.Z7WBxuf0QKPrdzv2o6Mx6A';
+        var map = new mapboxgl.Map({
+          container: 'map',
+          style: 'mapbox://styles/mapbox/streets-v11',
+          center: [-58.381619, -34.603767],
+          interactive: false,
+          zoom: 10
+        });
+        t.map = map  
+        t.$root.loading = false
+        resolve(map)
+      })
+    },
+    initAutocomplete (index) {
+      let t = this
+      var autocomplete = new google.maps.places.Autocomplete(
+        document.getElementById(`waypoint_${index}`),
+        {
+          types: ['geocode'],
+          bounds: t.defaultBounds,
+          strictBounds: true,
+          componentRestrictions: {
+            country: 'ar'
+          }        
+        }
+      )
 
-      /* inputs disable state*/
-      this.waypoints.map((e, i) => {
+      google.maps.event.addListener(autocomplete, 'place_changed', function () {
+        var place = autocomplete.getPlace()
+        let ac = place.address_components
+        let city = ac[0]["short_name"]
+        t.data.waypoints[index] = {
+          location: new google.maps.LatLng(place.geometry.location.lat(), place.geometry.location.lng()),
+          stopover: true,
+          value: place.formatted_address
+        }
+        t.calculateAndDisplayRoute()
+      })
+    },
+    checkWaypoints () {
+      let waypoints = this.data.waypoints.filter(e => e.location)
+      this.data.waypoints.map((e, i) => {
         let disabled = false
         if(i > waypoints.length) {
           disabled = true
         }
-        this.waypoints[i].disabled = disabled
+        this.data.waypoints[i].disabled = disabled
       })
 
       setTimeout(() => {
-        document.getElementById(`waypoint_${waypoints.length}`).focus()
+        if (document.getElementById('waypoint_' + waypoints.length)) {
+          document.getElementById('waypoint_' + waypoints.length).focus()
+        }
       }, 1000)
+    },
+    calculateAndDisplayRoute() {
+      let t = this
+      let waypoints = this.data.waypoints.filter(e => e.location)
+
+      /* inputs disable state*/
+
+      this.checkWaypoints()
 
       if (!waypoints.length) {
         return
       }
 
+      this.createWaypointsMarkers()
+
       if (waypoints.length === 1) {
-        this.createOrigMarker()
         this.map.flyTo({
           center: [waypoints[0].location.lng(), waypoints[0].location.lat()],
           zoom: 16
@@ -126,7 +174,6 @@ export default {
       }
 
       if (waypoints.length > 1) {
-        let waypoints_data = null
         let data = {
           origin: document.getElementById('waypoint_0').value,
           destination: document.getElementById('waypoint_' + parseInt(waypoints.length - 1)).value,
@@ -136,9 +183,16 @@ export default {
         }
 
         if (waypoints.length > 2) {
-          data.waypoints = waypoints.filter((e, i) => e.is_waypoint && e.location)
+          waypoints = waypoints.filter((e, i) => i && i < waypoints.length - 1 && e.location)
+          data.waypoints = waypoints.map(e => {
+            return {
+              location: {
+                lat: e.location.lat(),
+                lng: e.location.lng()
+              }
+            }
+          })
           data.optimizeWaypoints = true
-          this.createWaypointsMarkers()
         }
 
         this.directionsService.route(data, function(response, status) {
@@ -148,19 +202,17 @@ export default {
             // var summaryPanel = document.getElementById('directions-panel');
 
             if(route){
-              console.log(route.legs)
-
               // t.data = route.legs
-              t.data.distance = response.routes[0].legs[0].distance
-              t.data.duration = response.routes[0].legs[0].duration
               t.data.coordinates = []
-              response.routes[0].legs[0].steps.forEach((step) => {
-                t.data.coordinates.push([step.start_location.lng(),step.start_location.lat()])
-                t.data.coordinates.push([step.end_location.lng(),step.end_location.lat()])
-              })
-
-              t.createOrigMarker()
-              t.createDestMarker()  
+              for (var i = 0; i < route.legs.length; i++) {
+                const leg = route.legs[i]
+                for (var j = 0; j < leg.steps.length; j++) {
+                  const step = leg.steps[j]
+                  t.data.coordinates.push([step.start_location.lng(),step.start_location.lat()])
+                  t.data.coordinates.push([step.end_location.lng(),step.end_location.lat()])
+                }
+              }
+              t.computeTotalDistance(route)
               t.drawRoute()
               localStorage.setItem('ruta', JSON.stringify(t.data))
               t.$root.snackbar('success','📍 Distancia: ' + t.data.distance.text)
@@ -174,64 +226,59 @@ export default {
         })
       }
     },
-    addSegment ({type, target}) {
-      this.waypoints.splice(this.waypoints.length - 1, 0, this.defaultSegment)
-    },
     removeSaved () {
       var t = this
-      t.$dialog
-        .confirm('¿Descartar esta ruta?',{
-          okText: 'Descartar',
-          cancelText: 'Cerrar',
-        })
-        .then(function(dialog) {
+      swal({
+        title: 'Eliminar ruta',
+        text: '¿Deseas eliminar esta ruta?',
+        buttons: ["No", "Sí"]
+      })
+      .then(accept => {
+        if (accept) {
           localStorage.removeItem('ruta')
-          t.waypoints = []
+          t.data.waypoints = t.defaultWaypoints
           t.checkSavedData()
-        })
-        .catch(function() {
-          console.log('Clicked on cancel');
-        });
+        } else {
+          console.log('Clicked on cancel')
+        }
+      })
+    },
+    computeTotalDistance(route) {
+      var totalDist = 0;
+      var totalTime = 0;
+      for (i = 0; i < route.legs.length; i++) {
+        totalDist += route.legs[i].distance.value
+        totalTime += route.legs[i].duration.value
+      }
+      totalDist = totalDist / 1000
+      this.data.distance = totalDist + 'km'
+      this.data.duration = (totalTime / 60).toFixed(2) + 'min'
     },
     checkSavedData:function(){
       var t = this
-      const saved = localStorage.getItem('ruta')
-      this.waypoints.map((e, i) => {
-        var autocomplete = new google.maps.places.Autocomplete(
-          document.getElementById(`waypoint_${i}`),
-          {
-            types: ['geocode'],
-            bounds: t.defaultBounds,
-            strictBounds: true,
-            componentRestrictions: {
-              country: 'ar'
-            }        
-          }
-        );
-
-        google.maps.event.addListener(autocomplete, 'place_changed', function () {
-          var place = autocomplete.getPlace()
-          let ac = place.address_components
-          let city = ac[0]["short_name"]
-          t.waypoints[i] = {
-            location: new google.maps.LatLng(place.geometry.location.lat(), place.geometry.location.lng()),
-            stopover: true,
-            value: place.formatted_address
-          }
-          t.calculateAndDisplayRoute()
+      const saved = JSON.parse(localStorage.getItem('ruta')) || {}
+      let waypoints = saved.waypoints || this.defaultWaypoints
+      this.$nextTick(() => {
+        waypoints.map((e, i) => {
+          this.initAutocomplete(i)
         })
       })
 
-      if(saved){
-        t.data = JSON.parse(saved)
-        t.initMap()
+      if(Object.keys(saved).length){
+        t.data = saved
+        t.initMap().then(map => {
+          map.on('load', () => {
+            t.createWaypointsMarkers()
+            t.drawRoute()
+          })
+        })
       } else {
         if (!navigator.geolocation){
           this.$root.snackbar('default','No se pudo obtener ubicación')
           t.initMap()
         }
         navigator.geolocation.getCurrentPosition(function(position){
-          t.waypoints[0] = {
+          t.data.waypoints[0] = {
             location: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
             stopover: true
           }
@@ -248,9 +295,6 @@ export default {
       if(typeof mapLayer !== 'undefined') {
         this.map.removeLayer('coordinates').removeSource('coordinates');        
       }
-
-      console.log('coordinates')
-      console.log(this.data.coordinates)
 
       this.map.addLayer({
         "id": "coordinates",
@@ -280,9 +324,6 @@ export default {
         return bounds.extend(coord);
       }, new mapboxgl.LngLatBounds(this.data.coordinates[0], this.data.coordinates[0]));
 
-      console.log('bounds')
-      console.log(bounds)
-
       this.map.fitBounds(bounds,{
         padding:100, 
         offset:[0,-35]
@@ -296,7 +337,7 @@ export default {
       }, function (results, status) {
         if (status === google.maps.GeocoderStatus.OK) {
           if (results[1]) {
-            this.waypoints[0].value = results[1].formatted_address
+            this.data.waypoints[0].value = results[1].formatted_address
             this.$root.snackbar('success','📍 ' + t.data.from.formatted_address);
           } else {
             this.$root.snackbar('error','No results found');
@@ -305,99 +346,31 @@ export default {
           this.$root.snackbar('error','Geocoder failed due to: ' + status);
         }
       });
-    },   
-    createOrigMarker () {
-      var mapLayer = this.map.getLayer('orig');
-      let t = this
-      
-      if(typeof mapLayer !== 'undefined') {
-        this.map.removeImage('orig')
-        this.map.removeLayer('orig').removeSource('orig')
-      }
-
-      this.map.loadImage('/static/img/orig.png', function(error, image) {
-        if (error) throw error;
-        t.map.addImage('orig', image);
-        console.log('********')
-        console.log(t.waypoints[0].location.lat())
-        console.log(t.waypoints[0].location.lng())
-
-        t.map.addLayer({
-          "id": "orig",
-          "type": "symbol",
-          "source": {
-            "type": "geojson",
-            "data": {
-              "type": "FeatureCollection",
-              "features": [{
-                "type": "Feature",
-                "geometry": {
-                  "type": "Point",
-                  "coordinates": [t.waypoints[0].location.lng(), t.waypoints[0].location.lat()]
-                }
-              }]
-            }
-          },
-          "layout": {
-            "icon-image": "orig",
-            "icon-size": 0.35
-          }
-        });
-      });
     },
-    createDestMarker () {
-      var mapLayer = this.map.getLayer('dest')
-      let waypoints = this.waypoints.filter(e => e.is_waypoint && e.location)
+    createWaypointsMarkers () {
       let t = this
-      
-      if(typeof mapLayer !== 'undefined') {
-        this.map.removeImage('dest')
-        this.map.removeLayer('dest').removeSource('dest')
-      }
-
-      this.map.loadImage('/static/img/dest.png', function(error, image) {
-        if (error) throw error;
-        t.map.addImage('dest', image);
-        console.log('********')
-        console.log(waypoints[0].location.lng())
-
-        t.map.addLayer({
-          "id": "dest",
-          "type": "symbol",
-          "source": {
-            "type": "geojson",
-            "data": {
-              "type": "FeatureCollection",
-              "features": [{
-                "type": "Feature",
-                "geometry": {
-                  "type": "Point",
-                  "coordinates": [waypoints[waypoints.length - 1].location.lng(), waypoints[waypoints.length - 1].location.lat()]
-                }
-              }]
-            }
-          },
-          "layout": {
-            "icon-image": "orig",
-            "icon-size": 0.35
-          }
-        });
-      });
-    },
-    createWaypointsMarkers : function(){
+      let waypoints = this.data.waypoints.filter(e => e.location)
       //var bounds = new google.maps.LatLngBounds();
-      let t = this
       //var llb = new mapboxgl.LngLatBounds(orig, dest);
       //this.map.fitBounds(llb,{padding:100, offset:[0,-30]});
-      this.waypoints.map((e, i) => {
-        var mapLayer = this.map.getLayer(`w_${i}`);
+      waypoints.map((e, i) => {
+        var mapLayer = t.map.getLayer(`w_${i}`);
+        var icon = 'orig'
 
-        if(typeof mapLayer !== 'undefined') {
-          this.map.removeImage(`w_${i}`)
-          this.map.removeLayer(`w_${i}`).removeSource(`w_${i}`)
+        if (i > 0) {
+          if (i < waypoints.length - 1) {
+            icon = 'waypoint'
+          } else {
+            icon = 'dest'
+          }
         }
 
-        this.map.loadImage('/static/img/waypoint.png', function(error, image) {
+        if(typeof mapLayer !== 'undefined') {
+          t.map.removeImage(`w_${i}`)
+          t.map.removeLayer(`w_${i}`).removeSource(`w_${i}`)
+        }
+
+        t.map.loadImage(`/static/img/${icon}.png`, function(error, image) {
           if (error) throw error
           t.map.addImage(`w_${i}`, image)
           t.map.addLayer({
@@ -410,18 +383,18 @@ export default {
                 "features": [{
                   "type": "Feature",
                   'properties': {
-                    'description': i,
+                    'description': e.formatted_address,
                     'icon': 'map-marker'
                   },
                   "geometry": {
                     "type": "Point",
-                    "coordinates": [t.waypoints[i].location.lng(), t.waypoints[i].location.lat()]
+                    "coordinates": [t.data.waypoints[i].location.lng, t.data.waypoints[i].location.lat]
                   }
                 }]
               }
             },
             "layout": {
-              "icon-image": "dest",
+              "icon-image": `w_${i}`,
               "icon-size": 0.35
             }
           });
@@ -437,8 +410,17 @@ export default {
       map: null,
       mapHeight: 0,
       directionsService: null,
-      data: {},
-      waypoints: [
+      defaultSegment: {
+        placeholder: 'Parada',
+        stopover: true,
+        disabled: true,
+        value: 'Dirección de parada'
+      },
+      defaultBounds: new google.maps.LatLngBounds(
+        new google.maps.LatLng(-35.564406, -60.292954),
+        new google.maps.LatLng(-34.362287, -58.142812)
+      ),
+      defaultWaypoints: [
         {
           placeholder: 'Dirección de recepción',
           location: new google.maps.LatLng(-34.603767, -58.381619),
@@ -453,31 +435,11 @@ export default {
           value: ''
         }
       ],
-      defaultSegment: {
-        placeholder: 'Parada',
-        is_waypoint: true,
-        stopover: true,
-        disabled: true,
-        value: 'Dirección de parada'
-      },
-      defaultBounds: new google.maps.LatLngBounds(
-        new google.maps.LatLng(-35.564406, -60.292954),
-        new google.maps.LatLng(-34.362287, -58.142812)
-      ),
       data: {
         distance: {},
         duration: {},
-        legs: [],
-        from:{
-          formatted_address:'',
-          lat:0,
-          lng:0
-        },
-        to:{
-          formatted_address:'',
-          lat:0,
-          lng:0        
-        }
+        waypoints: [],
+        coordinates: []
       }
     }
   }
