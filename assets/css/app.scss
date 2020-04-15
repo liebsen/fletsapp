@@ -50,7 +50,7 @@ body > div:first-child {
 .form {
   opacity: 0;
 }
-#map { 
+#map {
   min-height: 450px;
   /*margin-bottom: 5.25rem;*/
   width:100%; 
@@ -67,6 +67,7 @@ body > div:first-child {
 }
 
 .steps-frame {
+  box-shadow: 0px 10px 20px #00000033;
   background-color: whitesmoke;
   padding: 0.25rem;
   padding-top: 1rem;
@@ -876,10 +877,22 @@ table {
   animation:1s cubic-bezier(.17,.67,.83,.67) .1s normal forwards 1 fadeOut;
 }
 
+.swal-button {
+  box-shadow: none!important;
+  border-radius: 35px;
+}
+
 @keyframes fadeOut{
   0%{opacity:1}
   80%{opacity:1}
   100%{opacity:0}
+}
+
+@media screen and (min-width: 768px) {
+  .swal-modal {
+    box-shadow: 0px 10px 20px #00000033;
+    border-radius: 25px;
+  }
 }
 
 @media screen and (max-width: 440px) {

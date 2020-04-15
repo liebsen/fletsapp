@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="form" id="form">
-      <div class="input-data">
+      <div class="input-data slideIn">
         <div class="columns is-vcentered">
           <div v-for="(item, index) in data.waypoints" class="column" :key="index">
             <div class="field">
@@ -11,7 +11,7 @@
                   :ref="`waypoint_${index}`"  
                   :id="`waypoint_${index}`" 
                   :placeholder="item.placeholder"                   
-                  :class="{ 'is-info has-text-info': index === 0, 'is-warning has-text-warning': index && index < data.waypoints.length - 1, 'is-success has-text-success': index === data.waypoints.length - 1 }" 
+                  :class="{ 'is-info has-text-info': index === 0, 'is-grey has-text-grey': index && index < data.waypoints.length - 1, 'is-success has-text-success': index === data.waypoints.length - 1 }" 
                   :autofocus="index===0" 
                   :disabled="item.disabled"
                   :value="item.value"
@@ -90,7 +90,7 @@ export default {
       this.data.waypoints.splice(this.data.waypoints.length - 1, 0, this.defaultSegment)
       this.$nextTick(() => {
         this.initAutocomplete(this.data.waypoints.length - 1)
-        this.checkWaypoints()
+        this.calcWaypoints()
       })
     },
     initMap () {
@@ -103,7 +103,7 @@ export default {
           style: 'mapbox://styles/mapbox/streets-v11',
           center: [-58.381619, -34.603767],
           interactive: false,
-          zoom: 10
+          zoom: 9.5
         });
         t.map = map  
         t.$root.loading = false
@@ -129,26 +129,32 @@ export default {
         let ac = place.address_components
         let city = ac[0]["short_name"]
         t.data.waypoints[index] = {
-          location: new google.maps.LatLng(place.geometry.location.lat(), place.geometry.location.lng()),
+          location: {
+            lat: place.geometry.location.lat(),
+            lng: place.geometry.location.lng()
+          },
           stopover: true,
           value: place.formatted_address
         }
         t.calculateAndDisplayRoute()
       })
     },
-    checkWaypoints () {
+    calcWaypoints () {
       let waypoints = this.data.waypoints.filter(e => e.location)
       this.data.waypoints.map((e, i) => {
         let disabled = false
-        if(i > waypoints.length) {
+        if(i > waypoints.length || !e.location) {
           disabled = true
         }
         this.data.waypoints[i].disabled = disabled
       })
 
       setTimeout(() => {
-        if (document.getElementById('waypoint_' + waypoints.length)) {
-          document.getElementById('waypoint_' + waypoints.length).focus()
+        let w = waypoints.length - 1
+        console.log('waypoint id? ' + w)
+        if (document.getElementById(`waypoint_${w}`)) {
+          console.log('waypoint id:' + w)
+          document.getElementById(`waypoint_${w}`).focus()
         }
       }, 1000)
     },
@@ -158,7 +164,7 @@ export default {
 
       /* inputs disable state*/
 
-      this.checkWaypoints()
+      this.calcWaypoints()
 
       if (!waypoints.length) {
         return
@@ -168,7 +174,7 @@ export default {
 
       if (waypoints.length === 1) {
         this.map.flyTo({
-          center: [waypoints[0].location.lng(), waypoints[0].location.lat()],
+          center: [waypoints[0].location.lng, waypoints[0].location.lat],
           zoom: 16
         })
       }
@@ -187,8 +193,8 @@ export default {
           data.waypoints = waypoints.map(e => {
             return {
               location: {
-                lat: e.location.lat(),
-                lng: e.location.lng()
+                lat: e.location.lat,
+                lng: e.location.lng
               }
             }
           })
@@ -236,7 +242,7 @@ export default {
       .then(accept => {
         if (accept) {
           localStorage.removeItem('ruta')
-          t.data.waypoints = t.defaultWaypoints
+          t.data = t.defaultData
           t.checkSavedData()
         } else {
           console.log('Clicked on cancel')
@@ -279,7 +285,10 @@ export default {
         }
         navigator.geolocation.getCurrentPosition(function(position){
           t.data.waypoints[0] = {
-            location: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+            location: {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            },
             stopover: true
           }
           t.getAddressFromLatLng()
@@ -330,20 +339,21 @@ export default {
       })   
     },
     getAddressFromLatLng: function () {
-      var latlng = new google.maps.LatLng(this.data.from.lat, this.data.from.lng);
+      let t = this
+      var latlng = new google.maps.LatLng(this.data.waypoints[0].location.lat, this.data.waypoints[0].location.lng)
       var geocoder = new google.maps.Geocoder()
       geocoder.geocode({
         'latLng': latlng
       }, function (results, status) {
         if (status === google.maps.GeocoderStatus.OK) {
           if (results[1]) {
-            this.data.waypoints[0].value = results[1].formatted_address
-            this.$root.snackbar('success','📍 ' + t.data.from.formatted_address);
+            t.data.waypoints[0].value = results[1].formatted_address
+            t.$root.snackbar('success','📍 ' + t.data.waypoints[0].formatted_address);
           } else {
-            this.$root.snackbar('error','No results found');
+            t.$root.snackbar('error','No results found');
           }
         } else {
-          this.$root.snackbar('error','Geocoder failed due to: ' + status);
+          t.$root.snackbar('error','Geocoder failed due to: ' + status);
         }
       });
     },
@@ -423,7 +433,10 @@ export default {
       defaultWaypoints: [
         {
           placeholder: 'Dirección de recepción',
-          location: new google.maps.LatLng(-34.603767, -58.381619),
+          location:  {
+            lat: -34.603767,
+            lng: -58.381619
+          },
           stopover: true,
           disabled: false,
           value: ''
@@ -435,6 +448,12 @@ export default {
           value: ''
         }
       ],
+      defaultData: {
+        distance: {},
+        duration: {},
+        waypoints: [],
+        coordinates: []
+      },
       data: {
         distance: {},
         duration: {},
