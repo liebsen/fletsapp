@@ -366,7 +366,7 @@ body > div:first-child {
 }
 
 .menu-items a:not(.button) {
-  font-size: 1.25rem;
+  font-size: 1rem;
   color: white;
   display: block;
 }
@@ -924,6 +924,16 @@ table {
     > .column:nth-last-child(-n+2) {
      border-color: #3d9970; 
     }    
+  }
+  .hero-body {
+    .content {
+      h2 {
+        margin-bottom: 1.75rem;
+      }
+      h4 {
+        margin-bottom: 1.25rem;
+      }
+    }
   }
 }
 

@@ -28,7 +28,7 @@
         <p>USTED RECONOCE QUE FLETSAPP NO PRESTA SERVICIOS DE TRANSPORTE DE NINGÚN TIPO NI FUNCIONA COMO UNA EMPRESA DE TRANSPORTES.</p>
         
         <br><br>        
-        <p>Algunas acciones que puedes tomar a partir de aquí:</p>
+        <p>Enlaces útiles:</p>
         <ul>
         <li>Volver a <router-link to="/">inicio</router-link>.</li>
         <li>Comienza hoy a usar FletsApp. <router-link to="/ruta">Comenzar</router-link>.</li>

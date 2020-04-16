@@ -42,7 +42,7 @@
         <p>Todos las cotizaciones son generadas automáticamente por nuestra aplicación garantizando el trato igualitario con todos nuestros clientes.</p>
         
         <br><br>
-        <p>Algunas acciones que puedes tomar a partir de aquí:</p>
+        <p>Enlaces útiles:</p>
 
         <ul>
         <li>Volver a <router-link to="/">inicio</router-link>.</li>

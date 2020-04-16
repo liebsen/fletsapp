@@ -4,7 +4,7 @@
       <div class="container content is-flex-column is-vertical">
         <h2>
           <span class="icon">
-            <span class="fas fa-info-circle"></span>
+            <span class="fas fa-user-shield"></span>
           </span> 
           <span>Acerca de <em>FletsApp</em></span>
         </h2>
@@ -17,7 +17,7 @@
         <p>Buscamos con todo esto lograr el prestigio y el liderazgo en este segmento del transporte automotor, para continuar ofreciendo las mejores posibilidades del mercado.</p>
 
         <br><br>
-        <p>Algunas acciones que puedes tomar a partir de aquí:</p>
+        <p>Enlaces útiles:</p>
         <ul>
         <li>Volver a <router-link to="/">inicio</router-link>.</li>
         <li>Comienza hoy a usar FletsApp. <router-link to="/ruta">Comenzar</router-link>.</li>

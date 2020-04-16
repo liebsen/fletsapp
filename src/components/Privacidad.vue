@@ -24,7 +24,7 @@
         <p><em>Que tengas un agradable Flet!</em></p>
 
         <br><br>
-        <p>Algunas acciones que puedes tomar a partir de aquí:</p>
+        <p>Enlaces útiles:</p>
         <ul>
         <li>Volver a <router-link to="/">inicio</router-link>.</li>
         <li>Comienza hoy a usar FletsApp. <router-link to="/ruta">Comenzar</router-link>.</li>

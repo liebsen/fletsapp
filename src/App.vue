@@ -60,14 +60,14 @@
               <span class="icon">
                 <span class="fas fa-search-dollar"></span>
               </span> 
-              <span>Cómo cotiza <em>FletsApp</em></span>
+              <span>Como cotizamos</span>
             </router-link>
 
             <router-link to="/about">
               <span class="icon">
-                <span class="fas fa-info-circle"></span>
+                <span class="fas fa-user-shield"></span>
               </span> 
-              <span>Acerca de <em>FletsApp</em></span>
+              <span>Acerca de nosotros</span>
             </router-link>
 
             <router-link to="/contacto">
@@ -80,7 +80,7 @@
             <hr>
     
             <div class="has-text-centered">
-              <router-link class="button is-rounded is-white is-large is-outlined" to="/ruta">
+              <router-link class="button is-rounded is-white is-outlined" to="/ruta">
                 <span class="icon">
                   <span class="fas fa-truck-loading"></span>
                 </span> 
