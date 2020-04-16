@@ -71,6 +71,9 @@ export default {
     this.checkSavedData()
     this.$root.snackbar('default','Por favor selecciona el <span class="has-text-weight-bold has-text-info">dirección de recepción</span> y <span class="has-text-weight-bold has-text-success">dirección de entrega</span> para tu viaje')
   },
+  destroyed () {
+    clearInterval(this.mapInterval)
+  },
   methods: {
     autocompleteFocus ({type, target}) {
       if (target.value) {
@@ -94,7 +97,7 @@ export default {
     },
     enableLineAnimation(layerId) {
       var step = 0;
-      var animationStep = 50;
+      var animationStep = 250;
       let dashArraySeq = [
         [0, 4, 3],
         [1, 4, 2],
@@ -104,7 +107,7 @@ export default {
         [0, 2, 3, 2],
         [0, 3, 3, 1]
       ];
-      setInterval(() => {
+      this.mapInterval = setInterval(() => {
         step = (step + 1) % dashArraySeq.length;
         this.map.setPaintProperty(layerId, 'line-dasharray', dashArraySeq[step]);
       }, animationStep)
@@ -127,7 +130,6 @@ export default {
       })
     },
     initAutocomplete (index) {
-      console.log('initAutocomplete: ' + index)
       let t = this
       var autocomplete = new google.maps.places.Autocomplete(
         document.getElementById(`waypoint_${index}`),
@@ -153,6 +155,20 @@ export default {
           stopover: true,
           value: place.formatted_address
         }
+        if (index === 0) {
+          t.data.from = {
+            lat: place.geometry.location.lat(),
+            lng: place.geometry.location.lng(),
+            formatted_address: place.formatted_address
+          }
+        }
+        if (index === t.data.waypoints.length - 1) {
+          t.data.to = {
+            lat: place.geometry.location.lat(),
+            lng: place.geometry.location.lng(),
+            formatted_address: place.formatted_address
+          }
+        }
         t.calculateAndDisplayRoute()
       })
     },
@@ -163,7 +179,6 @@ export default {
         if(i > waypoints.length) {
           disabled = true
         }
-        console.log(i+':'+disabled)
         this.data.waypoints[i].disabled = disabled
       })
 
@@ -172,10 +187,8 @@ export default {
         if (w < 0) {
           w = 0
         }
-        console.log('waypoint id? ' + w)
         let e = document.getElementById(`waypoint_${w}`)
         if (e && !e.value) {
-          console.log('waypoint id:' + w)
           document.getElementById(`waypoint_${w}`).focus()
         }
       }, 500)
@@ -228,7 +241,7 @@ export default {
             // var summaryPanel = document.getElementById('directions-panel');
 
             if(route){
-              t.data.legs = route.legs
+              t.legs = route.legs
               t.data.coordinates = []
               for (var i = 0; i < route.legs.length; i++) {
                 const leg = route.legs[i]
@@ -265,7 +278,9 @@ export default {
       .then(accept => {
         if (accept) {
           localStorage.removeItem('ruta')
+          clearInterval(this.mapInterval)
           t.data = t.defaultData
+          t.data.waypoints = t.defaultWaypoints
           t.checkSavedData()
         } else {
           console.log('Clicked on cancel')
@@ -276,12 +291,9 @@ export default {
       var totalDist = 0
       var totalTime = 0
       for (var i = 0; i < route.legs.length; i++) {
-        console.log(route.legs[i].distance.value)
         totalDist+= route.legs[i].distance.value
         totalTime+= route.legs[i].duration.value
       }
-      console.log('totalDist:' + totalDist)
-      console.log('totalTime:' + totalTime)
       totalDist = totalDist / 1000
       let duration = (totalTime / 60).toFixed(2)
       this.data.distance = {
@@ -340,28 +352,39 @@ export default {
     },
     drawRoute: function() {
       let t = this
-      this.data.legs.map((e, i) => {
-
+      if (this.mapInterval) {
+        clearInterval(this.mapInterval)
+      }
+      this.legs.map((e, i) => {
         var mapLayer = t.map.getLayer(`leg_${i}`);
-        var linecolor = '#5e84f6'
+        var linecolor = '#b5b5b5'
 
         if(typeof mapLayer !== 'undefined') {
           t.map.removeLayer(`leg_${i}`).removeSource(`leg_${i}`)
         }
 
+        if (this.legs.length === 1) {
+          linecolor = '#3d9970'          
+        }
+
         if (i > 0) {
-          if (i < waypoints.length - 1) {
-            linecolor = '#9ea7a7'
+          if (i < this.legs.length - 1) {
+            linecolor = '#b5b5b5'
           } else {
-            linecolor = '#4fde51'
+            linecolor = '#3d9970'
           }
         }
 
         let coordinates = []
         for (var j = 0; j < e.steps.length; j++) {
           const step = e.steps[j]
-          coordinates.push([step.start_location.lng,step.start_location.lat])
-          coordinates.push([step.end_location.lng,step.end_location.lat])
+          const lng = typeof step.start_location.lng === 'function' ? step.start_location.lng() : step.start_location.lng
+          const lat = typeof step.start_location.lat === 'function' ? step.start_location.lat() : step.start_location.lat
+          const lng2 = typeof step.end_location.lng === 'function' ? step.end_location.lng() : step.end_location.lng
+          const lat2 = typeof step.end_location.lat === 'function' ? step.end_location.lat() : step.end_location.lat
+
+          coordinates.push([lng,lat])
+          coordinates.push([lng2,lat2])
         }
 
         t.map.addLayer({
@@ -379,17 +402,13 @@ export default {
             }
           },
           "layout": {
-            "line-join": "round",
-            "line-cap": "round"
           },
           "paint": {
             "line-color": linecolor,
-            // "line-width": 8
             "line-width": 8,
             "line-dasharray": [0, 4, 3]
           }
         })
-
         t.enableLineAnimation(`leg_${i}`)
       })
 
@@ -490,8 +509,10 @@ export default {
     return {
       inputKey: 0,
       map: null,
+      mapInterval: 0,
       mapHeight: 0,
       directionsService: null,
+      legs: [],
       defaultSegment: {
         placeholder: 'Parada',
         stopover: true,
@@ -523,14 +544,16 @@ export default {
       defaultData: {
         distance: {},
         duration: {},
-        legs: [],
+        from: {},
+        to: {},
         waypoints: [],
         coordinates: []
       },
       data: {
         distance: {},
         duration: {},
-        legs: [],
+        from: {},
+        to: {},
         waypoints: [],
         coordinates: []
       }

@@ -13,7 +13,7 @@
             </div>
 
             <div v-show="data.service" class="notification">
-              <p>El servicio de carga y descarga tiene un costo adicional de <span></span></p>
+              <p>El servicio de carga y descarga tiene un costo adicional de <span v-html="service.cost"></span><span v-html="service.currency"></span></p>
             </div>
           </div>
 
@@ -42,8 +42,11 @@
             </div>
 
             <div class="field">
-              <input class="is-checkradio" id="carga5" type="radio" v-model="data.carga" value="heladera">
+              <input class="is-checkradio" id="carga5" type="radio" v-model="data.carga" value="otro">
               <label for="carga5">Otro</label>
+            </div>
+
+            <div v-show="data.carga === 'otro'" class="field">
               <textarea class="textarea" v-model="data.otro" maxlength="500" placeholder="Detallá que querés llevar acá"></textarea>
             </div>
           </div>
@@ -90,14 +93,27 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'carga',
   mounted: function(){
     var t = this
     var saved = localStorage.getItem('carga')
-    if(saved){
+    if (saved) {
       t.data = JSON.parse(saved)
     }
+    if (t.data.carga === 'otro') {
+      t.data.carga = t.data.otro
+    }
+    t.$root.loading = true
+    axios.post( '/flet/service_cost/5dadf4617c213e556141874f').then((res) => {
+      if(res.data.status==='success'){
+        t.service = res.data
+      } else {
+        this.$root.snackbar('danger','Algo pasó.')
+      } 
+      t.$root.loading = false       
+    })
   },
   methods: {
     submit: function(){
@@ -108,8 +124,9 @@ export default {
   },
   data () {
     return {
+      service: {},
       data: {
-        service: false,
+        service: false,        
         carga:null,
         peso:null
       }

@@ -157,9 +157,9 @@
       </ul>
     </div>
     
-    <keep-alive v-show="!$root.loading" exclude="landing,ruta,cotizacion,confirma">
-      <router-view/>
-    </keep-alive>
+    <transition name="fade" mode="out-in">
+      <router-view :key="$route.fullPath" />
+    </transition>
 
     <div class="tosprompt">
       <div class="notification">

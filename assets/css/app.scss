@@ -12,6 +12,20 @@ body > div:first-child {
   min-height: 100%;
 }
 
+.fade-enter-active, .fade-leave-active {
+  transition-property: opacity;
+  transition-duration: .25s;
+}
+
+.fade-enter-active {
+  transition-delay: .25s;
+}
+
+.fade-enter, .fade-leave-active {
+  opacity: 0
+}
+
+
 .hero {
   min-height: 100%;
   margin: 1rem 0 auto;
@@ -900,19 +914,17 @@ table {
   }
   .is-waypoints {
     > .column:not(.is-1) {
-      border-bottom: 5px solid #5e84f6;
+      border-bottom: 5px solid #b5b5b5;
     }
 
     > .column:first-child {
-      border-color: #5e84f6;
+      border-color: #004966;
     }
 
     > .column:nth-last-child(-n+2) {
-     border-color: #4fde51; 
-    }
-    
+     border-color: #3d9970; 
+    }    
   }
-
 }
 
 @media screen and (max-width: 440px) {

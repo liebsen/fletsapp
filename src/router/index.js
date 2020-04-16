@@ -175,17 +175,19 @@ router.afterEach(function (to, from, next) {
         var node = document.querySelectorAll('.steps-segment')[i] 
         if(!node) return
         if(step === to.name){
-          node.classList.add('is-active')
+          node.classList.add('is-active')          
           stop = true
         } else {
-          node.classList.remove('is-active')
+          node.classList.remove('is-active')          
         }
         if(stop) {
+          node.classList.add('add-gaps')
           node.querySelector('a').addEventListener('click', (e) => {
             e.preventDefault()
             return false
           })
         } else {
+          node.classList.remove('has-gaps')
           node.querySelector('a').addEventListener('click', () => {
             return router.push(step)
           })
