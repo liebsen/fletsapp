@@ -241,12 +241,17 @@ export default {
             // var summaryPanel = document.getElementById('directions-panel');
 
             if(route){
-              t.legs = route.legs
+              t.data.legs = []
               t.data.coordinates = []
               for (var i = 0; i < route.legs.length; i++) {
                 const leg = route.legs[i]
                 for (var j = 0; j < leg.steps.length; j++) {
                   const step = leg.steps[j]
+                  if (!t.data.legs[i]) {
+                    t.data.legs[i] = []
+                  }
+                  t.data.legs[i].push([step.start_location.lng(),step.start_location.lat()])
+                  t.data.legs[i].push([step.end_location.lng(),step.end_location.lat()])
                   t.data.coordinates.push([step.start_location.lng(),step.start_location.lat()])
                   t.data.coordinates.push([step.end_location.lng(),step.end_location.lat()])
                 }
@@ -261,7 +266,7 @@ export default {
             }
             t.$root.loading = false
           } else {
-            window.alert('Directions request failed due to ' + status);
+            t.$root.snackbar('error','📍 No se pudo obtener datos de la ruta ' + status)
           }
         })
       } else {
@@ -355,7 +360,7 @@ export default {
       if (this.mapInterval) {
         clearInterval(this.mapInterval)
       }
-      this.legs.map((e, i) => {
+      this.data.legs.map((e, i) => {
         var mapLayer = t.map.getLayer(`leg_${i}`);
         var linecolor = '#b5b5b5'
 
@@ -363,28 +368,16 @@ export default {
           t.map.removeLayer(`leg_${i}`).removeSource(`leg_${i}`)
         }
 
-        if (this.legs.length === 1) {
+        if (this.data.legs.length === 1) {
           linecolor = '#3d9970'          
         }
 
         if (i > 0) {
-          if (i < this.legs.length - 1) {
+          if (i < this.data.legs.length - 1) {
             linecolor = '#b5b5b5'
           } else {
             linecolor = '#3d9970'
           }
-        }
-
-        let coordinates = []
-        for (var j = 0; j < e.steps.length; j++) {
-          const step = e.steps[j]
-          const lng = typeof step.start_location.lng === 'function' ? step.start_location.lng() : step.start_location.lng
-          const lat = typeof step.start_location.lat === 'function' ? step.start_location.lat() : step.start_location.lat
-          const lng2 = typeof step.end_location.lng === 'function' ? step.end_location.lng() : step.end_location.lng
-          const lat2 = typeof step.end_location.lat === 'function' ? step.end_location.lat() : step.end_location.lat
-
-          coordinates.push([lng,lat])
-          coordinates.push([lng2,lat2])
         }
 
         t.map.addLayer({
@@ -397,7 +390,7 @@ export default {
               "properties": {},
               "geometry": {
                 "type": "LineString",
-                "coordinates": coordinates
+                "coordinates": t.data.legs[i]
               }
             }
           },
@@ -512,7 +505,6 @@ export default {
       mapInterval: 0,
       mapHeight: 0,
       directionsService: null,
-      legs: [],
       defaultSegment: {
         placeholder: 'Parada',
         stopover: true,
@@ -546,6 +538,7 @@ export default {
         duration: {},
         from: {},
         to: {},
+        legs: [],
         waypoints: [],
         coordinates: []
       },
@@ -554,6 +547,7 @@ export default {
         duration: {},
         from: {},
         to: {},
+        legs: [],
         waypoints: [],
         coordinates: []
       }
