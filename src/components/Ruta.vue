@@ -8,9 +8,10 @@
               <div class="control">
                 <input type="text" 
                   class="input is-rounded" 
+                  :index="index" 
                   :ref="`waypoint_${index}`"  
                   :id="`waypoint_${index}`" 
-                  :placeholder="item.placeholder"                   
+                  :placeholder="item.placeholder"
                   :class="{ 'is-info has-text-info': index === 0, 'is-grey has-text-grey': index && index < data.waypoints.length - 1, 'is-success has-text-success': index === data.waypoints.length - 1 }" 
                   :disabled="item.disabled"
                   :value="item.value"
@@ -76,16 +77,35 @@ export default {
   },
   methods: {
     autocompleteFocus ({type, target}) {
+      this.blurState = 0
       if (target.value) {
         target.setAttribute('text', target.value)
+        this.map.flyTo({
+          center: [this.data.waypoints[target.getAttribute('index')].location.lng, this.data.waypoints[target.getAttribute('index')].location.lat],
+          zoom: 16
+        })
       }
       target.value = ''
     },
     autocompleteBlur ({type, target}) {
+      this.blurState = 1
       let value = target.value
       if (target.getAttribute('text')) {
         value = target.getAttribute('text')
       }
+      setTimeout(() => {
+        if (this.blurState) {
+          this.blurState = 0
+          var bounds = this.data.coordinates.reduce(function(bounds, coord) {
+            return bounds.extend(coord);
+          }, new mapboxgl.LngLatBounds(this.data.coordinates[0], this.data.coordinates[0]));
+
+          this.map.fitBounds(bounds,{
+            padding:100, 
+            offset:[0,-50]
+          })
+        }
+      }, 500)
       target.value = value
     },
     addSegment ({type, target}) {
@@ -94,23 +114,6 @@ export default {
         this.initAutocomplete(this.data.waypoints.length - 1)
         this.calcWaypoints()
       })
-    },
-    enableLineAnimation(layerId) {
-      var step = 0;
-      var animationStep = 250;
-      let dashArraySeq = [
-        [0, 4, 3],
-        [1, 4, 2],
-        [2, 4, 1],
-        [3, 4, 0],
-        [0, 1, 3, 3],
-        [0, 2, 3, 2],
-        [0, 3, 3, 1]
-      ];
-      this.mapInterval = setInterval(() => {
-        step = (step + 1) % dashArraySeq.length;
-        this.map.setPaintProperty(layerId, 'line-dasharray', dashArraySeq[step]);
-      }, animationStep)
     },
     initMap () {
       let t = this
@@ -411,8 +414,25 @@ export default {
 
       this.map.fitBounds(bounds,{
         padding:100, 
-        offset:[0,-20]
+        offset:[0,-50]
       })   
+    },
+    enableLineAnimation(layerId) {
+      var step = 0;
+      var animationStep = 250;
+      let dashArraySeq = [
+        [0, 4, 3],
+        [1, 4, 2],
+        [2, 4, 1],
+        [3, 4, 0],
+        [0, 1, 3, 3],
+        [0, 2, 3, 2],
+        [0, 3, 3, 1]
+      ];
+      this.mapInterval = setInterval(() => {
+        step = (step + 1) % dashArraySeq.length;
+        this.map.setPaintProperty(layerId, 'line-dasharray', dashArraySeq[step]);
+      }, animationStep)
     },
     getAddressFromLatLng: function () {
       let t = this
@@ -501,6 +521,7 @@ export default {
   data () {
     return {
       inputKey: 0,
+      blurState: 0,
       map: null,
       mapInterval: 0,
       mapHeight: 0,
