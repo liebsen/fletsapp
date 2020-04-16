@@ -6,6 +6,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "preinstall": "npm config set package-lock false",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --port 3000 --progress",
     "build": "cross-env NODE_ENV=production webpack",
     "start": "node server.js"
