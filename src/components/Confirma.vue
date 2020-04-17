@@ -35,10 +35,10 @@
               </tr>              
               <tr>
                 <td class="has-background-light">
-                  <label>FLET para</label>
+                  <label>Solicitante</label>
                 </td>
                 <td>
-                  <span v-html="data.datos.nombre"></span>
+                  <span class="is-capitalize" v-html="data.datos.nombre"></span>
                 </td>
                 <td>
                   <router-link class="button is-rounded is-text" to="/datos">✎</router-link>
@@ -99,7 +99,7 @@
                   <span class="icon">
                     <span class="fa fa-times"></span>
                   </span>
-                  <span>Este envío no cubre costos de carga y descarga</span>
+                  <span>No incluye</span>
                 </td>
                 <td>
                   <router-link class="button is-rounded is-text" to="/carga">✎</router-link>
@@ -110,7 +110,7 @@
                   <label>Tipo de carga</label>
                 </td>
                 <td>
-                  <span v-html="data.carga.carga"></span>
+                  <span class="is-capitalize" v-html="data.carga.carga"></span>
                 </td>
                 <td>
                   <router-link class="button is-rounded is-text" to="/carga">✎</router-link>
