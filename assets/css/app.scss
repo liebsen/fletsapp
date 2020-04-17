@@ -25,7 +25,6 @@ body > div:first-child {
   opacity: 0
 }
 
-
 .hero {
   min-height: 100%;
   margin: 1rem 0 auto;
@@ -914,15 +913,15 @@ table {
   }
   .is-waypoints {
     > .column:not(.is-1) {
-      border-bottom: 5px solid #b5b5b5;
+      border-bottom: 4px solid #b5b5b5;
     }
 
     > .column:first-child {
-      border-color: #004966;
+      border-color: #00496699;
     }
 
     > .column:nth-last-child(-n+2) {
-     border-color: #3d9970; 
+     border-color: #3d997099;
     }    
   }
   .hero-body {

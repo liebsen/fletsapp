@@ -12,7 +12,7 @@
                   :ref="`waypoint_${index}`"  
                   :id="`waypoint_${index}`" 
                   :placeholder="item.placeholder"
-                  :class="{ 'is-info has-text-info': index === 0, 'is-grey has-text-grey': index && index < data.waypoints.length - 1, 'is-success has-text-success': index === data.waypoints.length - 1 }" 
+                  :class="{ 'is-info': index === 0, 'is-grey': index && index < data.waypoints.length - 1, 'is-success': index === data.waypoints.length - 1 }" 
                   :disabled="item.disabled"
                   :value="item.value"
                   @focus="autocompleteFocus" 
@@ -79,7 +79,7 @@ export default {
   methods: {
     autocompleteFocus ({type, target}) {
       this.blurState = 0
-      if (target.value) {
+      if (target.value && this.data.waypoints[target.getAttribute('index')].location) {
         target.setAttribute('text', target.value)
         this.map.flyTo({
           center: [this.data.waypoints[target.getAttribute('index')].location.lng, this.data.waypoints[target.getAttribute('index')].location.lat],
@@ -94,25 +94,27 @@ export default {
       if (target.getAttribute('text')) {
         value = target.getAttribute('text')
       }
-      setTimeout(() => {
-        if (this.blurState) {
-          this.blurState = 0
-          var bounds = this.data.coordinates.reduce(function(bounds, coord) {
-            return bounds.extend(coord);
-          }, new mapboxgl.LngLatBounds(this.data.coordinates[0], this.data.coordinates[0]));
+      if (this.data.coordinates.length) {
+        setTimeout(() => {
+          if (this.blurState) {
+            this.blurState = 0
+            var bounds = this.data.coordinates.reduce(function(bounds, coord) {
+              return bounds.extend(coord);
+            }, new mapboxgl.LngLatBounds(this.data.coordinates[0], this.data.coordinates[0]));
 
-          this.map.fitBounds(bounds,{
-            padding:100, 
-            offset:[0,-50]
-          })
-        }
-      }, 500)
+            this.map.fitBounds(bounds,{
+              padding:100, 
+              offset:[0,-50]
+            })
+          }
+        }, 500)
+      }
       target.value = value
     },
     addSegment ({type, target}) {
       this.data.waypoints.splice(this.data.waypoints.length - 1, 0, this.defaultSegment)
       this.$nextTick(() => {
-        this.initAutocomplete(this.data.waypoints.length - 1)
+        this.initAutocomplete(this.data.waypoints.length - 1)        
         this.calcWaypoints()
       })
     },
@@ -195,7 +197,7 @@ export default {
         if (e && !e.value) {
           document.getElementById(`waypoint_${w}`).focus()
         }
-      }, 500)
+      }, 100)
     },
     calculateAndDisplayRoute() {
       let t = this
@@ -365,11 +367,11 @@ export default {
         clearInterval(this.mapInterval)
       }
       this.data.legs.map((e, i) => {
-        var mapLayer = t.map.getLayer(`leg_${i}`);
+        var mapLayer = this.map.getLayer(`leg_${i}`);
         var linecolor = '#b5b5b5'
 
         if(typeof mapLayer !== 'undefined') {
-          t.map.removeLayer(`leg_${i}`).removeSource(`leg_${i}`)
+          this.map.removeLayer(`leg_${i}`).removeSource(`leg_${i}`)
         }
 
         if (this.data.legs.length === 1) {
@@ -384,7 +386,7 @@ export default {
           }
         }
 
-        t.map.addLayer({
+        this.map.addLayer({
           "id": `leg_${i}`,
           "type": "line",
           "source": {
@@ -419,8 +421,8 @@ export default {
       })   
     },
     enableLineAnimation(layerId) {
-      var step = 0;
-      var animationStep = 250;
+      var step = 0
+      var animationStep = 250
       let dashArraySeq = [
         [0, 4, 3],
         [1, 4, 2],
@@ -429,37 +431,41 @@ export default {
         [0, 1, 3, 3],
         [0, 2, 3, 2],
         [0, 3, 3, 1]
-      ];
+      ]
       this.mapInterval = setInterval(() => {
-        step = (step + 1) % dashArraySeq.length;
-        this.map.setPaintProperty(layerId, 'line-dasharray', dashArraySeq[step]);
+        step = (step + 1) % dashArraySeq.length
+        var mapLayer = this.map.getLayer(layerId)
+        if(typeof mapLayer !== 'undefined') {
+          this.map.setPaintProperty(layerId, 'line-dasharray', dashArraySeq[step])
+        }
       }, animationStep)
     },
     getAddressFromLatLng: function () {
       let t = this
-      var latlng = new google.maps.LatLng(this.data.waypoints[0].location.lat, this.data.waypoints[0].location.lng)
+      let data = this.data
+      var latlng = new google.maps.LatLng(data.waypoints[0].location.lat, data.waypoints[0].location.lng)
       var geocoder = new google.maps.Geocoder()
       geocoder.geocode({
         'latLng': latlng
       }, function (results, status) {
         if (status === google.maps.GeocoderStatus.OK) {
           if (results[0]) {
-            t.data.waypoints[0].value = results[0].formatted_address
-            t.inputKey++
+            data.waypoints[0].value = results[0].formatted_address
+            this.inputKey++
             t.calcWaypoints()
             t.$nextTick(() => {
-              t.data.waypoints.map((e, i) => {
+              data.waypoints.map((e, i) => {
                 t.initAutocomplete(i)
               })
             })
             t.$root.snackbar('success','📍 ' + t.data.waypoints[0].value)
           } else {
-            t.$root.snackbar('default','El Geocoder falló');
+            t.$root.snackbar('default','El Geocoder falló')
           }
         } else {
-          t.$root.snackbar('error','El Geocoder falló: ' + status);
+          t.$root.snackbar('error','El Geocoder falló: ' + status)
         }
-      });
+      })
     },
     createWaypointsMarkers () {
       let t = this
