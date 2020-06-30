@@ -29,8 +29,10 @@
                   <label class="has-text-white">Costo</label>
                 </td>
                 <td colspan="2" class="has-background-success">
-                  <span class="is-size-4 has-text-white has-text-weight-bold" v-html="data.estimate.amount"></span> 
-                  <span class="has-text-white" v-html="data.estimate.currency"></span>
+                  <div class="slideIn">
+                    <span class="is-size-3 has-text-white has-text-weight-bold" v-html="data.estimate.amount"></span> 
+                    <span class="has-text-white is-size-4" v-html="data.estimate.currency"></span>
+                  </div>
                 </td>
               </tr>              
               <tr>
@@ -38,7 +40,7 @@
                   <label>Solicitante</label>
                 </td>
                 <td>
-                  <span class="is-capitalize" v-html="data.datos.nombre"></span>
+                  <span class="is-capitalized" v-html="data.datos.nombre"></span>
                 </td>
                 <td>
                   <router-link class="button is-rounded is-text" to="/datos">✎</router-link>
@@ -110,7 +112,7 @@
                   <label>Tipo de carga</label>
                 </td>
                 <td>
-                  <span class="is-capitalize" v-html="data.carga.carga"></span>
+                  <span class="is-capitalized" v-html="data.carga.carga"></span>
                 </td>
                 <td>
                   <router-link class="button is-rounded is-text" to="/carga">✎</router-link>
