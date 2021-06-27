@@ -106,8 +106,6 @@
             </div>
           </a>
         </li>
-
-
         <!--li class="steps-segment is-active has-gaps">
           <a href="#" class="has-text-dark">
             <span class="steps-marker">
