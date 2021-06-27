@@ -70,7 +70,7 @@ export default {
   },
   mounted () {
     this.checkSavedData()
-    this.$root.snackbar('default','Por favor selecciona el <span class="has-text-weight-bold has-text-info">dirección de recepción</span> y <span class="has-text-weight-bold has-text-success">dirección de entrega</span> para tu viaje')
+    this.$root.snackbar('default','Por favor seleccioná el <span class="has-text-weight-bold has-text-info">dirección de recepción</span> y <span class="has-text-weight-bold has-text-success">dirección de entrega</span> para tu viaje')
   },
   destroyed () {
     if (document.querySelector('.pac-container')) {
