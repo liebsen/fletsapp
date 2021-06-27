@@ -127,7 +127,7 @@ export default {
           container: 'map',
           style: 'mapbox://styles/mapbox/streets-v11',
           center: [-58.381619, -34.603767],
-          interactive: false,
+          // interactive: false,
           zoom: 9.5
         });
         t.map = map  
@@ -442,19 +442,18 @@ export default {
     },
     getAddressFromLatLng: function () {
       let t = this
-      let data = this.data
-      var latlng = new google.maps.LatLng(data.waypoints[0].location.lat, data.waypoints[0].location.lng)
+      var latlng = new google.maps.LatLng(t.data.waypoints[0].location.lat, t.data.waypoints[0].location.lng)
       var geocoder = new google.maps.Geocoder()
       geocoder.geocode({
         'latLng': latlng
       }, function (results, status) {
         if (status === google.maps.GeocoderStatus.OK) {
           if (results[0]) {
-            data.waypoints[0].value = results[0].formatted_address
-            this.inputKey++
+            t.data.waypoints[0].value = results[0].formatted_address
+            t.inputKey++
             t.calcWaypoints()
             t.$nextTick(() => {
-              data.waypoints.map((e, i) => {
+              t.data.waypoints.map((e, i) => {
                 t.initAutocomplete(i)
               })
             })
@@ -490,34 +489,36 @@ export default {
           t.map.removeLayer(`w_${i}`).removeSource(`w_${i}`)
         }
 
-        t.map.loadImage(`/static/img/${icon}.png`, function(error, image) {
-          if (error) throw error
-          t.map.addImage(`w_${i}`, image)
-          t.map.addLayer({
-            "id": `w_${i}`,
-            "type": "symbol",
-            "source": {
-              "type": "geojson",
-              "data": {
-                "type": "FeatureCollection",
-                "features": [{
-                  "type": "Feature",
-                  'properties': {
-                    'description': e.formatted_address,
-                    'icon': 'map-marker'
-                  },
-                  "geometry": {
-                    "type": "Point",
-                    "coordinates": [t.data.waypoints[i].location.lng, t.data.waypoints[i].location.lat]
-                  }
-                }]
+        t.map.on('load', () => {
+          t.map.loadImage(`/static/img/${icon}.png`, function(error, image) {
+            if (error) throw error
+            t.map.addImage(`w_${i}`, image)
+            t.map.addLayer({
+              "id": `w_${i}`,
+              "type": "symbol",
+              "source": {
+                "type": "geojson",
+                "data": {
+                  "type": "FeatureCollection",
+                  "features": [{
+                    "type": "Feature",
+                    'properties': {
+                      'description': e.formatted_address,
+                      'icon': 'map-marker'
+                    },
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [t.data.waypoints[i].location.lng, t.data.waypoints[i].location.lat]
+                    }
+                  }]
+                }
+              },
+              "layout": {
+                "icon-image": `w_${i}`,
+                "icon-size": 0.35
               }
-            },
-            "layout": {
-              "icon-image": `w_${i}`,
-              "icon-size": 0.35
-            }
-          });
+            });
+          })
         })
       })
     },
