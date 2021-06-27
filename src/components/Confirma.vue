@@ -1,8 +1,6 @@
 <template>
   <div>
     <div class="form fadeIn">
-
-
       <div v-show="Object.keys(data.estimate).length" class="input-data bottom-spaced">
         <div class="columns content has-text-centered fadeLeft">
           <div class="column confirm-container has-text-left">
@@ -190,7 +188,7 @@ export default {
             localStorage.setItem('preference',JSON.stringify(res.data))
             t.$router.push('/pago')
           } else {
-            this.$root.snackbar('danger','La preferencia de pago no pudo ser recibida. Por favor intente de nuevo en unos instantes.')
+            this.$root.snackbar('danger','El pago no pudo ser recibido. Por favor intente de nuevo en unos instantes.')
           } 
           t.$root.loading = false       
         })
