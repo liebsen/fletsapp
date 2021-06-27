@@ -93,8 +93,22 @@
     </div>
 
     <div class="steps-frame hidden fadeIn">
-      <ul class="steps is-narrow is-medium is-centered has-content-centered">
-        <li class="steps-segment is-active has-gaps">
+      <ul class="steps is-horizontal is-narrow is-medium is-centered has-content-centered">
+        <li v-for="item in breadcrumb" class="steps-segment is-active has-gaps">
+          <a href="#" class="has-text-dark">
+            <span class="steps-marker">
+              <span class="icon">
+                <span class="`fas fa-${item.text}`"></span>
+              </span>
+            </span>
+            <div class="steps-content">
+              <p class="heading">{{ item.text }}</p>
+            </div>
+          </a>
+        </li>
+
+
+        <!--li class="steps-segment is-active has-gaps">
           <a href="#" class="has-text-dark">
             <span class="steps-marker">
               <span class="icon">
@@ -153,7 +167,7 @@
               <p class="heading">Pago</p>
             </div>
           </a>
-        </li>
+        </li-->
       </ul>
     </div>
     
@@ -196,6 +210,26 @@
 import moment from 'moment'
 export default {
   name: 'app',
+  data () {
+    return {
+      breadcrumb: [{
+        text: 'Ruta',
+        icon:'map-marker-alt'
+      },{
+        text: 'Carga',
+        icon:'truck-loading'
+      },{
+        text: 'Mis datos',
+        icon:'user'
+      },{
+        text: 'Confirmación',
+        icon:'check'
+      },{
+        text: 'Pago',
+        icon:'credit-card'
+      }]
+    }
+  },
   methods: {
     getYear () {
       return moment().format('YYYY')

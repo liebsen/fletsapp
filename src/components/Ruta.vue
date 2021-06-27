@@ -73,8 +73,12 @@ export default {
     this.$root.snackbar('default','Por favor selecciona el <span class="has-text-weight-bold has-text-info">dirección de recepción</span> y <span class="has-text-weight-bold has-text-success">dirección de entrega</span> para tu viaje')
   },
   destroyed () {
-    document.querySelector('.pac-container').remove()
-    clearInterval(this.mapInterval)
+    if (document.querySelector('.pac-container')) {
+      document.querySelector('.pac-container').remove()
+    }
+    if (this.mapInterval) {
+      clearInterval(this.mapInterval)
+    }
   },
   methods: {
     autocompleteFocus ({type, target}) {

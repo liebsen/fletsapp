@@ -949,5 +949,12 @@ table {
   }
   .input-data {
   }
+  .steps-segment {
+    min-height: 3.33rem;
+    min-width: 3.75rem!important;
+  }
+  .steps-content {
+    display: none!important;
+  }
 }
 
