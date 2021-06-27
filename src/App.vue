@@ -98,7 +98,7 @@
           <a href="#" class="has-text-dark">
             <span class="steps-marker">
               <span class="icon">
-                <span class="`fas fa-${item.text}`"></span>
+                <span :class="`fas fa-${item.icon}`"></span>
               </span>
             </span>
             <div class="steps-content">

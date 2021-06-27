@@ -59,6 +59,9 @@ body > div:first-child {
   z-index: 1020;
   bottom: 6rem;
   right: 0.5rem;
+  .button {
+    margin-top: 0.25rem;
+  }
 }
 .form {
   opacity: 0;
