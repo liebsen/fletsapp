@@ -20,7 +20,8 @@ export default {
     if(!preference){
       t.$router.push('/')
     } else {
-      preference = JSON.parse(preference)
+      window.location.href = preference.init_point
+      /* preference = JSON.parse(preference)
       let script = document.createElement('script')
       script.setAttribute('src', 'https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js')
       script.setAttribute('data-preference-id', preference.id)
@@ -29,7 +30,7 @@ export default {
       document.getElementById('form').appendChild(script)
       setTimeout(function(){
         document.querySelector('.mercadopago-button').click()
-      },5000)
+      },5000) */
     }
   },
   data () {

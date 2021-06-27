@@ -483,13 +483,11 @@ export default {
             icon = 'dest'
           }
         }
-
-        if(typeof mapLayer !== 'undefined') {
-          t.map.removeImage(`w_${i}`)
-          t.map.removeLayer(`w_${i}`).removeSource(`w_${i}`)
-        }
-
         t.map.on('load', () => {
+          if(typeof mapLayer !== 'undefined') {
+            t.map.removeImage(`w_${i}`)
+            t.map.removeLayer(`w_${i}`).removeSource(`w_${i}`)
+          }
           t.map.loadImage(`/static/img/${icon}.png`, function(error, image) {
             if (error) throw error
             t.map.addImage(`w_${i}`, image)
