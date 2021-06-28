@@ -20,29 +20,28 @@
           <div class="column">
             <h4>Tipo de carga</h4>
             <p>Por favor selecciona el tipo de carga que deseas contratar.</p>
-            
             <div class="field">
-              <input class="is-checkradio" id="carga1" type="radio" v-model="data.carga" value="mueble">
+              <input class="is-checkradio" id="carga1" type="checkbox" v-model="data.carga.muebles" value="mueble">
               <label for="carga1">Muebles</label>
             </div>
 
             <div class="field">
-              <input class="is-checkradio" id="carga2" type="radio" v-model="data.carga" value="electrodomestico">
+              <input class="is-checkradio" id="carga2" type="checkbox" v-model="data.carga.electrodomesticos" value="electrodomestico">
               <label for="carga2">Electrodómesticos</label>
             </div>
 
             <div class="field">
-              <input class="is-checkradio" id="carga3" type="radio" v-model="data.carga" value="mascota">
+              <input class="is-checkradio" id="carga3" type="checkbox" v-model="data.carga.mascotas" value="mascota">
               <label for="carga3">Mascotas (con canil)</label>
             </div>
 
             <div class="field">
-              <input class="is-checkradio" id="carga4" type="radio" v-model="data.carga" value="caja">
+              <input class="is-checkradio" id="carga4" type="checkbox" v-model="data.carga.cajas" value="cajas">
               <label for="carga4">Cajas</label>
             </div>
 
             <div class="field">
-              <input class="is-checkradio" id="carga5" type="radio" v-model="data.carga" value="otro">
+              <input class="is-checkradio" id="carga5" type="checkbox" v-model="data.carga.otro" value="otro">
               <label for="carga5">Otro</label>
             </div>
 
@@ -82,7 +81,7 @@
         </div>
       </div>
     
-      <div v-show="data.carga && data.peso" class="columns actions navbar is-fixed-bottom is-vbaseline has-text-centered">
+      <div v-show="Object.keys(data.carga).length && data.peso" class="columns actions navbar is-fixed-bottom is-vbaseline has-text-centered">
         <div class="column has-text-centered">
           <a href="#" @click="submit" class="button is-rounded is-success is-medium">Siguiente</a>
           <!--router-link to="/pago" class="button is-info is-large">Continuar</router-link-->
@@ -102,8 +101,8 @@ export default {
     if (saved) {
       t.data = JSON.parse(saved)
     }
-    if (t.data.carga === 'otro') {
-      t.data.carga = t.data.otro
+    if (t.data.carga.otro) {
+      t.data.carga.otro = t.data.otro
     }
     t.$root.loading = true
     axios.post( '/flet/service_cost/5dadf4617c213e556141874f').then((res) => {
@@ -117,9 +116,8 @@ export default {
   },
   methods: {
     submit: function(){
-      var t = this
-      localStorage.setItem('carga',JSON.stringify(t.data))
-      t.$router.push('/datos')
+      localStorage.setItem('carga',JSON.stringify(this.data))
+      this.$router.push('/datos')
     }
   },
   data () {
@@ -127,8 +125,8 @@ export default {
       service: {},
       data: {
         service: false,        
-        carga:null,
-        peso:null
+        carga: {},
+        peso: null
       }
     }
   }

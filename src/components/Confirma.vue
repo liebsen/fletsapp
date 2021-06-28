@@ -110,7 +110,11 @@
                   <label>Tipo de carga</label>
                 </td>
                 <td>
-                  <span class="is-capitalized" v-html="data.carga.carga"></span>
+                  <span v-show="data.carga.carga.muebles" class="is-capitalized tag is-rounded is-medium is-success">Muebles</span>
+                  <span v-show="data.carga.carga.electrodomesticos" class="is-capitalized tag is-rounded is-medium is-success">Electrodomésticos</span>
+                  <span v-show="data.carga.carga.mascotas" class="is-capitalized tag is-rounded is-medium is-success">Mascotas (con canil)</span>
+                  <span v-show="data.carga.carga.cajas" class="is-capitalized tag is-rounded is-medium is-success">Cajas</span>
+                  <span v-show="data.carga.carga.otro" class="is-capitalized tag is-rounded is-medium is-success">{{ data.carga.otro }}</span>
                 </td>
                 <td>
                   <router-link class="button is-rounded is-text" to="/carga">✎</router-link>
@@ -222,8 +226,8 @@ export default {
         },
         carga:{
           service: false,
-          carga:null,
-          peso:null
+          carga: {},
+          peso: null
         },
         datos:{},
         estimate:{}
