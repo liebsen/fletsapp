@@ -95,7 +95,7 @@
 import axios from 'axios'
 export default {
   name: 'carga',
-  mounted: function(){
+  mounted: function() {
     var t = this
     var saved = localStorage.getItem('carga')
     if (saved) {
