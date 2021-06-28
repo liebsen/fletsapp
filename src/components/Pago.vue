@@ -16,11 +16,12 @@ export default {
   name: 'pago',
   mounted: function(){
     var t = this
-    var preference = localStorage.getItem('preference')
+    var preference = JSON.parse(localStorage.getItem('preference'))
     if(!preference){
       t.$router.push('/')
     } else {
-      window.location.href = preference.init_point
+      // window.location.href = preference.init_point
+      window.location.assign(preference.init_point)
       /* preference = JSON.parse(preference)
       let script = document.createElement('script')
       script.setAttribute('src', 'https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js')
