@@ -26,7 +26,7 @@
 
     <div v-show="data.nombre && data.telefono" class="columns actions navbar is-fixed-bottom is-vbaseline has-text-centered">
       <div class="column has-text-centered">
-        <a href="#" @click="submit" class="button is-rounded is-success is-medium">Siguiente</a>
+        <a href="#" @click="submit" class="button is-rounded is-success is-outlined is-medium">Siguiente</a>
         <!--router-link to="/pago" class="button is-info is-large">Continuar</router-link-->
       </div>
     </div>  

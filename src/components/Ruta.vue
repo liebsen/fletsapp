@@ -53,7 +53,7 @@
         </a>
       </div>
       <div class="column has-text-centered">
-        <router-link to="/carga" class="button is-rounded is-success is-medium">Siguiente</router-link>
+        <router-link to="/carga" class="button is-rounded is-success is-outlined is-medium">Siguiente</router-link>
       </div>
     </div>  
   </div>
@@ -429,7 +429,7 @@ export default {
 
       this.map.fitBounds(bounds,{
         padding:100, 
-        offset:[0,-50]
+        offset:[0,-20]
       })   
     },
     enableLineAnimation(layerId) {

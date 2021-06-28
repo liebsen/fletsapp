@@ -83,7 +83,7 @@
     
       <div v-show="Object.keys(data.carga).length && data.peso" class="columns actions navbar is-fixed-bottom is-vbaseline has-text-centered">
         <div class="column has-text-centered">
-          <a href="#" @click="submit" class="button is-rounded is-success is-medium">Siguiente</a>
+          <a href="#" @click="submit" class="button is-rounded is-success is-outlined is-medium">Siguiente</a>
           <!--router-link to="/pago" class="button is-info is-large">Continuar</router-link-->
         </div>
       </div>  
@@ -96,22 +96,21 @@ import axios from 'axios'
 export default {
   name: 'carga',
   mounted: function() {
-    var t = this
     var saved = localStorage.getItem('carga')
     if (saved) {
-      t.data = JSON.parse(saved)
+      this.data = JSON.parse(saved)
     }
-    if (t.data.carga.otro) {
-      t.data.carga.otro = t.data.otro
+    if (this.data.carga.otro) {
+      this.data.carga.otro = t.data.otro
     }
-    t.$root.loading = true
+    this.$root.loading = true
     axios.post( '/flet/service_cost/5dadf4617c213e556141874f').then((res) => {
       if(res.data.status==='success'){
-        t.service = res.data
+        this.service = res.data
       } else {
         this.$root.snackbar('danger','Algo pasó.')
       } 
-      t.$root.loading = false       
+      this.$root.loading = false       
     })
   },
   methods: {

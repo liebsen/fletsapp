@@ -51,7 +51,7 @@ body > div:first-child {
 }
 
 .actions .button.is-medium {
-  min-width: 250px;
+  min-width: 150px;
 }
 
 .bottomright {
@@ -68,6 +68,7 @@ body > div:first-child {
 }
 #map {
   min-height: 440px;
+  background-color: #efe9e1;
   /*margin-bottom: 5.25rem;*/
   width:100%; 
 }
@@ -123,7 +124,8 @@ body > div:first-child {
   font-weight: 700;
   text-transform: uppercase;
   &.is-large {
-    font-size: 125%!important;
+    font-size: 175%!important;
+    font-weight: 800!important;
   }
   &.is-medium {
     font-size: 100%!important;
