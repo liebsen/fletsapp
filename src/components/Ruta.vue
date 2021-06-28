@@ -113,7 +113,7 @@ export default {
 
             this.map.fitBounds(bounds,{
               padding:100, 
-              offset:[0,-50]
+              offset:[0,-20]
             })
           }
         }, 500)
