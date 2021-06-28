@@ -134,7 +134,7 @@
     </div>
     <div v-show="Object.keys(data.estimate).length && !$root.loading" class="columns actions navbar is-fixed-bottom is-vbaseline has-text-centered">
       <div class="column has-text-centered">
-        <a href="#" @click="submit" class="button is-rounded is-info is-medium" :class="{ 'is-loading': $root.loading }">Confirmar y pagar</a>
+        <a href="#" @click="submit" class="button is-rounded is-success is-medium" :class="{ 'is-loading': $root.loading }">Confirmar</a>
         <!--router-link to="/pago" class="button is-success is-medium">Confirmar</router-link-->
       </div>
     </div>  

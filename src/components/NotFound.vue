@@ -2,9 +2,9 @@
   <section class="hero">
     <div class="hero-body">
       <div class="container content is-flex-column is-vertical">
-        <h1 class="title">
+        <h3 class="title">
           <span>🔌 No se encontró la página</span>
-        </h1>
+        </h3>
         <h4><em>FletsApp</em> no encontró el recurso que estás buscando. </h4>
         <p>Enlaces útiles:</p>
         <ul>        

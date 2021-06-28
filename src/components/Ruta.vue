@@ -20,7 +20,7 @@
               </div>
             </div>
           </div>
-          <div class="column is-1">
+          <div v-show="readyToAdd" class="column is-1">
             <a @click="addSegment" class="button is-rounded is-success is-circle is-outlined">
               <span class="icon">
                 <span class="fa fa-plus"></span>
@@ -53,7 +53,7 @@
         </a>
       </div>
       <div class="column has-text-centered">
-        <router-link to="/carga" class="button is-rounded is-info is-medium">Continuar</router-link>
+        <router-link to="/carga" class="button is-rounded is-success is-medium">Siguiente</router-link>
       </div>
     </div>  
   </div>
@@ -70,7 +70,7 @@ export default {
   },
   mounted () {
     this.checkSavedData()
-    this.$root.snackbar('default','Por favor seleccioná el <span class="has-text-weight-bold has-text-info">dirección de recepción</span> y <span class="has-text-weight-bold has-text-success">dirección de entrega</span> para tu viaje')
+    this.$root.snackbar('success','Por favor seleccioná el <span class="has-text-weight-bold">dirección de recepción</span> y <span class="has-text-weight-bold">dirección de entrega</span> para tu viaje')
   },
   destroyed () {
     if (document.querySelector('.pac-container')) {
@@ -78,6 +78,11 @@ export default {
     }
     if (this.mapInterval) {
       clearInterval(this.mapInterval)
+    }
+  },
+  computed: {
+    readyToAdd () {
+      return this.data.waypoints.filter(e => e.location).length > 1
     }
   },
   methods: {
@@ -216,6 +221,7 @@ export default {
       }
 
       if (waypoints.length === 1) {
+        t.createWaypointsMarkers()
         this.map.flyTo({
           center: [waypoints[0].location.lng, waypoints[0].location.lat],
           zoom: 16
@@ -353,10 +359,12 @@ export default {
           }
           t.getAddressFromLatLng()
           t.initMap().then(() => {
-            t.createWaypointsMarkers()
-            t.map.flyTo({
-              center: [waypoints[0].location.lng, waypoints[0].location.lat],
-              zoom: 16
+            t.map.on('load', () => {
+              t.createWaypointsMarkers()
+              t.map.flyTo({
+                center: [waypoints[0].location.lng, waypoints[0].location.lat],
+                zoom: 16
+              })
             })
           })
         }, function() {
@@ -487,40 +495,38 @@ export default {
             icon = 'dest'
           }
         }
-        t.map.on('load', () => {
+        t.map.loadImage(`/static/img/${icon}.png`, function(error, image) {
+          if (error) throw error
           if(typeof mapLayer !== 'undefined') {
             t.map.removeImage(`w_${i}`)
             t.map.removeLayer(`w_${i}`).removeSource(`w_${i}`)
           }
-          t.map.loadImage(`/static/img/${icon}.png`, function(error, image) {
-            if (error) throw error
-            t.map.addImage(`w_${i}`, image)
-            t.map.addLayer({
-              "id": `w_${i}`,
-              "type": "symbol",
-              "source": {
-                "type": "geojson",
-                "data": {
-                  "type": "FeatureCollection",
-                  "features": [{
-                    "type": "Feature",
-                    'properties': {
-                      'description': e.formatted_address,
-                      'icon': 'map-marker'
-                    },
-                    "geometry": {
-                      "type": "Point",
-                      "coordinates": [t.data.waypoints[i].location.lng, t.data.waypoints[i].location.lat]
-                    }
-                  }]
-                }
-              },
-              "layout": {
-                "icon-image": `w_${i}`,
-                "icon-size": 0.35
+          t.map.addImage(`w_${i}`, image)
+          t.map.addLayer({
+            "id": `w_${i}`,
+            "type": "symbol",
+            "source": {
+              "type": "geojson",
+              "data": {
+                "type": "FeatureCollection",
+                "features": [{
+                  "type": "Feature",
+                  'properties': {
+                    'description': e.formatted_address,
+                    'icon': 'map-marker'
+                  },
+                  "geometry": {
+                    "type": "Point",
+                    "coordinates": [t.data.waypoints[i].location.lng, t.data.waypoints[i].location.lat]
+                  }
+                }]
               }
-            });
-          })
+            },
+            "layout": {
+              "icon-image": `w_${i}`,
+              "icon-size": 0.35
+            }
+          });
         })
       })
     },

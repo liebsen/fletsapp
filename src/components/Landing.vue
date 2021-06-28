@@ -9,7 +9,7 @@
             <span class="icon">
               <span class="fas fa-truck-loading"></span>
             </span> 
-            <span>Comenzar</span>  
+            <span>Solicitar</span>  
           </router-link>
         </div>
         <div class="landing-scale">

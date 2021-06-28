@@ -26,7 +26,7 @@
 .landing-scale {
   opacity: 0;
   height: 220px;
-  background-color: #7FDBFF;
+  background-color: white;
   width: 100vw;
   margin: auto;
   position: fixed;
@@ -37,19 +37,14 @@
 }
 
 .landing-text {
-  opacity: 0.9;
-  background-color: #7FDBFF;
+  opacity: 0.95;
+  background-color: white;
   position: relative;
   z-index: 1;
   margin: auto!important;
   text-align: center;
   width: 100vw;
   padding: 2rem 2rem;
-}
-
-.landing-text h2, .landing-text h4 {
-  color: hsla(197, 100%, 20%, 1.0)!important;
-  text-shadow: 0 0 5px #7FDBFF;
 }
 
 .expand {

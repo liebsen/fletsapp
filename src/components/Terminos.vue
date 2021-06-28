@@ -2,12 +2,12 @@
   <section class="hero">
     <div class="hero-body">
       <div class="container content is-flex-column is-vertical">
-        <h2>
+        <h3>
             <span class="icon">
               <span class="fas fa-balance-scale"></span>
             </span> 
             <span>Términos y condiciones</span>
-        </h2>
+        </h3>
 
         <p>El principal radio de acción de los fletes es Buenos Aires Capital Federal y Gran Buenos Aires, realizando fletes al interior a expreso pedido del cliente.</p>
 
