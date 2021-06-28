@@ -212,6 +212,7 @@ body > div:first-child {
   left:0;
   right:0;
   z-index: 1021;
+  background-color: white;
   span {
     color: black;
     font-size: 12px;
@@ -405,6 +406,7 @@ body > div:first-child {
 
 .menu.fs .menu-items div {
   opacity: 1;
+  min-height: 6rem;
   /*margin-top: 75px;*/
 }
 
