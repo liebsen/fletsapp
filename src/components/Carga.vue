@@ -80,7 +80,6 @@
           </div>
         </div>
       </div>
-  
       <div v-show="Object.keys(form.carga).filter((e, i) => form.carga[e]).length && form.carga.peso" class="columns actions navbar is-fixed-bottom is-vbaseline has-text-centered">
         <div class="column has-text-centered">
           <a href="#" @click="submit" class="button is-rounded is-success is-outlined is-medium">
