@@ -2,13 +2,13 @@
   <section class="hero">
     <div class="hero-body">
       <div class="container content is-flex-column is-vertical">
-        <h3>
+        <h4>
           <span class="icon">
             <span class="fas fa-envelope"></span>
           </span> 
           <span>Contacto</span>
-        </h3>
-        <h4>En <em>FletsApp</em> estamos siempre dispuestos a recibir feedback de nuestros usuarios.</h4>
+        </h4>
+        <div class="notification is-info">En <em>FletsApp</em> estamos siempre dispuestos a recibir feedback de nuestros usuarios.</div>
         <p>Por favor ingresa tus datos para contactarnos</p>
         <form class="form padless has-text-left fadeIn" @submit.prevent="submit">
           <div class="columns">

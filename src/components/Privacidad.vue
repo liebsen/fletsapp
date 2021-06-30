@@ -2,13 +2,13 @@
   <section class="hero">
     <div class="hero-body">
       <div class="container content is-flex-column is-vertical">
-        <h3>
+        <h4>
           <span class="icon">
             <span class="fas fa-unlock-alt"></span>
           </span> 
           <span>Política de privacidad</span>
-        </h3>
-        <h4><em>FletsApp</em> se compromete con sus usuarios a tratar su información personal con la responsabilidad social que se merecen.</h4>
+        </h4>
+        <div class="notification is-info"><em>FletsApp</em> se compromete con sus usuarios a tratar su información personal con la responsabilidad social que se merecen.</div>
 
         <p>Cumplimos con las normas establecidas por los estándares informáticos referentes a la seguridad de las transacciones y análisis de base de datos. No guardamos datos de tarjetas de crédito, débito sino que dejamos la operación exclusivamente a la tercera parte en este caso <a href="https://mercadopago.com" target="_blank">Mercado Pago</a>. </p>
 

@@ -2,9 +2,9 @@
   <section class="hero">
     <div class="hero-body">
       <div v-if="data.payment_status === 'approved'" class="container content is-flex-column is-vertical">
-        <h3 class="title">
+        <h4 class="title">
           <span class="has-text-success">✔️ Tu pago fue recibido!</span>
-        </h3>
+        </h4>
         <div class="notification is-success">Un móvil FletsApp estará pasando a retirar tu envío en unos instantes.</div>
         <p>Si tenés alguna duda o sugerencia podés seguir a:</p>
         <ul>

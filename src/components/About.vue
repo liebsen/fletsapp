@@ -2,13 +2,13 @@
   <section class="hero">
     <div class="hero-body">
       <div class="container content is-flex-column is-vertical">
-        <h3>
+        <h4>
           <span class="icon">
             <span class="fas fa-user-shield"></span>
           </span> 
           <span>Acerca de <em>FletsApp</em></span>
-        </h3>
-        <h4><em>FletsApp</em> ofrece servicios de transporte de carga liviana por vía terrestre, con rápida recepción y entrega solicitadas, sin demoras.</h4>
+        </h4>
+        <div class="notification is-info"><em>FletsApp</em> ofrece servicios de transporte de carga liviana por vía terrestre, con rápida recepción y entrega solicitadas, sin demoras.</div>
 
         <p>Cumplimos con las normas establecidas por las autoridades del transporte nacional, ofreciendo a nuestros clientes la confianza de un servicio eficiente, competitivo y de calidad para que su carga viaje segura, llegue en buen estado y a tiempo.</p>
 

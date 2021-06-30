@@ -84,7 +84,7 @@
                 <span class="icon">
                   <span class="fas fa-route"></span>
                 </span> 
-                <span>Solicitar ahora</span>            
+                <span>Empezar</span>            
               </router-link>
             </div>
           </div>

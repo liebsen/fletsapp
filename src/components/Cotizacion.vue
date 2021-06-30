@@ -2,13 +2,13 @@
   <section class="hero">
     <div class="hero-body">
       <div class="container content is-flex-column is-vertical">
-        <h2>
+        <h4>
           <span class="icon">
             <span class="fas fa-search-dollar"></span>
           </span> 
           <span>Cómo cotiza <em>FletsApp</em></span>
-        </h2>
-        <h4>Transparencia a la hora de cotizar los envíos.</h4>
+        </h4>
+        <h5>Transparencia a la hora de cotizar los envíos.</h5>
         <p>En <em>FletsApp</em> tenemos en cuenta los siguientes parámetros para cotizar los flets:</p>
         <ul>
         <li><a href="#ruta">Ruta</a></li>
