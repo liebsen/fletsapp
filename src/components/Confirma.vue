@@ -4,7 +4,8 @@
       <div v-show="Object.keys(data.estimate).length" class="input-data bottom-spaced">
         <div class="columns content has-text-centered fadeLeft">
           <div class="column confirm-container has-text-left">
-            <!--h3>Datos de tu Flet</h3-->
+            <h3 class="has-margin-top">Confirmá tu flete</h3>
+            <p>Cuando se confirme tu pago pasaremos a retirar tu flete. El pago se realizará mediante mercadopago a nombre de Geotiendas. Gracias por usar FletsApp!</p>
             <table class="table">
               <tr>
                 <td class="has-background-light">
@@ -138,7 +139,12 @@
     </div>
     <div v-show="Object.keys(data.estimate).length && !$root.loading" class="columns actions navbar is-fixed-bottom is-vbaseline has-text-centered">
       <div class="column has-text-centered">
-        <a href="#" @click="submit" class="button is-rounded is-success is-medium" :class="{ 'is-loading': $root.loading }">Confirmar</a>
+        <a href="#" @click="submit" class="button is-rounded is-success is-medium" :class="{ 'is-loading': $root.loading }">
+          <span class="icon">
+            <span class="fa fa-check"/>
+          </span>
+          <span class="has-margin-left">Confirmar</span>
+        </a>
         <!--router-link to="/pago" class="button is-success is-medium">Confirmar</router-link-->
       </div>
     </div>  

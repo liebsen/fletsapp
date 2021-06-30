@@ -24,6 +24,7 @@
               <input class="is-checkradio" id="carga1" type="checkbox" v-model="data.carga.muebles" value="mueble">
               <label for="carga1">Muebles</label>
             </div>
+
             <div class="field">
               <input class="is-checkradio" id="carga2" type="checkbox" v-model="data.carga.electrodomesticos" value="electrodomestico">
               <label for="carga2">Electrodómesticos</label>
@@ -82,7 +83,12 @@
     
       <div v-show="Object.keys(data.carga).length && data.peso" class="columns actions navbar is-fixed-bottom is-vbaseline has-text-centered">
         <div class="column has-text-centered">
-          <a href="#" @click="submit" class="button is-rounded is-success is-outlined is-medium">Siguiente</a>
+          <a href="#" @click="submit" class="button is-rounded is-success is-outlined is-medium">
+            <span class="icon">
+              <span class="fa fa-check"/>
+            </span>
+            <span class="has-margin-left">Siguiente</span>
+          </a>
           <!--router-link to="/pago" class="button is-info is-large">Continuar</router-link-->
         </div>
       </div>  

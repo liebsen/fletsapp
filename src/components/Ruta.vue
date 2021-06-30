@@ -37,7 +37,7 @@
           <span class="icon">
             <span class="fas fa-route"></span>
           </span>
-          <span v-html="data.distance.text"></span>
+          <span v-html="parseFloat(data.distance.text).toFixed(2)"></span><span> km</span>
         </div>
         <div class="button is-rounded is-small is-success">
           <span class="icon">
@@ -53,7 +53,12 @@
         </a>
       </div>
       <div class="column has-text-centered">
-        <router-link to="/carga" class="button is-rounded is-success is-outlined is-medium">Siguiente</router-link>
+        <router-link to="/carga" class="button is-rounded is-success is-outlined is-medium">
+          <span class="icon">
+            <span class="fa fa-check"/>
+          </span>
+          <span class="has-margin-left">Siguiente</span>
+        </router-link>
       </div>
     </div>  
   </div>
@@ -272,7 +277,7 @@ export default {
                   t.data.coordinates.push([step.end_location.lng(),step.end_location.lat()])
                 }
               }
-              t.computeTotalDistance(route)  
+              t.computeTotalDistance(route)
               t.drawRoute()
               t.createWaypointsMarkers()
               localStorage.setItem('ruta', JSON.stringify(t.data))
@@ -312,10 +317,10 @@ export default {
       var totalDist = 0
       var totalTime = 0
       for (var i = 0; i < route.legs.length; i++) {
-        totalDist+= route.legs[i].distance.value
-        totalTime+= route.legs[i].duration.value
+        totalDist+= parseFloat(route.legs[i].distance.value)
+        totalTime+= parseFloat(route.legs[i].duration.value)
       }
-      totalDist = totalDist / 1000
+      totalDist = parseFloat(totalDist / 1000).toFixed(2)
       let duration = (totalTime / 60).toFixed(2)
       this.data.distance = {
         text: totalDist + 'km',
@@ -340,8 +345,8 @@ export default {
         t.data = saved
         t.initMap().then(map => {
           map.on('load', () => {
-            t.createWaypointsMarkers()
             t.drawRoute()
+            t.createWaypointsMarkers()            
           })
         })
       } else {

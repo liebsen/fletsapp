@@ -4,7 +4,7 @@
       <div class="input-data bottom-spaced">
         <div class="columns content has-text-centered fadeLeft">
           <div class="column options-container has-text-left">
-            <h3>Mis datos</h3>
+            <h3 class="has-margin-top">Mis datos</h3>
             <p>Por favor indicanos tus datos y comentarios personales acerca del envío si es necesario.</p>
             <div class="field">
               <label>Tu nombre completo (*)</label>
@@ -26,7 +26,12 @@
 
     <div v-show="data.nombre && data.telefono" class="columns actions navbar is-fixed-bottom is-vbaseline has-text-centered">
       <div class="column has-text-centered">
-        <a href="#" @click="submit" class="button is-rounded is-success is-outlined is-medium">Siguiente</a>
+        <a href="#" @click="submit" class="button is-rounded is-success is-outlined is-medium">
+          <span class="icon">
+            <span class="fa fa-check"/>
+          </span>
+          <span class="has-margin-left">Siguiente</span>
+        </a>
         <!--router-link to="/pago" class="button is-info is-large">Continuar</router-link-->
       </div>
     </div>  

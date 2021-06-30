@@ -8,7 +8,7 @@ body {
 }
 
 body > div:first-child {
-  padding-top: 60px;
+  margin-top: 60px;
   min-height: 100%;
 }
 
@@ -172,6 +172,17 @@ body > div:first-child {
   border-width: 0.25rem!important;
 }
 
+.has-margin-top {
+  margin-top: 0.5rem;
+}
+
+.has-margin-left {
+  margin-left: 0.5rem;
+}
+
+.has-margin-right {
+  margin-right: 0.5rem;
+}
 
 /* menu */
 
@@ -232,6 +243,10 @@ body > div:first-child {
     color: black;
     font-size: 12px;
   }
+}
+
+.textarea {
+  min-height: 80px!important;
 }
 
 .menu-text {
