@@ -24,7 +24,6 @@
               <input class="is-checkradio" id="carga1" type="checkbox" v-model="data.carga.muebles" value="mueble">
               <label for="carga1">Muebles</label>
             </div>
-
             <div class="field">
               <input class="is-checkradio" id="carga2" type="checkbox" v-model="data.carga.electrodomesticos" value="electrodomestico">
               <label for="carga2">Electrodómesticos</label>
