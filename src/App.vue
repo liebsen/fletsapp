@@ -173,7 +173,7 @@
       <router-view :key="$route.fullPath" />
     </transition>
 
-    <div class="tosprompt">
+    <div v-show="tosAgree" class="tosprompt">
       <div class="notification">
         <div class="is-pulled-right">
           <a href="#" @click="$root.tosAgree(this)">
@@ -195,6 +195,7 @@
 
     <div class="legal-footer has-text-centered">
       <span>©️ {{ getYear() }} FletsApp &mdash; <router-link to="/terminos">Términos y condiciones</router-link></span>
+      <span class="has-text-muted is-hidden-mobile">&mdash; Desarrollo <a href="https://overlemon.com" target="_blank">Overlemon</a></span>
     </div>
 
     <div class="ui-snackbar ui-snackbar--is-inactive">
@@ -210,6 +211,7 @@ export default {
   name: 'app',
   data () {
     return {
+      tosAgree: localStorage.getItem('tosagree'),
       breadcrumb: [{
         text: 'Ruta',
         icon:'map-marker-alt'
