@@ -82,9 +82,9 @@
             <div class="has-text-centered">
               <router-link class="button is-rounded is-white is-outlined" to="/ruta">
                 <span class="icon">
-                  <span class="fas fa-truck-loading"></span>
+                  <span class="fas fa-route"></span>
                 </span> 
-                <span>Comenzar</span>            
+                <span>Solicitar</span>            
               </router-link>
             </div>
           </div>

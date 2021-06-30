@@ -3,11 +3,11 @@
     <div class="column slideIn">
       <div class="landing-container">
         <div class="landing-text content">
-          <h2>Llevalo y traelo al toque</h2>
-          <h4>Entregamos en Capital Federal y GBA de Lunes a Sábado de 8 a 18hs</h4>
-          <router-link class="button is-rounded is-action is-info is-outlined is-large" to="/ruta">
+          <h2 class="has-text-success">Llevalo y traelo al toque</h2>
+          <h4 class="has-text-success">Entregamos en Capital Federal y GBA de Lunes a Sábado de 8 a 18hs</h4>
+          <router-link class="button is-rounded is-action is-success is-outlined is-large" to="/ruta">
             <span class="icon">
-              <span class="fas fa-truck-loading"></span>
+              <span class="fas fa-route"></span>
             </span> 
             <span>Solicitar</span>  
           </router-link>

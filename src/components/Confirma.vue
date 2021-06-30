@@ -4,7 +4,7 @@
       <div v-show="Object.keys(data.estimate).length" class="input-data bottom-spaced">
         <div class="columns content has-text-centered fadeLeft">
           <div class="column confirm-container has-text-left">
-            <h3 class="has-margin-top">Confirmá tu flete</h3>
+            <h3 class="has-margin-top">Confirmá tu envío</h3>
             <p>Cuando se confirme tu pago pasaremos a retirar tu flete. El pago se realizará mediante mercadopago a nombre de Geotiendas. Gracias por usar FletsApp!</p>
             <table class="table">
               <tr>
