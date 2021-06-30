@@ -66,8 +66,10 @@ body > div:first-child {
 .form {
   opacity: 0;
 }
+
 #map {
-  min-height: 440px;
+  /* min-height: 440px; */
+  height: calc(100vh - 280px);
   background-color: #efe9e1;
   /*margin-bottom: 5.25rem;*/
   width:100%; 
@@ -920,6 +922,9 @@ table {
 }
 
 @media screen and (min-width: 768px) {
+  #map {
+    /* min-height: 90vh; */
+  }
   .swal-modal {
     box-shadow: 0px 10px 20px #00000033;
     border-radius: 25px;
@@ -960,6 +965,10 @@ table {
    width: 200vh;
    height: 200vh;
  }
+  .steps-segment {
+    min-height: 3.33rem;
+    min-width: calc(100vw / 5)!important;
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -970,7 +979,6 @@ table {
   }
   .steps-segment {
     min-height: 3.33rem;
-    min-width: 3.75rem!important;
   }
   .steps-content {
     display: none!important;

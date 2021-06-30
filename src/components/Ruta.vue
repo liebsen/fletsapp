@@ -30,7 +30,7 @@
         </div>
       </div>
     </div>
-    <div id='map' :style="{ height: mapHeight + 'px'}"></div>
+    <div id="map"></div>
     <div v-show="Object.keys(data.distance).length" class="columns actions navbar is-fixed-bottom is-vbaseline has-text-centered" id="actions">
       <div class="bottomright">
         <div class="button is-rounded is-small is-success">
@@ -92,7 +92,7 @@ export default {
         target.setAttribute('text', target.value)
         this.map.flyTo({
           center: [this.data.waypoints[target.getAttribute('index')].location.lng, this.data.waypoints[target.getAttribute('index')].location.lat],
-          zoom: 16
+          zoom: 15
         })
       }
       target.value = ''
@@ -224,7 +224,7 @@ export default {
         t.createWaypointsMarkers()
         this.map.flyTo({
           center: [waypoints[0].location.lng, waypoints[0].location.lat],
-          zoom: 16
+          zoom: 15
         })
       }
 
@@ -363,7 +363,7 @@ export default {
               t.createWaypointsMarkers()
               t.map.flyTo({
                 center: [waypoints[0].location.lng, waypoints[0].location.lat],
-                zoom: 16
+                zoom: 15
               })
             })
           })
@@ -529,9 +529,6 @@ export default {
           });
         })
       })
-    },
-    setMapHeight: function(){
-      this.mapHeight = window.innerHeight - (document.getElementById('form').clientHeight + document.getElementById('form').offsetTop)
     }
   },
   data () {
@@ -540,7 +537,6 @@ export default {
       blurState: 0,
       map: null,
       mapInterval: 0,
-      mapHeight: 0,
       directionsService: null,
       defaultSegment: {
         placeholder: 'Parada',
