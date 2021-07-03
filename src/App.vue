@@ -95,7 +95,7 @@
     <div class="steps-frame hidden fadeIn">
       <ul class="steps is-horizontal is-narrow is-medium is-centered has-content-centered">
         <li v-for="item in breadcrumb" class="steps-segment is-active has-gaps">
-          <a href="#" class="has-text-dark" :title="item.text">
+          <a href="#" class="has-text-grey" :title="item.text">
             <span class="steps-marker">
               <span class="icon">
                 <span :class="`fas fa-${item.icon}`"></span>
