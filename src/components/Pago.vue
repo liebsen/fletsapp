@@ -2,7 +2,7 @@
   <div>
     <div class="form">
       <div class="input-data has-text-centered">
-        <form action="https://api.fletsapp.com/procesar-pago" method="POST" id="form">
+        <form action="https://api.fletsapp.overlemon.com/procesar-pago" method="POST" id="form">
           <p>Enviando solicitud a Mercadopago. Espere por favor...</p>
         </form>
       </div>
