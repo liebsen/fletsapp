@@ -20,7 +20,7 @@
               </div>
             </div>
           </div>
-          <div v-show="readyToAdd" class="column is-1">
+          <div v-show="data.waypoints.filter(e => e.location).length > 1" class="column is-narrow">
             <a @click="addSegment" class="button is-rounded is-success is-circle is-outlined">
               <span class="icon">
                 <span class="fa fa-plus"></span>
@@ -304,10 +304,13 @@ export default {
       .then(accept => {
         if (accept) {
           localStorage.removeItem('ruta')
-          clearInterval(this.mapInterval)
+          if (t.mapInterval) {
+            clearInterval(t.mapInterval)
+          }
           t.data = t.defaultData
           t.data.waypoints = t.defaultWaypoints
           t.checkSavedData()
+          t.inputKey++
         } else {
           console.log('Clicked on cancel')
         }
@@ -503,7 +506,8 @@ export default {
         }
         t.map.loadImage(`/static/img/${icon}.png`, function(error, image) {
           if (error) throw error
-          if(typeof mapLayer !== 'undefined') {
+          var mapLayer = t.map.getLayer(`w_${i}`);            
+          if(mapLayer) {
             t.map.removeImage(`w_${i}`)
             t.map.removeLayer(`w_${i}`).removeSource(`w_${i}`)
           }
