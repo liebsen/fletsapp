@@ -1,7 +1,7 @@
 @charset "utf-8";
 @import "~bulma/sass/utilities/initial-variables";
 @import "~bulma/sass/utilities/functions";
-@import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
+@import url('https://fonts.googleapis.com/css?family=Varela+Round:400,500,600,700');
 // 2. Set your own initial variables
 // Update blue
 $blue: #72d0eb;
@@ -10,7 +10,7 @@ $pink: #ffb3b3;
 $pink-invert: #fff;
 // Add a serif family
 //$family-serif: "Merriweather", "Georgia", serif;
-$family-serif: "Nunito", sans-serif;
+$family-serif: "Varela Round", sans-serif;
 
 // 3. Set the derived variables
 // Use the new pink as the primary color
