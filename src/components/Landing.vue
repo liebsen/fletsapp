@@ -9,7 +9,7 @@
             <span class="icon">
               <span class="fas fa-route"></span>
             </span> 
-            <span>Solicitar</span>  
+            <span>Empezar</span>  
           </router-link>
         </div>
         <div class="landing-scale">

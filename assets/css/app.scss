@@ -375,6 +375,7 @@ body > div:first-child {
           transform: rotate(-180deg) translateY(10px);
 }*/
 
+
 .menu-items {
   > div {
     margin: auto;
@@ -391,44 +392,45 @@ body > div:first-child {
           transform: translateY(-200%);
   pointer-events: none;
   z-index: 99;
+
+  .menu-links {
+    padding: 1.5rem;
+    .icon {
+      position: relative;
+      top: 3px;
+    }
+  }
+
+  a {
+    &:not(.button) {
+      font-size: 1.25rem;
+      line-height: 1.5;
+      color: white;
+      display: block;
+      &:hover {
+        color: yellow;
+      }
+    }
+    &.active {
+      color: yellow;
+    }
+    img {
+      max-width: 20rem;
+      max-height: 5rem;
+      height: 5rem;      
+    }
+    div {
+      -webkit-transition: 1s;
+      transition: 1s;
+      opacity: 0;
+    }    
+  }
 }
 
-.menu-items img {
-  max-height: 5rem;
-  height: 5rem;
-}
-
-.menu-links {
-  padding: 1.5rem;
-}
-
-.menu-items a:not(.button) {
-  font-size: 1rem;
-  color: white;
-  display: block;
-}
-
-.menu-items a.active {
-  color: yellow;
-}
-
-.menu-items a:not(.button):hover {
-  color: yellow;
-}
-
-.menu-items img{
-  max-width: 20rem;
-}
-
-.menu-items div {
-  -webkit-transition: 1s;
-  transition: 1s;
-  opacity: 0;
-}
 
 .menu.fs .menu-items {
-  -webkit-transform: translateY(0);
-          transform: translateY(0);
+  -webkit-transform: translateY(-4rem);
+          transform: translateY(-4rem);
   pointer-events: auto;
   opacity: 1;
 }

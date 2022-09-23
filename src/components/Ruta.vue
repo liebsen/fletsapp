@@ -418,14 +418,16 @@ export default {
             }
           },
           "layout": {
+            'line-join': 'round',
+            'line-cap': 'round'            
           },
           "paint": {
             "line-color": linecolor,
             "line-width": 8,
-            "line-dasharray": [0, 4, 3]
+            // "line-dasharray": [0, 1.5, 0.5]
           }
         })
-        t.enableLineAnimation(`leg_${i}`)
+        // t.enableLineAnimation(`leg_${i}`)
       })
 
       var bounds = this.data.coordinates.reduce(function(bounds, coord) {
@@ -439,20 +441,19 @@ export default {
     },
     enableLineAnimation(layerId) {
       var step = 0
-      var animationStep = 250
+      var animationStep = 50
       let dashArraySeq = [
-        [0, 4, 3],
-        [1, 4, 2],
-        [2, 4, 1],
-        [3, 4, 0],
-        [0, 1, 3, 3],
-        [0, 2, 3, 2],
-        [0, 3, 3, 1]
+        [0, 1.5, 0.5],
+        [0.3, 1.5, 0.25],
+        [0.6, 1.5, 0.1],
+        [1, 1.5, 0],
+        //[0, 0.1, 0.5, 0.5],
+        //[0, 0.25, 0.5, 0.25],
+        //[0, 0.5, 0.5, 0.1]
       ]
       this.mapInterval = setInterval(() => {
         step = (step + 1) % dashArraySeq.length
-        var mapLayer = this.map.getLayer(layerId)
-        if(typeof mapLayer !== 'undefined') {
+        if(typeof this.map.getLayer(layerId) !== 'undefined') {
           this.map.setPaintProperty(layerId, 'line-dasharray', dashArraySeq[step])
         }
       }, animationStep)

@@ -9,18 +9,18 @@
             <table class="table">
               <tr>
                 <td class="has-background-light">
-                  <label>Distancia</label>
+                  <label class="has-text-success">Distancia</label>
                 </td>
-                <td class="has-background-light" colspan="2">
-                  <span v-html="data.ruta.distance.text"></span>
+                <td class="has-background-white" colspan="2">
+                  <span class="has-text-success" v-html="data.ruta.distance.text"></span>
                 </td>
               </tr>
               <tr>
                 <td class="has-background-light">
-                  <label>Tiempo aprox. viaje</label>
+                  <label class="has-text-success">Tiempo aprox. viaje</label>
                 </td>
-                <td class="has-background-light" colspan="2">
-                  <span v-html="data.ruta.duration.text"></span>
+                <td class="has-background-white" colspan="2">
+                  <span class="has-text-success" v-html="data.ruta.duration.text"></span>
                 </td>
               </tr>
               <tr>
